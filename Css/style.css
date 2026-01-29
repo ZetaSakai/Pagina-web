@@ -139,8 +139,8 @@ h2 {
 
 .popular-content {
     display: flex;
-    justify-content: space-evenly;
-    margin: 100px;
+    justify-content: space-between;
+    margin: 90px;
 }
 
 .popular-content img {
