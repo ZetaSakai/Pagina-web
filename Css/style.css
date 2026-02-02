@@ -337,4 +337,18 @@ input {
         margin-top: 20px;
         
     }
+
+    .navbar ul li a {
+    display: inline-block;
+    }
+
+    .navbar ul li a,
+.product-1 {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .navbar ul li a,
+.product-1 {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
 }
