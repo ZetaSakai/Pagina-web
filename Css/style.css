@@ -23,7 +23,7 @@ img {
 }
 
 .header {
-    background-image: url(/img/deo182h-4d8f64bf-0b0c-4f9b-8d13-a57c8d144ce1.gif);
+    background-image: url(/img/deo182h-4d8f64bf-0b0c-4f9b-8d13-a57c8d144ce1\ \(2\).gif);
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -336,5 +336,19 @@ input {
     .link ul {
         margin-top: 20px;
         
+    }
+
+    .navbar ul li a {
+    display: inline-block;
+    }
+
+    .navbar ul li a,
+.product-1 {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .navbar ul li a,
+.product-1 {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 }
