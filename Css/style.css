@@ -96,7 +96,7 @@ img {
 }
 
 .header-txt span {
-    color: #ff5a2c;
+    color: #ff00c8;
 }
 
 .header-txt p {
@@ -336,5 +336,19 @@ input {
     .link ul {
         margin-top: 20px;
         
+    }
+
+    .navbar ul li a {
+    display: inline-block;
+    }
+
+    .navbar ul li a,
+.product-1 {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .navbar ul li a,
+.product-1 {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 }
