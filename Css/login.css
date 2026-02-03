@@ -9,9 +9,101 @@ body {
     width: 100%;
     height: 100vh;
     position: relative;
-    background: url('../img/login/login_bg.gif') 
+    background: url('../img/9QiNexr\ -\ Imgur.gif') 
         no-repeat center;
     background-size: cover;
+}
+
+img {
+    max-width: 100%;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.menu {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+.menu .navbar ul {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.menu .navbar ul li {
+    float: none;
+}
+
+.menu .navbar ul li.logo-item img,
+.menu .logo img {
+    height: 40px;
+    display: block;
+}
+
+
+.menu .navbar {
+    margin-left: 0;
+    margin-right: auto;
+    padding-left: 20px; 
+}
+
+.menu .navbar ul {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.menu .navbar ul li.logo-item {
+    margin-left: 10px;
+    padding-left: 0;
+}
+
+.logo {
+    color: #ff00c8;
+    margin-top: 20px;
+    font-size: 25px;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.menu .navbar ul li {
+    position: relative;
+    float: left;
+}
+
+.menu .navbar ul li a {
+    font-size: 18px;
+    padding: 20px;
+    color: #ffffff;
+    font-weight: 600;
+    display: block;
+}
+
+.menu .navbar ul li a:hover {
+    color: #ff00c8;
+}
+
+#menu {
+    display: none;
+}
+
+.menu-icono {
+    width: 25px;
+}
+
+.menu label {
+    cursor: pointer;
+    display: none;
 }
 
 .card-container {
