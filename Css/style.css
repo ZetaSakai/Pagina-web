@@ -191,13 +191,38 @@ h2 {
     grid-template-columns: repeat(3, 1fr);
     gap: 50px;
 }
-
 .product-1 {
     background-color: #2a223a;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.product-1 img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+.product-1:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 25px 60px rgba(0,0,0,0.7);
+}
+
+.product-1:hover img {
+    transform: scale(1.05);
 }
 
 .product-txt {
-    padding: 50px 30px;
+    padding: 22px 20px 26px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 
 h3 {
@@ -221,6 +246,26 @@ h3 {
     padding: 5px 25px;
     background-color: #ff00c8;
     margin-right: 0;
+}
+
+/* Botón dentro de cada tarjeta */
+.btr-2 {
+    padding: 8px 18px;
+    background: linear-gradient(90deg,#ff6ad1,#ff00c8);
+    color: #fff;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+@media (max-width: 991px) {
+    .product-1 img {
+        height: 160px;
+    }
+
+    .product-content {
+        gap: 30px;
+    }
 }
 
 .contact {
