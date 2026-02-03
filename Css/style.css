@@ -43,6 +43,41 @@ img {
     justify-content: space-between;
 }
 
+
+.menu .navbar ul {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.menu .navbar ul li {
+    float: none;
+}
+
+.menu .navbar ul li.logo-item img,
+.menu .logo img {
+    height: 40px;
+    display: block;
+}
+
+
+.menu .navbar {
+    margin-left: 0;
+    margin-right: auto;
+    padding-left: 20px; 
+}
+
+.menu .navbar ul {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.menu .navbar ul li.logo-item {
+    margin-left: 10px;
+    padding-left: 0;
+}
+
 .logo {
     color: #ff00c8;
     margin-top: 20px;
@@ -102,7 +137,7 @@ img {
 
 .header-txt p {
     font-size: 17px;
-    color: #e0e0e0;
+    color: #ffffff;
     margin-bottom: 45px;
     text-align: center;
 }
