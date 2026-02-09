@@ -64,5 +64,15 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     initRevealOnScroll();
+    // Close mobile menu when a nav link is clicked
+    const menuCheckbox = document.getElementById('menu');
+    const navLinks = document.querySelectorAll('.navbar ul li a');
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            if (menuCheckbox && menuCheckbox.checked) {
+                menuCheckbox.checked = false;
+            }
+        });
+    });
 });
 
