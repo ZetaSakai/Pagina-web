@@ -490,3 +490,22 @@ input {
         font-size: 34px;
     }
 }
+
+/* Ensure the services "cuadrados" remain visible on Informació page in mobile */
+@media (max-width: 991px) {
+    .popular-container.servicios {
+        display: block;
+        padding: 30px 20px;
+    }
+
+    .popular-content {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 24px;
+        margin: 20px 0 0 0;
+    }
+
+    .popular-card {
+        min-height: auto;
+    }
+}
