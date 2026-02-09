@@ -379,10 +379,6 @@ input {
         background: transparent;
     }
 
-    .menu .navbar ul li a:hover {
-        color: #1b1726;
-    }
-
     .menu .navbar ul li {
         width: 100%;
     }
@@ -491,7 +487,6 @@ input {
     }
 }
 
-/* Ensure the services "cuadrados" remain visible on Informació page in mobile */
 @media (max-width: 991px) {
     .popular-container.servicios {
         display: block;
