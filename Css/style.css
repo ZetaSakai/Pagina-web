@@ -197,7 +197,7 @@ h2 {
 .popular-content img {
     width: 150px;
     margin: 10px;
-    transition: transform 0.35s cubic-bezier(.2,.8,.2,1), filter 0.35s ease, box-shadow 0.35s ease;
+    transition: transform 0.12s cubic-bezier(.2,.8,.2,1), filter 0.12s ease, box-shadow 0.12s ease;
     will-change: transform, filter, box-shadow;
     cursor: pointer;
     border-radius: 6px;
@@ -226,7 +226,7 @@ h2 {
     border-radius: 14px;
     overflow: hidden;
     box-shadow: 0 10px 25px rgba(0,0,0,0.6);
-    transition: transform 0.35s ease, box-shadow 0.35s ease;
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
     display: flex;
     flex-direction: column;
 }
@@ -236,7 +236,7 @@ h2 {
     height: 200px;
     object-fit: cover;
     display: block;
-    transition: transform 0.45s ease, filter 0.45s ease;
+    transition: transform 0.12s ease, filter 0.12s ease;
     will-change: transform, filter;
 }
 
@@ -475,12 +475,12 @@ input {
 
     .navbar ul li a,
 .product-1 {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
     }
 
     .navbar ul li a,
 .product-1 {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
     }
 }
 

@@ -1,30 +1,5 @@
 document.addEventListener("DOMContentLoaded", function() {
 
-    const enlacesMenu = document.querySelectorAll(".navbar ul li a");
-
-    enlacesMenu.forEach(enlace => {
-        enlace.addEventListener("mouseenter", () => {
-            enlace.style.transform = "scale(1.15)";
-        });
-
-        enlace.addEventListener("mouseleave", () => {
-            enlace.style.transform = "scale(1)";
-        });
-    });
-
-    const productos = document.querySelectorAll(".product-1");
-
-    productos.forEach(producto => {
-        producto.addEventListener("mouseenter", () => {
-            producto.style.transform = "scale(1.05)";
-            producto.style.boxShadow = "0 10px 25px rgba(0,0,0,0.4)";
-        });
-
-        producto.addEventListener("mouseleave", () => {
-            producto.style.transform = "scale(1)";
-            producto.style.boxShadow = "none";
-        });
-    });
 
     function initRevealOnScroll() {
         const selectors = [
@@ -53,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 if (entry.isIntersecting) {
                     const el = entry.target;
                     const index = elements.indexOf(el);
-                    el.style.transitionDelay = (index >= 0 ? index * 70 : 0) + 'ms';
+                    el.style.transitionDelay = (index >= 0 ? index * 30 : 0) + 'ms';
                     el.classList.add('reveal');
                     obs.unobserve(el);
                 }
@@ -64,7 +39,6 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     initRevealOnScroll();
-    // Close mobile menu when a nav link is clicked
     const menuCheckbox = document.getElementById('menu');
     const navLinks = document.querySelectorAll('.navbar ul li a');
     navLinks.forEach(link => {
