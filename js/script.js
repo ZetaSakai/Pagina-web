@@ -27,8 +27,8 @@ document.addEventListener("DOMContentLoaded", function() {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     const el = entry.target;
-                    const index = elements.indexOf(el);
-                    el.style.transitionDelay = (index >= 0 ? index * 30 : 0) + 'ms';
+                    // Fijar delay en 30ms para todos los elementos
+                    el.style.transitionDelay = '30ms';
                     el.classList.add('reveal');
                     obs.unobserve(el);
                 }
