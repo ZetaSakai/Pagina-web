@@ -61,10 +61,14 @@ img {
     color: #ffffff;
     font-weight: 600;
     display: block;
+    transition: transform 0.16s cubic-bezier(.2,.8,.2,1), color 0.12s ease;
+    transform-origin: center;
+    will-change: transform, color;
 }
 
 .menu .navbar ul li a:hover {
     color: #FF5A2C;
+    transform: scale(1.08);
 }
 
 #menu {

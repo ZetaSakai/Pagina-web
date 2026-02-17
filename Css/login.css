@@ -48,6 +48,9 @@ menu .navbar ul {
 .menu .logo img {
     height: 40px;
     display: block;
+    transition: transform 0.18s cubic-bezier(.2,.8,.2,1);
+    transform-origin: center;
+    will-change: transform;
 }
 
 
@@ -92,8 +95,20 @@ menu .navbar ul {
     display: block;
 }
 
+.menu .navbar ul li a {
+    font-size: 18px;
+    padding: 20px;
+    color: #ffffff;
+    font-weight: 600;
+    display: block;
+    transition: transform 0.16s cubic-bezier(.2,.8,.2,1), color 0.12s ease;
+    transform-origin: center;
+    will-change: transform, color;
+}
+
 .menu .navbar ul li a:hover {
     color: #ff00c8;
+    transform: scale(1.08);
 }
 
 #menu {
