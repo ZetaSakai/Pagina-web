@@ -31,6 +31,7 @@ img {
 body {
     color: var(--text-color);
     background: var(--dark-color);
+    padding-top: 72px; /* leave space for fixed header */
 }
 .container {
     max-width: 1068px;
@@ -449,6 +450,9 @@ html::-webkit-scrollbar {
         margin: 0 auto;
         width: 90%;
     }
+    body {
+        padding-top: 64px;
+    }
     .nav {
         padding: 10px 0;
     }
@@ -519,6 +523,9 @@ html::-webkit-scrollbar {
     }
     p {
         font-size: 0.875rem;
+    }
+    body {
+        padding-top: 56px;
     }
     .download-links {
         grid-template-columns: 1fr;
