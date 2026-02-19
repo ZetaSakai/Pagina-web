@@ -8,9 +8,34 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="shortcut icon" href="img/fav.png" type="image/x-icon">
-        <link rel="stylesheet" href="css/style.css">
-        <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.0/css/boxicons.min.css">
         <link rel="stylesheet" href="/Css/estilojuegos.css">
+        <link rel="stylesheet" href="/css/style.css">
+        <style>
+            html { scroll-behavior: smooth; }
+            /* Local overrides to ensure the top navigation bar displays like Index.html */
+            header.header .menu {
+                position: absolute !important;
+                top: 0 !important;
+                left: 0 !important;
+                right: 0 !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: space-between !important;
+                width: auto !important;
+                height: auto !important;
+                background: transparent !important;
+                clip-path: none !important;
+                z-index: 1000 !important;
+            }
+            header.header .menu .navbar ul {
+                display: flex !important;
+                gap: 10px !important;
+                margin: 0 !important;
+            }
+            header.header .menu .logo img {
+                height: 40px !important;
+            }
+        </style>
     </head>
     <body>
         
@@ -18,10 +43,9 @@
             <div class="progress-bar" id="scroll-bar"></div>
         </div>
 
-        <header>
-            <div class="nav container">
+    <header class="header">
 
-                <div class="menu container">
+        <div class="menu container">
             <input type="checkbox" id="menu" />
             <label for="menu">
                 <img src="/img/menu.png" class="menu-icono" alt="menu">
@@ -38,8 +62,22 @@
             </nav>
         </div>
 
+        <div class="header-content container">
+            <div class="header-txt">
+                <h1>Descubre tu <span>juego</span> <br> favorito aqui </h1>
+                <p>
+                    Nosotros somos <strong>New Era Games</strong> una empresa dedicada a la creación de una página web
+                    especializada en videojuegos indie con el objetivo de <strong>facilitar el descubrimiento de nuevos juegos</strong> y
+                    dar visibilidad a desarrolladores independientes.
+                </p>
+                <div class="butons">
+                    <a href="#"></a>
+                    <a href="Informació.html" class="btn-1">Información</a>
+                    <a href="#juegos" class="btn-1">Juegos</a>
+                </div>
             </div>
-        </header>
+        </div>
+    </header>
 
         <div class="about container">
             <h2>About Game</h2>

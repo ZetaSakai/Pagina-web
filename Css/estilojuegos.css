@@ -38,14 +38,7 @@ body {
     margin: auto;
     width: 100%;
 }
-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background: var(--dark-color);
-    z-index: 2000;
-}
+
 
 .nav {
     display: flex;
