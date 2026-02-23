@@ -4,7 +4,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Download Page</title>
+        <title>Editor del juego</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="shortcut icon" href="img/fav.png" type="image/x-icon">
@@ -74,6 +74,24 @@
             }
             header.header .menu .navbar ul .nav-edit a:hover {
                 opacity: 0.95;
+            }
+            header.header .menu .nav-edit a.btn-exit {
+                display: inline-block;
+                padding: 10px 18px;
+                background: transparent;
+                color: #fff;
+                border-radius: 12px;
+                font-weight: 700;
+                text-decoration: none;
+                border: 1px solid rgba(255,255,255,0.12);
+                margin-left: 12px;
+                box-shadow: none;
+                transition: opacity .12s ease, transform .12s ease;
+                font-size: 0.95rem;
+            }
+            header.header .menu .nav-edit a.btn-exit:hover {
+                opacity: 0.92;
+                transform: translateY(-1px);
             }
             header.header .menu .logo img {
                 height: 40px !important;
@@ -172,6 +190,31 @@
                     justify-content: flex-start;
                 }
             }
+            /* Editor panel styles */
+            .editor-panel {
+                margin: 24px auto;
+                padding: 16px;
+                max-width: 1000px;
+                background: rgba(42,34,58,0.9);
+                color: #fff;
+                border-radius: 10px;
+                box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+            }
+            .editor-panel h2 { margin: 0 0 12px 0; font-size: 1.1rem; }
+            .editor-grid { display: grid; gap: 12px; grid-template-columns: 1fr 360px; align-items: start; }
+            .editor-field { display:flex; flex-direction:column; gap:6px; }
+            .editor-field input[type="text"], .editor-field textarea { padding:8px; border-radius:6px; border:1px solid rgba(255,255,255,0.08); background:#24192b; color:#fff; }
+            .editor-field label { font-size:0.9rem; color:rgba(255,255,255,0.85); }
+            .editor-actions { display:flex; gap:8px; margin-top:8px; }
+            .editor-actions button { padding:8px 12px; border-radius:8px; border:none; cursor:pointer; font-weight:600; }
+            .btn-save { background:linear-gradient(90deg,#37d67a,#1bbf6b); color:#072; }
+            .btn-reset { background:#444; color:#fff; }
+            .editor-preview { background:#201528; padding:10px; border-radius:8px; }
+            .editor-preview h4 { margin:0 0 8px 0; font-size:0.95rem; }
+            .editor-preview img { max-width:100%; border-radius:6px; display:block; margin-bottom:8px; }
+            @media (max-width: 880px) {
+                .editor-grid { grid-template-columns: 1fr; }
+            }
         </style>
     </head>
     <body>
@@ -197,7 +240,10 @@
                             src="/img/image__1_-removebg-preview (1) (1).png" alt="New Era Games logo"></a></li>
                 </ul>
             </nav>
-                <div class="nav-edit"><a href="editor.html">Editar juego</a></div>
+                <div class="nav-edit">
+                    <a href="editor.html" class="btn-edit">Guardar</a>
+                    <a href="#" id="exit-no-save" class="btn-exit">Salir sin guardar</a>
+                </div>
         </div>
 
         <div class="header-content container">
@@ -209,6 +255,7 @@
             </div>
         </div>
     </header>
+
 
         <div class="about container">
             <h2>About Game</h2>
@@ -326,6 +373,71 @@
             })();
         </script>
 
+    <script>
+        (function(){
+            var ids = {
+                headerBg: document.getElementById('header-bg'),
+                headerTitle: document.getElementById('header-title'),
+                headerSub: document.getElementById('header-sub'),
+                aboutDesc: document.getElementById('about-desc'),
+                shot1: document.getElementById('shot-1'),
+                shot2: document.getElementById('shot-2'),
+                shot3: document.getElementById('shot-3'),
+                linkAndroid: document.getElementById('link-android'),
+                linkIos: document.getElementById('link-ios'),
+                linkWindows: document.getElementById('link-windows'),
+                saveBtn: document.getElementById('save-changes'),
+                resetBtn: document.getElementById('reset-changes'),
+                exitBtn: document.getElementById('exit-no-save')
+            };
+
+            function apply(data){
+                if(!data) return;
+                if(data.headerBg){ document.querySelector('header.header').style.backgroundImage = 'url("'+data.headerBg+'")'; document.querySelector('header.header').style.backgroundSize='cover'; }
+                if(data.title !== undefined) { var h = document.querySelector('.header-txt h1'); if(h) h.textContent = data.title; }
+                if(data.sub !== undefined) { var p = document.querySelector('.header-txt p'); if(p) p.textContent = data.sub; }
+                if(data.about !== undefined){ var a = document.querySelector('.about p'); if(a) a.textContent = data.about; }
+                var shots = document.querySelectorAll('.screenshots-content img');
+                if(shots && shots.length){ if(data.shot1) shots[0].src = data.shot1; if(data.shot2) shots[1].src = data.shot2; if(data.shot3) shots[2].src = data.shot3; }
+                var dlinks = document.querySelectorAll('.download-links a');
+                if(dlinks && dlinks.length){ if(data.linkAndroid) dlinks[0].href = data.linkAndroid; if(data.linkIos) dlinks[1].href = data.linkIos; if(data.linkWindows) dlinks[2].href = data.linkWindows; }
+
+                // preview
+                if(document.getElementById('pv-header-title')) document.getElementById('pv-header-title').textContent = data.title || document.querySelector('.header-txt h1').textContent;
+                if(document.getElementById('pv-header-sub')) document.getElementById('pv-header-sub').textContent = data.sub || document.querySelector('.header-txt p').textContent;
+                if(document.getElementById('pv-about')) document.getElementById('pv-about').textContent = data.about || (document.querySelector('.about p') && document.querySelector('.about p').textContent);
+                if(document.getElementById('pv-shot-1') && data.shot1) document.getElementById('pv-shot-1').src = data.shot1;
+                if(document.getElementById('pv-shot-2') && data.shot2) document.getElementById('pv-shot-2').src = data.shot2;
+                if(document.getElementById('pv-shot-3') && data.shot3) document.getElementById('pv-shot-3').src = data.shot3;
+            }
+
+            function load(){ try{ return JSON.parse(localStorage.getItem('editorData')||'{}'); }catch(e){ return {}; } }
+            function populateForm(data){ if(!data) return; if(data.headerBg) ids.headerBg.value = data.headerBg; if(data.title) ids.headerTitle.value = data.title; if(data.sub) ids.headerSub.value = data.sub; if(data.about) ids.aboutDesc.value = data.about; if(data.shot1) ids.shot1.value = data.shot1; if(data.shot2) ids.shot2.value = data.shot2; if(data.shot3) ids.shot3.value = data.shot3; if(data.linkAndroid) ids.linkAndroid.value = data.linkAndroid; if(data.linkIos) ids.linkIos.value = data.linkIos; if(data.linkWindows) ids.linkWindows.value = data.linkWindows; }
+
+            function collect(){ return {
+                headerBg: ids.headerBg.value.trim(),
+                title: ids.headerTitle.value.trim(),
+                sub: ids.headerSub.value.trim(),
+                about: ids.aboutDesc.value.trim(),
+                shot1: ids.shot1.value.trim(),
+                shot2: ids.shot2.value.trim(),
+                shot3: ids.shot3.value.trim(),
+                linkAndroid: ids.linkAndroid.value.trim(),
+                linkIos: ids.linkIos.value.trim(),
+                linkWindows: ids.linkWindows.value.trim()
+            }; }
+
+            // initialize
+            var data = load();
+            populateForm(data);
+            apply(Object.keys(data).length?data:null);
+
+            ids.saveBtn.addEventListener('click', function(){ var d = collect(); localStorage.setItem('editorData', JSON.stringify(d)); apply(d); alert('Cambios guardados (en localStorage).'); });
+            ids.resetBtn.addEventListener('click', function(){ if(confirm('Restablecer los valores guardados?')){ localStorage.removeItem('editorData'); location.reload(); } });
+            if(ids.exitBtn) ids.exitBtn.addEventListener('click', function(e){ e.preventDefault(); window.location.href='Index.html'; });
+        })();
+    </script>
+
         <div class="download">
             <h2>Download Links</h2>
             <div class="download-links">
@@ -334,6 +446,59 @@
                 <a href="#">For Windows</a>
             </div>
         </div>
+
+    <!-- Editor panel moved to bottom -->
+    <div class="editor-panel container" id="editor-panel">
+        <h2>Editor de la página</h2>
+        <div class="editor-grid">
+            <div>
+                <div class="editor-field">
+                    <label for="header-bg">Imagen fondo del header (URL)</label>
+                    <input type="text" id="header-bg" placeholder="/img/mi-fondo.jpg">
+                </div>
+                <div class="editor-field">
+                    <label for="header-title">Título del juego</label>
+                    <input type="text" id="header-title" placeholder="Titulo del juego">
+                </div>
+                <div class="editor-field">
+                    <label for="header-sub">Subtítulo / parte de debajo</label>
+                    <input type="text" id="header-sub" placeholder="Lore del juego">
+                </div>
+                <div class="editor-field">
+                    <label for="about-desc">Descripción (About)</label>
+                    <textarea id="about-desc" rows="4" placeholder="Descripción del juego..."></textarea>
+                </div>
+                <div class="editor-field">
+                    <label>Capturas (URLs)</label>
+                    <input type="text" id="shot-1" placeholder="img/screenshots1.jpg">
+                    <input type="text" id="shot-2" placeholder="img/screenshots2.jpg">
+                    <input type="text" id="shot-3" placeholder="img/screenshots3.jpg">
+                </div>
+                <div class="editor-field">
+                    <label>Links de descarga</label>
+                    <input type="text" id="link-android" placeholder="https://play.google.com/...">
+                    <input type="text" id="link-ios" placeholder="https://apps.apple.com/...">
+                    <input type="text" id="link-windows" placeholder="https://...windows">
+                </div>
+                <div class="editor-actions">
+                    <button id="save-changes" class="btn-save">Guardar cambios</button>
+                    <button id="reset-changes" class="btn-reset">Restablecer</button>
+                </div>
+            </div>
+            <div class="editor-preview">
+                <h4>Previsualización rápida</h4>
+                <div style="margin-bottom:8px;"><strong>Header:</strong> <span id="pv-header-title">Titulo del juego</span></div>
+                <div style="margin-bottom:8px;"><strong>Subtítulo:</strong> <span id="pv-header-sub">Lore del juego</span></div>
+                <div style="margin-bottom:8px;"><strong>About:</strong> <div id="pv-about" style="margin-top:6px;color:rgba(255,255,255,0.9)">There are plenty of examples of this kind of game on moble devices...</div></div>
+                <div>
+                    <strong>Capturas:</strong>
+                    <img id="pv-shot-1" src="img/screenshots1.jpg" alt="shot1">
+                    <img id="pv-shot-2" src="img/screenshots2.jpg" alt="shot2">
+                    <img id="pv-shot-3" src="img/screenshots3.jpg" alt="shot3">
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="/js/swiper-bundle.min.js"></script>
 
