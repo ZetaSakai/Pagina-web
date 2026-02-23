@@ -190,7 +190,6 @@
                     justify-content: flex-start;
                 }
             }
-            /* Editor panel styles */
             .editor-panel {
                 margin: 24px auto;
                 padding: 16px;
@@ -402,7 +401,6 @@
                 var dlinks = document.querySelectorAll('.download-links a');
                 if(dlinks && dlinks.length){ if(data.linkAndroid) dlinks[0].href = data.linkAndroid; if(data.linkIos) dlinks[1].href = data.linkIos; if(data.linkWindows) dlinks[2].href = data.linkWindows; }
 
-                // preview
                 if(document.getElementById('pv-header-title')) document.getElementById('pv-header-title').textContent = data.title || document.querySelector('.header-txt h1').textContent;
                 if(document.getElementById('pv-header-sub')) document.getElementById('pv-header-sub').textContent = data.sub || document.querySelector('.header-txt p').textContent;
                 if(document.getElementById('pv-about')) document.getElementById('pv-about').textContent = data.about || (document.querySelector('.about p') && document.querySelector('.about p').textContent);
@@ -427,7 +425,6 @@
                 linkWindows: ids.linkWindows.value.trim()
             }; }
 
-            // initialize
             var data = load();
             populateForm(data);
             apply(Object.keys(data).length?data:null);
@@ -447,7 +444,6 @@
             </div>
         </div>
 
-    <!-- Editor panel moved to bottom -->
     <div class="editor-panel container" id="editor-panel">
         <h2>Editor de la página</h2>
         <div class="editor-grid">
