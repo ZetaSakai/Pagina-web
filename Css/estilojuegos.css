@@ -565,3 +565,20 @@ html::-webkit-scrollbar {
         font-size: 1.2rem;
     }
 }
+
+/* Remove underline/border and prevent size jumps on link hover (override) */
+.navbar a:hover,
+.menu .navbar ul li a:hover,
+.link ul li > a:hover,
+.download-links a:hover {
+    border-bottom: none !important;
+    text-decoration: none !important;
+    font-size: inherit !important;
+}
+
+/* Ensure nav links don't get larger on hover */
+.navbar a,
+.menu .navbar ul li a,
+.link ul li > a {
+    transition: color 0.2s ease; /* keep subtle color transition */
+}
