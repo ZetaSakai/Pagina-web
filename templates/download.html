@@ -12,7 +12,6 @@
         <link rel="stylesheet" href="/css/style.css">
         <style>
             html { scroll-behavior: smooth; }
-            /* Local overrides to ensure the top navigation bar displays like Index.html */
             header.header .menu {
                 position: absolute !important;
                 top: 0 !important;
@@ -34,6 +33,100 @@
             }
             header.header .menu .logo img {
                 height: 40px !important;
+            }
+            .comments {
+                margin: 30px auto;
+                padding: 18px;
+                max-width: 1000px;
+                background: #2a223a;
+                color: #ffffff;
+                border-radius: 12px;
+                box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+            }
+            .comments h3 {
+                margin: 0 0 14px 0;
+                font-size: 1.2rem;
+                color: #ffffff;
+                text-align: center;
+            }
+            .comments-grid {
+                display: grid;
+                grid-template-columns: 1fr;
+                grid-auto-rows: 1fr; /* make columns fill available height */
+                gap: 12px;
+                align-items: stretch;
+            }
+            .comments-list {
+                max-height: 320px;
+                overflow: auto;
+                padding-right: 6px;
+            }
+            .comment {
+                padding: 12px;
+                background: #3f3456;
+                border: 1px solid rgba(255,255,255,0.04);
+                border-radius: 8px;
+                margin-bottom: 10px;
+                color: #eae6f2;
+            }
+            .comment-meta {
+                font-size: 0.8rem;
+                color: rgba(255,255,255,0.65);
+                margin-top: 8px;
+            }
+            .comment-form {
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-end; /* anchor form controls to bottom */
+                gap: 8px;
+            }
+            .comment-form textarea {
+                width: 100%;
+                min-height: 80px;
+                padding: 10px;
+                margin-bottom: 8px;
+                border: 1px solid rgba(255,255,255,0.06);
+                background: #24192b;
+                color: #fff;
+                border-radius: 6px;
+                resize: vertical;
+                font-family: inherit;
+            }
+            .comment-form textarea::placeholder { color: rgba(255,255,255,0.45); }
+            .comment-form button {
+                background: linear-gradient(90deg,#ff6ad1,#ff00c8);
+                color: #fff;
+                border: none;
+                padding: 10px 14px;
+                border-radius: 8px;
+                cursor: pointer;
+                font-weight: 600;
+            }
+            @media (min-width: 768px) {
+                .comments-grid {
+                    grid-template-columns: 1fr 360px;
+                    grid-template-rows: 1fr auto; 
+                    grid-template-areas: "list ." "form form";
+                    grid-auto-rows: unset;
+                    min-height: 220px;
+                }
+                .comments-list { grid-area: list; }
+                .comment-form { grid-area: form; align-self: end; }
+                .comments {
+                    padding: 20px;
+                }
+                .comment-form button {
+                    width: 100%;
+                }
+            }
+
+            @media (max-width: 767px) {
+                .comments-grid {
+                    grid-template-columns: 1fr;
+                }
+                .comment-form {
+                    justify-content: flex-start;
+                }
             }
         </style>
     </head>
@@ -64,17 +157,10 @@
 
         <div class="header-content container">
             <div class="header-txt">
-                <h1>Descubre tu <span>juego</span> <br> favorito aqui </h1>
+                <h1>Titulo del juego</h1>
                 <p>
-                    Nosotros somos <strong>New Era Games</strong> una empresa dedicada a la creación de una página web
-                    especializada en videojuegos indie con el objetivo de <strong>facilitar el descubrimiento de nuevos juegos</strong> y
-                    dar visibilidad a desarrolladores independientes.
+                    Lore del juego
                 </p>
-                <div class="butons">
-                    <a href="#"></a>
-                    <a href="Informació.html" class="btn-1">Información</a>
-                    <a href="#juegos" class="btn-1">Juegos</a>
-                </div>
             </div>
         </div>
     </header>
@@ -93,6 +179,107 @@
                 <img src="img/screenshots3.jpg" alt="">
             </div>
         </div>
+
+        <div class="comments container">
+            <h3>Comentarios</h3>
+            <div class="comments-grid">
+                <div id="comments-list" class="comments-list"></div>
+                <form id="comment-form" class="comment-form">
+                    <textarea id="comment-text" placeholder="Escribe un comentario..." required></textarea>
+                    <div style="display:flex;gap:8px;align-items:center;">
+                        <button type="submit" id="comment-submit">Enviar</button>
+                        <button type="button" id="comment-cancel" style="display:none;background:#444;color:#fff;border-radius:8px;padding:10px 14px;border:none;cursor:pointer;">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <script>
+            (function(){
+                var list = document.getElementById('comments-list');
+                var form = document.getElementById('comment-form');
+                var textarea = document.getElementById('comment-text');
+                function escapeHtml(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+                var editIndex = null;
+                var submitBtn = document.getElementById('comment-submit');
+                var cancelBtn = document.getElementById('comment-cancel');
+
+                function render(){
+                    var arr = JSON.parse(localStorage.getItem('comments')||'[]');
+                    if(!arr.length){
+                        list.innerHTML = '<p>No hay comentarios aún. Sé el primero.</p>';
+                        return;
+                    }
+                    list.innerHTML = arr.map(function(c, i){
+                        var text = escapeHtml(c.text);
+                        var time = escapeHtml(c.time);
+                        return '<div class="comment">'
+                            + '<div class="comment-body">' + text + '</div>'
+                            + '<div class="comment-meta">' + time + '</div>'
+                            + '<div class="comment-actions" style="margin-top:8px;display:flex;gap:8px;">'
+                            + '<button class="btn-edit" data-index="' + i + '" style="background:transparent;border:1px solid rgba(255,255,255,0.08);color:rgba(255,255,255,0.9);padding:6px 10px;border-radius:6px;cursor:pointer;">Editar</button>'
+                            + '<button class="btn-delete" data-index="' + i + '" style="background:transparent;border:1px solid rgba(255,0,200,0.18);color:#ff9fe6;padding:6px 10px;border-radius:6px;cursor:pointer;">Borrar</button>'
+                            + '</div>'
+                        + '</div>';
+                    }).join('');
+                }
+
+                form.addEventListener('submit', function(e){
+                    e.preventDefault();
+                    var arr = JSON.parse(localStorage.getItem('comments')||'[]');
+                    var value = textarea.value && textarea.value.trim();
+                    if(!value) return;
+                    if(editIndex === null){
+                        arr.unshift({ text: value, time: new Date().toLocaleString() });
+                    } else {
+                        arr[editIndex].text = value;
+                        arr[editIndex].time = new Date().toLocaleString();
+                        editIndex = null;
+                        submitBtn.textContent = 'Enviar';
+                        cancelBtn.style.display = 'none';
+                    }
+                    localStorage.setItem('comments', JSON.stringify(arr));
+                    textarea.value = '';
+                    render();
+                });
+
+                list.addEventListener('click', function(e){
+                    var btn;
+                    if(e.target.closest('.btn-edit')) btn = e.target.closest('.btn-edit');
+                    if(e.target.closest('.btn-delete')) btn = e.target.closest('.btn-delete');
+                    if(!btn) return;
+                    var idx = parseInt(btn.getAttribute('data-index'), 10);
+                    var arr = JSON.parse(localStorage.getItem('comments')||'[]');
+                    if(btn.classList.contains('btn-delete')){
+                        if(!isNaN(idx)){
+                            arr.splice(idx, 1);
+                            localStorage.setItem('comments', JSON.stringify(arr));
+                            if(editIndex === idx){ editIndex = null; textarea.value=''; submitBtn.textContent='Enviar'; cancelBtn.style.display='none'; }
+                            render();
+                        }
+                        return;
+                    }
+                    if(btn.classList.contains('btn-edit')){
+                        if(!isNaN(idx) && arr[idx]){
+                            editIndex = idx;
+                            textarea.value = arr[idx].text;
+                            submitBtn.textContent = 'Guardar';
+                            cancelBtn.style.display = 'inline-block';
+
+                            textarea.scrollIntoView({behavior:'smooth',block:'center'});
+                        }
+                    }
+                });
+
+                cancelBtn.addEventListener('click', function(){
+                    editIndex = null;
+                    textarea.value = '';
+                    submitBtn.textContent = 'Enviar';
+                    cancelBtn.style.display = 'none';
+                });
+                render();
+            })();
+        </script>
 
         <div class="download">
             <h2>Download Links</h2>
