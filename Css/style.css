@@ -530,3 +530,35 @@ input {
         min-height: auto;
     }
 }
+
+/* Responsive: adapt menu button (top-left) size and position on small screens */
+@media (max-width: 991px) {
+    .menu label {
+        display: block !important;
+        z-index: 1200 !important;
+        position: absolute !important;
+        left: 12px !important;
+        top: 12px !important;
+        padding: 6px !important;
+        background: transparent !important;
+        border-radius: 8px !important;
+    }
+
+    /* Make the icon scale with viewport while keeping sensible min/max */
+    .menu-icono {
+        width: clamp(22px, 6vw, 40px) !important;
+        height: auto !important;
+        display: block !important;
+    }
+
+    /* Ensure menu content doesn't get hidden under the button */
+    .menu {
+        padding-top: 56px !important;
+    }
+
+    /* Slightly increase clickable area for the label */
+    .menu label img {
+        display: block !important;
+        pointer-events: none !important;
+    }
+}
