@@ -4,34 +4,550 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>New Era Games</title>
-    <meta name="description" content="">
+    <title>{{ game.title }} — New Era Games</title>
+    <meta name="description" content="{{ game.description }}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/css/style copy.css">
-    <link rel="icon" href="/img/1-17e21c9a.ico">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style copy.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='img/1-17e21c9a.ico') }}">
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .flash-messages {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 9999;
+            max-width: 400px;
+        }
+
+        .flash-msg {
+            padding: 12px 20px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 14px;
+            animation: fadeIn .3s ease;
+        }
+
+        .flash-msg.success {
+            background: #27ae60;
+        }
+
+        .flash-msg.danger {
+            background: #e74c3c;
+        }
+
+        .flash-msg.warning {
+            background: #f39c12;
+        }
+
+        .flash-msg.info {
+            background: #3498db;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Game detail styles */
+        .game-detail {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+            color: #fff;
+        }
+
+        .game-cover {
+            width: 100%;
+            max-height: 400px;
+            object-fit: cover;
+            border-radius: 16px;
+            margin-bottom: 24px;
+        }
+
+        .game-info h1 {
+            font-size: 2rem;
+            margin-bottom: 8px;
+        }
+
+        .game-info .categories {
+            color: #a78bfa;
+            font-size: 0.9rem;
+            margin-bottom: 16px;
+        }
+
+        .game-info .description {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: #ccc;
+            margin-bottom: 24px;
+        }
+
+        .game-creator {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 40px;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+        }
+
+        .game-creator img {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .game-creator .creator-name {
+            font-weight: 600;
+        }
+
+        /* Comments */
+        .comments-section {
+            max-width: 900px;
+            margin: 0 auto 60px;
+            padding: 0 20px;
+            color: #fff;
+        }
+
+        .comments-section h2 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 12px;
+        }
+
+        .comment-form textarea {
+            width: 100%;
+            min-height: 80px;
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            font-size: 0.95rem;
+            resize: vertical;
+            margin-bottom: 10px;
+        }
+
+        .comment-form button {
+            padding: 10px 28px;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #7c3aed, #a78bfa);
+            color: #fff;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .comment-form button:hover {
+            transform: scale(1.05);
+        }
+
+        .comment-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        .comment-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .comment-header img {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .comment-header .comment-user {
+            font-weight: 600;
+        }
+
+        .comment-header .comment-date {
+            font-size: 0.8rem;
+            color: #999;
+            margin-left: auto;
+        }
+
+        .comment-body {
+            line-height: 1.6;
+            color: #ddd;
+            margin-bottom: 10px;
+        }
+
+        .comment-actions {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .comment-actions form {
+            display: inline;
+        }
+
+        .like-btn,
+        .reply-toggle {
+            background: none;
+            border: none;
+            color: #a78bfa;
+            cursor: pointer;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .like-btn.liked {
+            color: #e74c3c;
+        }
+
+        .like-btn:hover,
+        .reply-toggle:hover {
+            text-decoration: underline;
+        }
+
+        .replies {
+            margin-left: 40px;
+            margin-top: 12px;
+        }
+
+        .reply-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 3px solid #7c3aed;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 10px;
+        }
+
+        .reply-form {
+            margin-top: 10px;
+            margin-left: 40px;
+        }
+
+        .reply-form textarea {
+            width: 100%;
+            min-height: 50px;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.03);
+            color: #fff;
+            font-size: 0.9rem;
+            resize: vertical;
+            margin-bottom: 6px;
+        }
+
+        .reply-form button {
+            padding: 6px 18px;
+            border: none;
+            border-radius: 6px;
+            background: #7c3aed;
+            color: #fff;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+
+        .no-comments {
+            color: #888;
+            font-style: italic;
+        }
+
+        .login-prompt {
+            color: #a78bfa;
+        }
+
+        .login-prompt a {
+            color: #fff;
+            text-decoration: underline;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Download & Favorite buttons */
+        .game-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 24px;
+        }
+
+        .btn-download {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 28px;
+            background: linear-gradient(90deg, #00c853, #00e676);
+            color: #fff;
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            text-decoration: none;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .btn-download:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 200, 83, 0.3);
+        }
+
+        .btn-fav-game {
+            padding: 12px 28px;
+            border: 2px solid #ff00c8;
+            background: transparent;
+            color: #ff00c8;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .btn-fav-game.favorited {
+            background: #ff00c8;
+            color: #fff;
+        }
+
+        .btn-fav-game:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 0, 200, 0.3);
+        }
+
+        .creator-link {
+            color: #a78bfa;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .creator-link:hover {
+            text-decoration: underline;
+            color: #ff00c8;
+        }
+
+        .role-badge {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-left: 8px;
+        }
+
+        .role-developer {
+            background: linear-gradient(90deg, #6a11cb, #2575fc);
+            color: #fff;
+        }
+
+        .role-admin {
+            background: linear-gradient(90deg, #ff0844, #ffb199);
+            color: #fff;
+        }
+    </style>
 </head>
 
 <body>
-    <header class="header">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <div class="flash-messages">
+        {% for category, message in messages %}
+        <div class="flash-msg {{ category }}">{{ message }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
 
+    <header class="header">
         <div class="menu container">
             <input type="checkbox" id="menu" />
             <label for="menu">
-                <img src="/img/menu.png" class="menu-icono" alt="menu">
+                <img src="{{ url_for('static', filename='img/menu.png') }}" class="menu-icono" alt="menu">
             </label>
             <nav class="navbar">
                 <ul>
-                    <li><a href="Index.html">Inicio</a></li>
-                    <li><a href="Informacio.html">Servicios</a></li>
-                    <li><a href="login.html">Iniciar sesión</a></li>
-                    <li><a href="contactos.html">Contacto</a></li>
-                    <li class="logo-item"><a href="#" class="logo"><img
-                                src="/img/image__1_-removebg-preview (1) (1).png" alt="New Era Games logo"></a></li>
+                    <li><a href="{{ url_for('index') }}">Inicio</a></li>
+                    <li><a href="{{ url_for('informacion') }}">Servicios</a></li>
+                    {% if current_user %}
+                    <li><a href="{{ url_for('publish') }}">Publicar Juego</a></li>
+                    <li><a href="{{ url_for('logout') }}">Cerrar sesión ({{ current_user.username }})</a></li>
+                    {% else %}
+                    <li><a href="{{ url_for('login') }}">Iniciar sesión</a></li>
+                    {% endif %}
+                    <li><a href="{{ url_for('contactos') }}">Contacto</a></li>
+                    <li class="logo-item"><a href="{{ url_for('index') }}" class="logo"><img
+                                src="{{ url_for('static', filename='img/image__1_-removebg-preview (1) (1).png') }}"
+                                alt="New Era Games logo"></a></li>
                 </ul>
             </nav>
         </div>
     </header>
-</body>
 
+    <!-- Game Detail -->
+    <div class="game-detail">
+        <img class="game-cover" src="{{ url_for('static', filename=game.cover) }}" alt="{{ game.title }}">
+        <div class="game-info">
+            <h1>{{ game.title }}</h1>
+            <p class="categories">{{ game.categories }}</p>
+            <p class="description">{{ game.description }}</p>
+        </div>
+        <div class="game-creator">
+            {% if game.creator_pic %}
+            <img src="{{ url_for('static', filename=game.creator_pic) }}" alt="{{ game.creator_name }}">
+            {% else %}
+            <img src="{{ url_for('static', filename='img/image__1_-removebg-preview (1) (1).png') }}" alt="default">
+            {% endif %}
+            <div>
+                {% if game.creator_slug %}
+                <a class="creator-link" href="{{ url_for('user_profile', username=game.creator_slug) }}">{{
+                    game.creator_name or 'Anónimo' }}</a>
+                {% else %}
+                <div class="creator-name">{{ game.creator_name or 'Anónimo' }}</div>
+                {% endif %}
+                {% if game.creator_role == 'developer' %}
+                <span class="role-badge role-developer">Developer</span>
+                {% elif game.creator_role == 'admin' %}
+                <span class="role-badge role-admin">Admin</span>
+                {% endif %}
+                <div style="font-size:0.85rem; color:#999;">Creador</div>
+            </div>
+        </div>
+
+        <!-- Download & Favorite -->
+        <div class="game-actions">
+            {% if game.game_file %}
+            <a href="{{ url_for('download_game_file', game_id=game.id) }}" class="btn-download">⬇ Descargar juego</a>
+            {% endif %}
+
+            {% if current_user %}
+            <form method="POST" action="{{ url_for('toggle_fav_game', game_id=game.id) }}" style="display:inline;">
+                <button type="submit" class="btn-fav-game {{ 'favorited' if is_favorited }}">
+                    {{ '★ Favorito' if is_favorited else '☆ Añadir a favoritos' }}
+                    ({{ game.fav_count }})
+                </button>
+            </form>
+            {% else %}
+            <span style="color:#888; font-size:0.9rem;">⭐ {{ game.fav_count }} favoritos</span>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Comments Section -->
+    <div class="comments-section">
+        <h2>Comentarios ({{ comments|length }})</h2>
+
+        {% if current_user %}
+        <form class="comment-form" method="POST" action="{{ url_for('post_comment', game_id=game.id) }}">
+            <textarea name="content" placeholder="Escribe un comentario..." required></textarea>
+            <button type="submit">Comentar</button>
+        </form>
+        {% else %}
+        <p class="login-prompt"><a href="{{ url_for('login') }}">Inicia sesión</a> para dejar un comentario.</p>
+        {% endif %}
+
+        <div style="margin-top: 24px;">
+            {% if comments %}
+            {% for comment in comments %}
+            <div class="comment-card">
+                <div class="comment-header">
+                    {% if comment.user_pic %}
+                    <img src="{{ url_for('static', filename=comment.user_pic) }}" alt="{{ comment.username }}">
+                    {% else %}
+                    <img src="{{ url_for('static', filename='img/image__1_-removebg-preview (1) (1).png') }}"
+                        alt="default">
+                    {% endif %}
+                    <span class="comment-user">{{ comment.username }}</span>
+                    <span class="comment-date">{{ comment.created_at.strftime('%d/%m/%Y %H:%M') }}</span>
+                </div>
+                <div class="comment-body">{{ comment.content }}</div>
+                <div class="comment-actions">
+                    {% if current_user %}
+                    <form method="POST" action="{{ url_for('like_comment', comment_id=comment.id) }}">
+                        <button type="submit" class="like-btn {{ 'liked' if comment.user_liked }}">
+                            ♥ {{ comment.like_count }}
+                        </button>
+                    </form>
+                    <button class="reply-toggle"
+                        onclick="document.getElementById('reply-form-{{ comment.id }}').classList.toggle('hidden')">
+                        ↩ Responder
+                    </button>
+                    {% else %}
+                    <span class="like-btn">♥ {{ comment.like_count }}</span>
+                    {% endif %}
+                </div>
+
+                <!-- Reply form (hidden by default) -->
+                {% if current_user %}
+                <div id="reply-form-{{ comment.id }}" class="reply-form hidden">
+                    <form method="POST" action="{{ url_for('reply_comment', comment_id=comment.id) }}">
+                        <textarea name="content" placeholder="Escribe una respuesta..." required></textarea>
+                        <button type="submit">Responder</button>
+                    </form>
+                </div>
+                {% endif %}
+
+                <!-- Replies -->
+                {% if comment.replies %}
+                <div class="replies">
+                    {% for reply in comment.replies %}
+                    <div class="reply-card">
+                        <div class="comment-header">
+                            {% if reply.user_pic %}
+                            <img src="{{ url_for('static', filename=reply.user_pic) }}" alt="{{ reply.username }}">
+                            {% else %}
+                            <img src="{{ url_for('static', filename='img/image__1_-removebg-preview (1) (1).png') }}"
+                                alt="default">
+                            {% endif %}
+                            <span class="comment-user">{{ reply.username }}</span>
+                            <span class="comment-date">{{ reply.created_at.strftime('%d/%m/%Y %H:%M') }}</span>
+                        </div>
+                        <div class="comment-body">{{ reply.content }}</div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+            {% else %}
+            <p class="no-comments">Aún no hay comentarios. ¡Sé el primero!</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script>
+        document.querySelectorAll('.reply-toggle').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const target = btn.closest('.comment-card').querySelector('.reply-form');
+                if (target) target.classList.toggle('hidden');
+            });
+        });
+        setTimeout(() => {
+            document.querySelectorAll('.flash-msg').forEach(el => el.style.display = 'none');
+        }, 4000);
+    </script>
+</body>
 
 </html>

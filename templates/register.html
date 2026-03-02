@@ -1,29 +1,75 @@
 <!DOCTYPE html>
 
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Registrarse</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="/css/register.css">
-        <link rel="icon" href="/img/1-17e21c9a.ico">
-    </head>
-    <body>
-        <div class="bg-container">
-            <div class="btn glass-effect">
-                <a href="../templates/index.html">Volver al Inicio</a>
-            </div>
-            <div class="card-container glass-effect">
-                <h1>Registrate!</h1>
-                <input class="sign" type="text" name="nombre" id="nombre" placeholder="Nombre Completo">
-                <input class="sign" type="text" name="Nombre de Usuario" id="Nombre de Usuario" placeholder="Nombre de Usuario">
-                <input class="sign" type="text" name="email" id="email" placeholder="Email">
-                <input class="sign" type="password" name="passwd" id="passwd" placeholder="Contraseña">
-                <input class="glass-effect button" type="submit" value="Registrarse">
-                <p><a class="anim-link pulse" href="../templates/login.html">Ya tengo una cuenta :D</a></p> 
-            </div>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Registrarse</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/register.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='img/1-17e21c9a.ico') }}">
+    <style>
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            text-align: center;
+            font-family: sans-serif;
+        }
+
+        .alert-success {
+            color: #155724;
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+        }
+
+        .alert-danger {
+            color: #721c24;
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+        }
+
+        .alert-warning {
+            color: #856404;
+            background-color: #fff3cd;
+            border-color: #ffeeba;
+        }
+
+        .alert-info {
+            color: #0c5460;
+            background-color: #d1ecf1;
+            border-color: #bee5eb;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="flash-container"
+        style="position: absolute; top: 20px; width: 100%; z-index: 999; display: flex; flex-direction: column; align-items: center;">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }}" style="width: 80%; max-width: 400px;">{{ message }}</div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+    </div>
+
+    <div class="bg-container">
+        <div class="btn glass-effect">
+            <a href="{{ url_for('index') }}">Volver al Inicio</a>
         </div>
-    </body>
+        <form method="POST" action="{{ url_for('register') }}" class="card-container glass-effect">
+            <h1>Registrate!</h1>
+            <input class="sign" type="text" name="username" id="username" placeholder="Nombre de Usuario" required>
+            <input class="sign" type="email" name="email" id="email" placeholder="Email" required>
+            <input class="sign" type="password" name="passwd" id="passwd" placeholder="Contraseña" required>
+            <input class="glass-effect button" type="submit" value="Registrarse">
+            <p><a class="anim-link pulse" href="{{ url_for('login') }}">Ya tengo una cuenta :D</a></p>
+        </form>
+    </div>
+</body>
+
 </html>

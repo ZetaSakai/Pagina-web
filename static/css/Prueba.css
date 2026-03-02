@@ -23,7 +23,7 @@ img {
 }
 
 .header {
-    background-image: url(/img/bg.jpg);
+    background-image: url(../img/bg.jpg);
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -61,7 +61,7 @@ img {
     color: #ffffff;
     font-weight: 600;
     display: block;
-    transition: transform 0.16s cubic-bezier(.2,.8,.2,1), color 0.12s ease;
+    transition: transform 0.16s cubic-bezier(.2, .8, .2, 1), color 0.12s ease;
     transform-origin: center;
     will-change: transform, color;
 }
@@ -113,7 +113,9 @@ img {
     display: flex;
 }
 
-.btn-1, .btn-2, .btn-3 {
+.btn-1,
+.btn-2,
+.btn-3 {
     display: inline-block;
     padding: 11px 35px;
     border: 2px solid #FF5A2C;
@@ -236,13 +238,13 @@ input {
     display: flex;
 }
 
-.link ul li > a {
+.link ul li>a {
     font-size: 17px;
     color: #ffffff;
     margin-right: 20px;
 }
 
-.link ul li > a:hover {
+.link ul li>a:hover {
     color: #FF5A2C;
 }
 
@@ -273,7 +275,7 @@ input {
         width: 100%;
     }
 
-    #menu:checked ~ .navbar {
+    #menu:checked~.navbar {
         display: initial;
     }
 

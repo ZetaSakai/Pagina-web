@@ -23,7 +23,7 @@ img {
 }
 
 .header {
-    background-image: url(/img/9QiNexr\ -\ Imgur.gif);
+    background-image: url(../img/4cc5b305e289491590fa85af043561bd.gif);
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -42,9 +42,6 @@ img {
     align-items: center;
     justify-content: space-between;
 }
-.menu {
-    z-index: 1000;
-}
 
 
 .menu .navbar ul {
@@ -61,13 +58,16 @@ img {
 .menu .logo img {
     height: 40px;
     display: block;
+    transition: transform 0.18s cubic-bezier(.2, .8, .2, 1);
+    transform-origin: center;
+    will-change: transform;
 }
 
 
 .menu .navbar {
     margin-left: 0;
     margin-right: auto;
-    padding-left: 20px; 
+    padding-left: 20px;
 }
 
 .menu .navbar ul {
@@ -97,9 +97,6 @@ img {
     display: block;
     height: 40px;
     margin-top: -2px;
-    transition: transform 0.18s cubic-bezier(.2,.8,.2,1);
-    transform-origin: center;
-    will-change: transform;
 }
 
 .menu .navbar ul li {
@@ -113,7 +110,15 @@ img {
     color: #ffffff;
     font-weight: 600;
     display: block;
-    transition: transform 0.16s cubic-bezier(.2,.8,.2,1), color 0.12s ease;
+}
+
+.menu .navbar ul li a {
+    font-size: 18px;
+    padding: 20px;
+    color: #ffffff;
+    font-weight: 600;
+    display: block;
+    transition: transform 0.16s cubic-bezier(.2, .8, .2, 1), color 0.12s ease;
     transform-origin: center;
     will-change: transform, color;
 }
@@ -148,7 +153,7 @@ img {
     font-size: 60px;
     color: #ffffff;
     line-height: 1.3;
-    margin-bottom: 25px;   
+    margin-bottom: 25px;
 }
 
 .header-txt span {
@@ -166,7 +171,9 @@ img {
     display: flex;
 }
 
-.btn-1, .btn-2, .btn-3 {
+.btn-1,
+.btn-2,
+.btn-3 {
     display: inline-block;
     padding: 11px 35px;
     border: 2px solid #ff00c8;
@@ -204,23 +211,6 @@ h2 {
 .popular-content img {
     width: 150px;
     margin: 10px;
-    transition: transform 0.12s cubic-bezier(.2,.8,.2,1), filter 0.12s ease, box-shadow 0.12s ease;
-    will-change: transform, filter, box-shadow;
-    cursor: pointer;
-    border-radius: 6px;
-}
-
-.popular-content img:hover,
-.popular-content img:focus {
-    transform: translateY(-8px) scale(1.06);
-    filter: brightness(1.05) saturate(1.08);
-    box-shadow: 0 18px 30px rgba(0,0,0,0.6);
-    outline: none;
-}
-
-.popular-content img:focus {
-    outline: 3px solid rgba(255,0,200,0.12);
-    outline-offset: 6px;
 }
 
 .product-content {
@@ -228,12 +218,13 @@ h2 {
     grid-template-columns: repeat(3, 1fr);
     gap: 50px;
 }
+
 .product-1 {
     background-color: #2a223a;
     border-radius: 14px;
     overflow: hidden;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.6);
-    transition: transform 0.12s ease, box-shadow 0.12s ease;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
     display: flex;
     flex-direction: column;
 }
@@ -243,18 +234,16 @@ h2 {
     height: 200px;
     object-fit: cover;
     display: block;
-    transition: transform 0.12s ease, filter 0.12s ease;
-    will-change: transform, filter;
+    transition: transform 0.5s ease;
 }
 
 .product-1:hover {
     transform: translateY(-10px);
-    box-shadow: 0 25px 60px rgba(0,0,0,0.7);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7);
 }
 
 .product-1:hover img {
     transform: scale(1.05);
-    filter: brightness(1.03) saturate(1.04);
 }
 
 .product-txt {
@@ -289,7 +278,7 @@ h3 {
 
 .btr-2 {
     padding: 8px 18px;
-    background: linear-gradient(90deg,#ff6ad1,#ff00c8);
+    background: linear-gradient(90deg, #ff6ad1, #ff00c8);
     color: #fff;
     border-radius: 20px;
     text-decoration: none;
@@ -356,13 +345,13 @@ input {
     display: flex;
 }
 
-.link ul li > a {
+.link ul li>a {
     font-size: 17px;
     color: #ffffff;
     margin-right: 20px;
 }
 
-.link ul li > a:hover {
+.link ul li>a:hover {
     color: #ff00c8;
 }
 
@@ -373,8 +362,7 @@ input {
     }
 
     .menu label {
-        display: block;
-        z-index: 1100;
+        display: initial;
     }
 
     .menu .navbar {
@@ -382,41 +370,25 @@ input {
         top: 100%;
         left: 0;
         right: 0;
-        background-color: rgba(27,17,38,0.9);
+        background-color: #ff00c8;
         display: none;
-        padding: 12px 16px;
-        box-shadow: 0 6px 20px rgba(0,0,0,0.45);
-    }
-
-    .menu .navbar ul {
-        display: flex;
-        flex-direction: column;
-        gap: 6px;
-    }
-
-    .menu .navbar ul li a {
-        padding: 10px 12px;
-        color: #ffffff;
-        display: block;
     }
 
     .menu .navbar ul li a:hover {
-        color: #ff00c8;
-        background: transparent;
+        color: #1b1726;
     }
 
     .menu .navbar ul li {
         width: 100%;
     }
 
-    #menu:checked ~ .navbar {
-        display: block;
+    #menu:checked~.navbar {
+        display: initial;
     }
 
-    .header{
+    .header {
         min-height: 0vh;
         padding: 80px 30px 50px 30px;
-        padding-top: 120px;
     }
 
     .header-txt {
@@ -445,8 +417,8 @@ input {
         padding: 30px;
     }
 
-    .product-content{
-        grid-template-columns: repeat(1,1fr);
+    .product-content {
+        grid-template-columns: repeat(1, 1fr);
         gap: 30px;
     }
 
@@ -473,60 +445,20 @@ input {
 
     .link ul {
         margin-top: 20px;
-        
+
     }
 
     .navbar ul li a {
-    display: inline-block;
+        display: inline-block;
     }
 
     .navbar ul li a,
-.product-1 {
-    transition: transform 0.12s ease, box-shadow 0.12s ease;
+    .product-1 {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
     .navbar ul li a,
-.product-1 {
-    transition: transform 0.12s ease, box-shadow 0.12s ease;
-    }
-}
-
-.reveal-on-scroll {
-    opacity: 0;
-    transform: translateY(22px) scale(0.995);
-    transition: opacity 600ms cubic-bezier(.2,.9,.2,1), transform 600ms cubic-bezier(.2,.9,.2,1);
-    will-change: opacity, transform;
-}
-
-.reveal-on-scroll.reveal {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-}
-
-.popular-content img.reveal-on-scroll {
-    transform-origin: center;
-}
-
-@media (max-width: 600px) {
-    .header-txt h1 {
-        font-size: 34px;
-    }
-}
-
-@media (max-width: 991px) {
-    .popular-container.servicios {
-        display: block;
-        padding: 30px 20px;
-    }
-
-    .popular-content {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 24px;
-        margin: 20px 0 0 0;
-    }
-
-    .popular-card {
-        min-height: auto;
+    .product-1 {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 }

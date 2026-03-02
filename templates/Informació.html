@@ -4,29 +4,34 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>New Era Games</title>
+    <title>New Era Games - Servicios</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/css/informacion.css">
-    <link rel="icon" href="/img/1-17e21c9a.ico">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/informacion.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='img/1-17e21c9a.ico') }}">
 </head>
 
 <body>
     <header class="header">
-
         <div class="menu container">
             <input type="checkbox" id="menu" />
             <label for="menu">
-                <img src="/img/menu.png" class="menu-icono" alt="menu">
+                <img src="{{ url_for('static', filename='img/menu.png') }}" class="menu-icono" alt="menu">
             </label>
             <nav class="navbar">
                 <ul>
-                    <li><a href="Index.html">Inicio</a></li>
-                    <li><a href="Informació.html">Servicios</a></li>
-                    <li><a href="login.html">Iniciar sesión</a></li>
-                    <li><a href="contactos.html">Contacto</a></li>
-                    <li class="logo-item"><a href="#" class="logo"><img
-                                src="/img/image__1_-removebg-preview (1) (1).png" alt="New Era Games logo"></a></li>
+                    <li><a href="{{ url_for('index') }}">Inicio</a></li>
+                    <li><a href="{{ url_for('informacion') }}">Servicios</a></li>
+                    {% if current_user %}
+                    <li><a href="{{ url_for('publish') }}">Publicar Juego</a></li>
+                    <li><a href="{{ url_for('logout') }}">Cerrar sesión</a></li>
+                    {% else %}
+                    <li><a href="{{ url_for('login') }}">Iniciar sesión</a></li>
+                    {% endif %}
+                    <li><a href="{{ url_for('contactos') }}">Contacto</a></li>
+                    <li class="logo-item"><a href="{{ url_for('index') }}" class="logo"><img
+                                src="{{ url_for('static', filename='img/image__1_-removebg-preview (1) (1).png') }}"
+                                alt="New Era Games logo"></a></li>
                 </ul>
             </nav>
         </div>
@@ -35,14 +40,16 @@
             <div class="header-txt">
                 <h1>Nuestros <span>Servicios</span></h1>
                 <p>
-                    En <strong>New Era Games</strong>, nos enorgullece ofrecer una amplia gama de servicios para <strong>satisfacer las
-                    necesidades</strong> de nuestros clientes. Nuestro equipo de expertos está dedicado a brindar soluciones
+                    En <strong>New Era Games</strong>, nos enorgullece ofrecer una amplia gama de servicios para
+                    <strong>satisfacer las
+                        necesidades</strong> de nuestros clientes. Nuestro equipo de expertos está dedicado a brindar
+                    soluciones
                     personalizadas y de alta calidad en el mundo de los videojuegos.
                 </p>
                 <div class="butons">
                     <a href="#"></a>
-                    <a href="Index.html" class="btn-1">Inicio</a>
-                    <a href="Index.html#juegos" class="btn-1">Juegos</a>
+                    <a href="{{ url_for('index') }}" class="btn-1">Inicio</a>
+                    <a href="{{ url_for('index') }}#juegos" class="btn-1">Juegos</a>
                 </div>
             </div>
         </div>
@@ -53,28 +60,35 @@
         <div class="popular-content">
             <div class="popular-card">
                 <h3>Visibilidad</h3>
-                <p>Ofrecemos <strong>servicios de visibilidad</strong> para ayudar a nuestros clientes a destacar en el mercado de los videojuegos. Proporcionandoles estrategias efectivas de promoción y posicionamiento en línea.</p>
+                <p>Ofrecemos <strong>servicios de visibilidad</strong> para ayudar a nuestros clientes a destacar en el
+                    mercado de los videojuegos. Proporcionándoles estrategias efectivas de promoción y posicionamiento
+                    en línea.</p>
             </div>
             <div class="popular-card">
                 <h3>Interactividad</h3>
-                <p>Ofrecemos <strong>servicios de interactividad</strong> para mejorar la experiencia del jugador en nuestros juegos. Nuestro equipo de expertos en interactividad se asegura de que cada juego sea atractivo, intuitivo y entretenido para los usuarios.</p>
+                <p>Ofrecemos <strong>servicios de interactividad</strong> para mejorar la experiencia del jugador en
+                    nuestros juegos. Nuestro equipo de expertos se asegura de que cada juego sea atractivo y
+                    entretenido.</p>
             </div>
             <div class="popular-card">
-                <h3>Descubrir</h3>
-                <p>Facilitamos el descubrimiento de <strong>nuevos juegos y contenido</strong> para nuestros clientes, ayudándoles a encontrar oportunidades únicas en el mercado de los videojuegos.</p>
+                <h3>Descubrimiento</h3>
+                <p>Facilitamos el descubrimiento de <strong>nuevos juegos y contenido</strong> para nuestros clientes,
+                    ayudándoles a encontrar oportunidades únicas en el mercado.</p>
             </div>
             <div class="popular-card">
                 <h3>Comunidad</h3>
-                <p>Hacemos que nuestros clientes puedan tener una <strong>comunidad activa y comprometida</strong> con sus juegos, fomentando la interacción y el engagement entre los jugadores.</p>
+                <p>Hacemos que nuestros clientes puedan crear una <strong>comunidad activa y comprometida</strong> con
+                    sus juegos, fomentando la interacción y el engagement entre jugadores.</p>
             </div>
             <div class="popular-card">
                 <h3>Desarrollo</h3>
-                <p>Ofrecemos <strong>servicios de desarrollo</strong> para ayudar a nuestros clientes a crear juegos innovadores y de alta calidad. Nuestro equipo de expertos en desarrollo se asegura de que cada proyecto cumpla con los más altos estándares de calidad y funcionalidad.</p>
+                <p>Ofrecemos <strong>servicios de desarrollo</strong> para crear juegos innovadores y de alta calidad
+                    que cumplan con los más altos estándares.</p>
             </div>
         </div>
     </section>
 
-    <script src="/js/script.js"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 
 </html>

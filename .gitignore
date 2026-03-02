@@ -1,0 +1,9 @@
+# MySQL data (no debe estar en el repositorio)
+mysql_data/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Variables de entorno
+.env

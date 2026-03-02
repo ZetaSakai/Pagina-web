@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Editor del juego - New Era Games</title>
+    <title>Ajustes — New Era Games</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="{{ url_for('static', filename='img/fav.png') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/estilojuegos.css') }}">
@@ -14,10 +14,8 @@
             scroll-behavior: smooth;
         }
 
-        /* Fix extra spacing from global header styles */
         body {
             padding-top: 0 !important;
-            /* Override estilojuegos.css body padding */
         }
 
         header.header {
@@ -41,41 +39,65 @@
             header.header .menu {
                 padding: 20px;
             }
-
-            .editor-panel {
-                margin: 20px auto 40px auto;
-            }
         }
 
-        .editor-panel {
+        .settings-panel {
+            max-width: 600px;
             margin: 40px auto 60px auto;
-            padding: 30px;
-            max-width: 800px;
+            padding: 40px;
             background: rgba(42, 34, 58, 0.95);
             color: #fff;
-            border-radius: 12px;
+            border-radius: 16px;
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
-            position: relative;
-            z-index: 10;
         }
 
-        .editor-panel h2 {
+        .settings-panel h2 {
             margin-top: 0;
             font-size: 1.8rem;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
             text-align: center;
         }
 
-        .editor-field {
+        .current-avatar {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .current-avatar img,
+        .current-avatar .avatar-placeholder {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #ff00c8;
+            margin-bottom: 10px;
+        }
+
+        .avatar-placeholder {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: #ff00c8;
+            background: #24192b;
+        }
+
+        .settings-field {
             display: flex;
             flex-direction: column;
             gap: 8px;
             margin-bottom: 20px;
         }
 
-        .editor-field input[type="text"],
-        .editor-field textarea,
-        .editor-field input[type="file"] {
+        .settings-field label {
+            font-size: 1rem;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .settings-field input[type="file"] {
             padding: 12px;
             border-radius: 8px;
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -84,20 +106,10 @@
             font-size: 1rem;
         }
 
-        .editor-field label {
-            font-size: 1rem;
-            font-weight: 500;
-            color: rgba(255, 255, 255, 0.9);
-        }
-
-        .editor-actions {
-            display: flex;
-            justify-content: center;
-            margin-top: 30px;
-        }
-
         .btn-save {
-            padding: 14px 40px;
+            display: block;
+            width: 100%;
+            padding: 14px;
             background: linear-gradient(90deg, #ff6ad1, #ff00c8);
             border-radius: 12px;
             border: none;
@@ -107,6 +119,7 @@
             font-size: 1.1rem;
             box-shadow: 0 8px 20px rgba(255, 0, 160, 0.2);
             transition: transform 0.2s;
+            margin-top: 20px;
         }
 
         .btn-save:hover {
@@ -118,25 +131,63 @@
             margin-bottom: 20px;
             border-radius: 4px;
             text-align: center;
-            font-family: sans-serif;
         }
 
         .alert-success {
             color: #155724;
             background-color: #d4edda;
-            border-color: #c3e6cb;
         }
 
         .alert-danger {
             color: #721c24;
             background-color: #f8d7da;
-            border-color: #f5c6cb;
         }
 
         .alert-warning {
             color: #856404;
             background-color: #fff3cd;
-            border-color: #ffeeba;
+        }
+
+        .profile-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .profile-link a {
+            color: #ff00c8;
+            font-weight: 600;
+        }
+
+        .user-info {
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .user-info .role-badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .role-standard {
+            background: #3f3456;
+            color: #aaa;
+        }
+
+        .role-developer {
+            background: linear-gradient(90deg, #6a11cb, #2575fc);
+            color: #fff;
+        }
+
+        .role-admin {
+            background: linear-gradient(90deg, #ff0844, #ffb199);
+            color: #fff;
         }
     </style>
 </head>
@@ -152,8 +203,13 @@
                 <ul>
                     <li><a href="{{ url_for('index') }}">Inicio</a></li>
                     <li><a href="{{ url_for('informacion') }}">Servicios</a></li>
-                    <li><a href="{{ url_for('index') }}">Juegos</a></li>
+                    {% if current_user %}
+                    <li><a href="{{ url_for('publish') }}">Publicar Juego</a></li>
+                    <li><a href="{{ url_for('user_profile', username=current_user.username) }}">Mi Perfil</a></li>
                     <li><a href="{{ url_for('logout') }}">Cerrar sesión</a></li>
+                    {% else %}
+                    <li><a href="{{ url_for('login') }}">Iniciar sesión</a></li>
+                    {% endif %}
                     <li><a href="{{ url_for('contactos') }}">Contacto</a></li>
                     <li class="logo-item"><a href="{{ url_for('index') }}" class="logo"><img
                                 src="{{ url_for('static', filename='img/image__1_-removebg-preview (1) (1).png') }}"
@@ -163,8 +219,8 @@
         </div>
     </header>
 
-    <div class="editor-panel container">
-        <h2>Publicar un Nuevo Juego</h2>
+    <div class="settings-panel container">
+        <h2>⚙️ Ajustes de Perfil</h2>
 
         {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
@@ -174,37 +230,35 @@
         {% endif %}
         {% endwith %}
 
-        <form method="POST" action="{{ url_for('publish') }}" enctype="multipart/form-data">
-            <div class="editor-field">
-                <label for="title">Título del juego</label>
-                <input type="text" name="title" id="title" placeholder="Ej: Mi Gran Aventura" required>
+        <div class="current-avatar">
+            {% if current_user and current_user.pic %}
+            <img src="{{ url_for('static', filename=current_user.pic) }}" alt="Tu avatar">
+            {% else %}
+            <div class="avatar-placeholder">
+                {{ current_user.username[0]|upper if current_user else '?' }}
             </div>
+            {% endif %}
+            {% if current_user %}
+            <div class="user-info">
+                <strong>{{ current_user.username }}</strong>
+                <span class="role-badge role-{{ current_user.role }}">{{ current_user.role }}</span>
+            </div>
+            {% endif %}
+        </div>
 
-            <div class="editor-field">
-                <label for="categories">Categorías (separadas por comas)</label>
-                <input type="text" name="categories" id="categories" placeholder="Ej: RPG, Acción, Aventura" required>
+        <form method="POST" action="{{ url_for('settings') }}" enctype="multipart/form-data">
+            <div class="settings-field">
+                <label for="avatar">Cambiar foto de perfil</label>
+                <input type="file" name="avatar" id="avatar" accept="image/*">
             </div>
-
-            <div class="editor-field">
-                <label for="description">Descripción general</label>
-                <textarea name="description" id="description" rows="6"
-                    placeholder="Describe la historia y jugabilidad..." required></textarea>
-            </div>
-
-            <div class="editor-field">
-                <label for="cover">Imagen de Portada</label>
-                <input type="file" name="cover" id="cover" accept="image/*" required>
-            </div>
-
-            <div class="editor-field">
-                <label for="game_file">Archivo del Juego (.zip, .rar, .exe)</label>
-                <input type="file" name="game_file" id="game_file" accept=".zip,.rar,.exe,.7z">
-            </div>
-
-            <div class="editor-actions">
-                <button type="submit" class="btn-save">Publicar Juego</button>
-            </div>
+            <button type="submit" class="btn-save">Guardar cambios</button>
         </form>
+
+        {% if current_user %}
+        <div class="profile-link">
+            <a href="{{ url_for('user_profile', username=current_user.username) }}">→ Ver mi perfil público</a>
+        </div>
+        {% endif %}
     </div>
 </body>
 

@@ -1,203 +1,247 @@
 <!DOCTYPE html>
 
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Download Page</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="shortcut icon" href="img/fav.png" type="image/x-icon">
-        <link rel="stylesheet" href="/Css/estilojuegos.css">
-        <link rel="stylesheet" href="/css/style.css">
-        <style>
-            html { scroll-behavior: smooth; }
-            header.header .menu {
-                position: absolute !important;
-                top: 0 !important;
-                left: 0 !important;
-                right: 0 !important;
-                display: flex !important;
-                align-items: center !important;
-                justify-content: space-between !important;
-                width: auto !important;
-                height: auto !important;
-                background: transparent !important;
-                clip-path: none !important;
-                z-index: 1000 !important;
-            }
-            header.header .menu .navbar ul {
-                display: flex !important;
-                gap: 18px !important;
-                margin: 0 !important;
-                align-items: center !important;
-                width: 100% !important;
-            }
-            header.header .menu .navbar ul .logo-item {
-                margin: 0 auto !important;
-                position: static !important;
-                transform: none !important;
-            }
-            header.header .menu .nav-edit {
-                position: absolute !important;
-                right: 18px !important;
-                top: 50% !important;
-                transform: translateY(-50%) !important;
-                z-index: 1010 !important;
-            }
-            header.header .menu .nav-edit a {
-                display: inline-block;
-                padding: 10px 18px;
-                background: linear-gradient(90deg,#ff6ad1,#ff00c8);
-                color: #fff;
-                border-radius: 12px;
-                font-weight: 700;
-                text-decoration: none;
-                box-shadow: 0 8px 20px rgba(255,0,160,0.12);
-                transition: transform .12s ease, opacity .12s ease;
-                font-size: 0.95rem;
-            }
-            header.header .menu .nav-edit a:hover {
-                transform: translateY(-2px);
-                opacity: 0.98;
-            }
-            header.header .menu .navbar ul .nav-edit a {
-                display: inline-block;
-                padding: 10px 18px;
-                background: linear-gradient(90deg,#ff4cc8,#ff00c8);
-                color: #fff;
-                border-radius: 12px;
-                font-weight: 700;
-                text-decoration: none;
-                border: none;
-                box-shadow: 0 6px 18px rgba(255,0,160,0.12);
-            }
-            header.header .menu .navbar ul .nav-edit a:hover {
-                opacity: 0.95;
-            }
-            header.header .menu .logo img {
-                height: 40px !important;
-            }
-            .comments {
-                margin: 30px auto;
-                padding: 18px;
-                max-width: 1000px;
-                background: #2a223a;
-                color: #ffffff;
-                border-radius: 12px;
-                box-shadow: 0 8px 30px rgba(0,0,0,0.6);
-            }
-            .comments h3 {
-                margin: 0 0 14px 0;
-                font-size: 1.2rem;
-                color: #ffffff;
-                text-align: center;
-            }
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Download Page</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/fav.png') }}" type="image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilojuegos.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        header.header .menu {
+            position: absolute !important;
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            width: auto !important;
+            height: auto !important;
+            background: transparent !important;
+            clip-path: none !important;
+            z-index: 1000 !important;
+        }
+
+        header.header .menu .navbar ul {
+            display: flex !important;
+            gap: 18px !important;
+            margin: 0 !important;
+            align-items: center !important;
+            width: 100% !important;
+        }
+
+        header.header .menu .navbar ul .logo-item {
+            margin: 0 auto !important;
+            position: static !important;
+            transform: none !important;
+        }
+
+        header.header .menu .nav-edit {
+            position: absolute !important;
+            right: 18px !important;
+            top: 50% !important;
+            transform: translateY(-50%) !important;
+            z-index: 1010 !important;
+        }
+
+        header.header .menu .nav-edit a {
+            display: inline-block;
+            padding: 10px 18px;
+            background: linear-gradient(90deg, #ff6ad1, #ff00c8);
+            color: #fff;
+            border-radius: 12px;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 8px 20px rgba(255, 0, 160, 0.12);
+            transition: transform .12s ease, opacity .12s ease;
+            font-size: 0.95rem;
+        }
+
+        header.header .menu .nav-edit a:hover {
+            transform: translateY(-2px);
+            opacity: 0.98;
+        }
+
+        header.header .menu .navbar ul .nav-edit a {
+            display: inline-block;
+            padding: 10px 18px;
+            background: linear-gradient(90deg, #ff4cc8, #ff00c8);
+            color: #fff;
+            border-radius: 12px;
+            font-weight: 700;
+            text-decoration: none;
+            border: none;
+            box-shadow: 0 6px 18px rgba(255, 0, 160, 0.12);
+        }
+
+        header.header .menu .navbar ul .nav-edit a:hover {
+            opacity: 0.95;
+        }
+
+        header.header .menu .logo img {
+            height: 40px !important;
+        }
+
+        .comments {
+            margin: 30px auto;
+            padding: 18px;
+            max-width: 1000px;
+            background: #2a223a;
+            color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+        }
+
+        .comments h3 {
+            margin: 0 0 14px 0;
+            font-size: 1.2rem;
+            color: #ffffff;
+            text-align: center;
+        }
+
+        .comments-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            grid-auto-rows: 1fr;
+            gap: 12px;
+            align-items: stretch;
+        }
+
+        .comments-list {
+            max-height: 320px;
+            overflow: auto;
+            padding-right: 6px;
+        }
+
+        .comment {
+            padding: 12px;
+            background: #3f3456;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 8px;
+            margin-bottom: 10px;
+            color: #eae6f2;
+        }
+
+        .comment-meta {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.65);
+            margin-top: 8px;
+        }
+
+        .comment-form {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            gap: 8px;
+        }
+
+        .comment-form textarea {
+            width: 100%;
+            min-height: 80px;
+            padding: 10px;
+            margin-bottom: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            background: #24192b;
+            color: #fff;
+            border-radius: 6px;
+            resize: vertical;
+            font-family: inherit;
+        }
+
+        .comment-form textarea::placeholder {
+            color: rgba(255, 255, 255, 0.45);
+        }
+
+        .comment-form button {
+            background: linear-gradient(90deg, #ff6ad1, #ff00c8);
+            color: #fff;
+            border: none;
+            padding: 10px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        @media (min-width: 768px) {
             .comments-grid {
-                display: grid;
-                grid-template-columns: 1fr;
-                grid-auto-rows: 1fr;
-                gap: 12px;
-                align-items: stretch;
-            }
-            .comments-list {
-                max-height: 320px;
-                overflow: auto;
-                padding-right: 6px;
-            }
-            .comment {
-                padding: 12px;
-                background: #3f3456;
-                border: 1px solid rgba(255,255,255,0.04);
-                border-radius: 8px;
-                margin-bottom: 10px;
-                color: #eae6f2;
-            }
-            .comment-meta {
-                font-size: 0.8rem;
-                color: rgba(255,255,255,0.65);
-                margin-top: 8px;
-            }
-            .comment-form {
-                display: flex;
-                flex-direction: column;
-                justify-content: flex-end;
-                gap: 8px;
-            }
-            .comment-form textarea {
-                width: 100%;
-                min-height: 80px;
-                padding: 10px;
-                margin-bottom: 8px;
-                border: 1px solid rgba(255,255,255,0.06);
-                background: #24192b;
-                color: #fff;
-                border-radius: 6px;
-                resize: vertical;
-                font-family: inherit;
-            }
-            .comment-form textarea::placeholder { color: rgba(255,255,255,0.45); }
-            .comment-form button {
-                background: linear-gradient(90deg,#ff6ad1,#ff00c8);
-                color: #fff;
-                border: none;
-                padding: 10px 14px;
-                border-radius: 8px;
-                cursor: pointer;
-                font-weight: 600;
-            }
-            @media (min-width: 768px) {
-                .comments-grid {
-                    grid-template-columns: 1fr 360px;
-                    grid-template-rows: 1fr auto; 
-                    grid-template-areas: "list ." "form form";
-                    grid-auto-rows: unset;
-                    min-height: 220px;
-                }
-                .comments-list { grid-area: list; }
-                .comment-form { grid-area: form; align-self: end; }
-                .comments {
-                    padding: 20px;
-                }
-                .comment-form button {
-                    width: 100%;
-                }
+                grid-template-columns: 1fr 360px;
+                grid-template-rows: 1fr auto;
+                grid-template-areas: "list ." "form form";
+                grid-auto-rows: unset;
+                min-height: 220px;
             }
 
-            @media (max-width: 767px) {
-                .comments-grid {
-                    grid-template-columns: 1fr;
-                }
-                .comment-form {
-                    justify-content: flex-start;
-                }
+            .comments-list {
+                grid-area: list;
             }
-        </style>
-    </head>
-    <body>
-        
-        <div class="progress">
-            <div class="progress-bar" id="scroll-bar"></div>
-        </div>
+
+            .comment-form {
+                grid-area: form;
+                align-self: end;
+            }
+
+            .comments {
+                padding: 20px;
+            }
+
+            .comment-form button {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .comments-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .comment-form {
+                justify-content: flex-start;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="progress">
+        <div class="progress-bar" id="scroll-bar"></div>
+    </div>
 
     <header class="header">
 
         <div class="menu container">
             <input type="checkbox" id="menu" />
             <label for="menu">
-                <img src="/img/menu.png" class="menu-icono" alt="menu">
+                <img src="{{ url_for('static', filename='img/menu.png') }}" class="menu-icono" alt="menu">
             </label>
             <nav class="navbar">
                 <ul>
-                    <li><a href="Index.html">Inicio</a></li>
-                    <li><a href="Informació.html">Servicios</a></li>
-                    <li><a href="login.html">Iniciar sesión</a></li>
-                    <li><a href="http://localhost/wordpress/?page_id=153">Contacto</a></li>
-                        <li class="logo-item"><a href="#" class="logo"><img
-                            src="/img/image__1_-removebg-preview (1) (1).png" alt="New Era Games logo"></a></li>
+                    <li><a href="{{ url_for('index') }}">Inicio</a></li>
+                    <li><a href="{{ url_for('informacion') }}">Servicios</a></li>
+                    {% if current_user %}
+                    <li><a href="{{ url_for('publish') }}">Publicar Juego</a></li>
+                    <li><a href="{{ url_for('logout') }}">Cerrar sesión</a></li>
+                    {% else %}
+                    <li><a href="{{ url_for('login') }}">Iniciar sesión</a></li>
+                    {% endif %}
+                    <li><a href="{{ url_for('contactos') }}">Contacto</a></li>
+                    <li class="logo-item"><a href="{{ url_for('index') }}" class="logo"><img
+                                src="{{ url_for('static', filename='img/image__1_-removebg-preview (1) (1).png') }}"
+                                alt="New Era Games logo"></a></li>
                 </ul>
             </nav>
-                <div class="nav-edit"><a href="editor.html">Editar juego</a></div>
+            {% if current_user %}
+            <div class="nav-edit"><a href="{{ url_for('publish') }}">Editar juego</a></div>
+            {% endif %}
         </div>
 
         <div class="header-content container">
@@ -210,135 +254,137 @@
         </div>
     </header>
 
-        <div class="about container">
-            <h2>About Game</h2>
-            <p>There are plenty of examples of this kind of game on moble devices, being...
-            </p>
+    <div class="about container">
+        <h2>About Game</h2>
+        <p>There are plenty of examples of this kind of game on moble devices, being...
+        </p>
+    </div>
+
+    <div class="screenshots container">
+        <h2>Screenshots</h2>
+        <div class="screenshots-content">
+            <img src="{{ url_for('static', filename='img/screenshots1.jpg') }}" alt="">
+            <img src="{{ url_for('static', filename='img/screenshots2.jpg') }}" alt="">
+            <img src="{{ url_for('static', filename='img/screenshots3.jpg') }}" alt="">
         </div>
+    </div>
 
-        <div class="screenshots container">
-            <h2>Screenshots</h2>
-            <div class="screenshots-content">
-                <img src="img/screenshots1.jpg" alt="">
-                <img src="img/screenshots2.jpg" alt="">
-                <img src="img/screenshots3.jpg" alt="">
-            </div>
+    <div class="comments container">
+        <h3>Comentarios</h3>
+        <div class="comments-grid">
+            <div id="comments-list" class="comments-list"></div>
+            <form id="comment-form" class="comment-form">
+                <textarea id="comment-text" placeholder="Escribe un comentario..." required></textarea>
+                <div style="display:flex;gap:8px;align-items:center;">
+                    <button type="submit" id="comment-submit">Enviar</button>
+                    <button type="button" id="comment-cancel"
+                        style="display:none;background:#444;color:#fff;border-radius:8px;padding:10px 14px;border:none;cursor:pointer;">Cancelar</button>
+                </div>
+            </form>
         </div>
+    </div>
 
-        <div class="comments container">
-            <h3>Comentarios</h3>
-            <div class="comments-grid">
-                <div id="comments-list" class="comments-list"></div>
-                <form id="comment-form" class="comment-form">
-                    <textarea id="comment-text" placeholder="Escribe un comentario..." required></textarea>
-                    <div style="display:flex;gap:8px;align-items:center;">
-                        <button type="submit" id="comment-submit">Enviar</button>
-                        <button type="button" id="comment-cancel" style="display:none;background:#444;color:#fff;border-radius:8px;padding:10px 14px;border:none;cursor:pointer;">Cancelar</button>
-                    </div>
-                </form>
-            </div>
-        </div>
+    <script>
+        (function () {
+            var list = document.getElementById('comments-list');
+            var form = document.getElementById('comment-form');
+            var textarea = document.getElementById('comment-text');
+            function escapeHtml(s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+            var editIndex = null;
+            var submitBtn = document.getElementById('comment-submit');
+            var cancelBtn = document.getElementById('comment-cancel');
 
-        <script>
-            (function(){
-                var list = document.getElementById('comments-list');
-                var form = document.getElementById('comment-form');
-                var textarea = document.getElementById('comment-text');
-                function escapeHtml(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-                var editIndex = null;
-                var submitBtn = document.getElementById('comment-submit');
-                var cancelBtn = document.getElementById('comment-cancel');
-
-                function render(){
-                    var arr = JSON.parse(localStorage.getItem('comments')||'[]');
-                    if(!arr.length){
-                        list.innerHTML = '<p>No hay comentarios aún. Sé el primero.</p>';
-                        return;
-                    }
-                    list.innerHTML = arr.map(function(c, i){
-                        var text = escapeHtml(c.text);
-                        var time = escapeHtml(c.time);
-                        return '<div class="comment">'
-                            + '<div class="comment-body">' + text + '</div>'
-                            + '<div class="comment-meta">' + time + '</div>'
-                            + '<div class="comment-actions" style="margin-top:8px;display:flex;gap:8px;">'
-                            + '<button class="btn-edit" data-index="' + i + '" style="background:transparent;border:1px solid rgba(255,255,255,0.08);color:rgba(255,255,255,0.9);padding:6px 10px;border-radius:6px;cursor:pointer;">Editar</button>'
-                            + '<button class="btn-delete" data-index="' + i + '" style="background:transparent;border:1px solid rgba(255,0,200,0.18);color:#ff9fe6;padding:6px 10px;border-radius:6px;cursor:pointer;">Borrar</button>'
-                            + '</div>'
-                        + '</div>';
-                    }).join('');
+            function render() {
+                var arr = JSON.parse(localStorage.getItem('comments') || '[]');
+                if (!arr.length) {
+                    list.innerHTML = '<p>No hay comentarios aún. Sé el primero.</p>';
+                    return;
                 }
+                list.innerHTML = arr.map(function (c, i) {
+                    var text = escapeHtml(c.text);
+                    var time = escapeHtml(c.time);
+                    return '<div class="comment">'
+                        + '<div class="comment-body">' + text + '</div>'
+                        + '<div class="comment-meta">' + time + '</div>'
+                        + '<div class="comment-actions" style="margin-top:8px;display:flex;gap:8px;">'
+                        + '<button class="btn-edit" data-index="' + i + '" style="background:transparent;border:1px solid rgba(255,255,255,0.08);color:rgba(255,255,255,0.9);padding:6px 10px;border-radius:6px;cursor:pointer;">Editar</button>'
+                        + '<button class="btn-delete" data-index="' + i + '" style="background:transparent;border:1px solid rgba(255,0,200,0.18);color:#ff9fe6;padding:6px 10px;border-radius:6px;cursor:pointer;">Borrar</button>'
+                        + '</div>'
+                        + '</div>';
+                }).join('');
+            }
 
-                form.addEventListener('submit', function(e){
-                    e.preventDefault();
-                    var arr = JSON.parse(localStorage.getItem('comments')||'[]');
-                    var value = textarea.value && textarea.value.trim();
-                    if(!value) return;
-                    if(editIndex === null){
-                        arr.unshift({ text: value, time: new Date().toLocaleString() });
-                    } else {
-                        arr[editIndex].text = value;
-                        arr[editIndex].time = new Date().toLocaleString();
-                        editIndex = null;
-                        submitBtn.textContent = 'Enviar';
-                        cancelBtn.style.display = 'none';
-                    }
-                    localStorage.setItem('comments', JSON.stringify(arr));
-                    textarea.value = '';
-                    render();
-                });
-
-                list.addEventListener('click', function(e){
-                    var btn;
-                    if(e.target.closest('.btn-edit')) btn = e.target.closest('.btn-edit');
-                    if(e.target.closest('.btn-delete')) btn = e.target.closest('.btn-delete');
-                    if(!btn) return;
-                    var idx = parseInt(btn.getAttribute('data-index'), 10);
-                    var arr = JSON.parse(localStorage.getItem('comments')||'[]');
-                    if(btn.classList.contains('btn-delete')){
-                        if(!isNaN(idx)){
-                            arr.splice(idx, 1);
-                            localStorage.setItem('comments', JSON.stringify(arr));
-                            if(editIndex === idx){ editIndex = null; textarea.value=''; submitBtn.textContent='Enviar'; cancelBtn.style.display='none'; }
-                            render();
-                        }
-                        return;
-                    }
-                    if(btn.classList.contains('btn-edit')){
-                        if(!isNaN(idx) && arr[idx]){
-                            editIndex = idx;
-                            textarea.value = arr[idx].text;
-                            submitBtn.textContent = 'Guardar';
-                            cancelBtn.style.display = 'inline-block';
-
-                            textarea.scrollIntoView({behavior:'smooth',block:'center'});
-                        }
-                    }
-                });
-
-                cancelBtn.addEventListener('click', function(){
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+                var arr = JSON.parse(localStorage.getItem('comments') || '[]');
+                var value = textarea.value && textarea.value.trim();
+                if (!value) return;
+                if (editIndex === null) {
+                    arr.unshift({ text: value, time: new Date().toLocaleString() });
+                } else {
+                    arr[editIndex].text = value;
+                    arr[editIndex].time = new Date().toLocaleString();
                     editIndex = null;
-                    textarea.value = '';
                     submitBtn.textContent = 'Enviar';
                     cancelBtn.style.display = 'none';
-                });
+                }
+                localStorage.setItem('comments', JSON.stringify(arr));
+                textarea.value = '';
                 render();
-            })();
-        </script>
+            });
 
-        <div class="download">
-            <h2>Download Links</h2>
-            <div class="download-links">
-                <a href="#">For Android</a>
-                <a href="#">For Ios</a>
-                <a href="#">For Windows</a>
-            </div>
+            list.addEventListener('click', function (e) {
+                var btn;
+                if (e.target.closest('.btn-edit')) btn = e.target.closest('.btn-edit');
+                if (e.target.closest('.btn-delete')) btn = e.target.closest('.btn-delete');
+                if (!btn) return;
+                var idx = parseInt(btn.getAttribute('data-index'), 10);
+                var arr = JSON.parse(localStorage.getItem('comments') || '[]');
+                if (btn.classList.contains('btn-delete')) {
+                    if (!isNaN(idx)) {
+                        arr.splice(idx, 1);
+                        localStorage.setItem('comments', JSON.stringify(arr));
+                        if (editIndex === idx) { editIndex = null; textarea.value = ''; submitBtn.textContent = 'Enviar'; cancelBtn.style.display = 'none'; }
+                        render();
+                    }
+                    return;
+                }
+                if (btn.classList.contains('btn-edit')) {
+                    if (!isNaN(idx) && arr[idx]) {
+                        editIndex = idx;
+                        textarea.value = arr[idx].text;
+                        submitBtn.textContent = 'Guardar';
+                        cancelBtn.style.display = 'inline-block';
+
+                        textarea.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                }
+            });
+
+            cancelBtn.addEventListener('click', function () {
+                editIndex = null;
+                textarea.value = '';
+                submitBtn.textContent = 'Enviar';
+                cancelBtn.style.display = 'none';
+            });
+            render();
+        })();
+    </script>
+
+    <div class="download">
+        <h2>Download Links</h2>
+        <div class="download-links">
+            <a href="#">For Android</a>
+            <a href="#">For Ios</a>
+            <a href="#">For Windows</a>
         </div>
+    </div>
 
-    <script src="/js/swiper-bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/swiper-bundle.min.js') }}"></script>
 
 
 
-            <script src="/js/main.js" async defer></script>
-    </body>
+    <script src="{{ url_for('static', filename='js/main.js') }}" async defer></script>
+</body>
+
 </html>

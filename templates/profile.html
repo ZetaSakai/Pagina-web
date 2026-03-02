@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{{ profile.username }} — New Era Games</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/fav.png') }}" type="image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilojuegos.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            padding-top: 0 !important;
+        }
+
+        header.header {
+            min-height: auto !important;
+            padding: 0 !important;
+            background: #1b1726 !important;
+            display: block !important;
+            position: relative !important;
+            z-index: 1000;
+        }
+
+        header.header .menu {
+            position: relative !important;
+            padding: 20px 0;
+            background: transparent !important;
+            height: auto !important;
+            clip-path: none !important;
+        }
+
+        @media (max-width: 991px) {
+            header.header .menu {
+                padding: 20px;
+            }
+        }
+
+        /* Profile card */
+        .profile-card {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 40px;
+            background: rgba(42, 34, 58, 0.95);
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+            color: #fff;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #ff00c8;
+            background: #24192b;
+        }
+
+        .profile-info {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .profile-info h1 {
+            font-size: 2rem;
+            margin: 0 0 6px 0;
+        }
+
+        .role-badge {
+            display: inline-block;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .role-standard {
+            background: #3f3456;
+            color: #aaa;
+        }
+
+        .role-developer {
+            background: linear-gradient(90deg, #6a11cb, #2575fc);
+            color: #fff;
+        }
+
+        .role-admin {
+            background: linear-gradient(90deg, #ff0844, #ffb199);
+            color: #fff;
+        }
+
+        .profile-stats {
+            display: flex;
+            gap: 24px;
+            margin-top: 14px;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.4rem;
+            font-weight: 700;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.6);
+            text-transform: uppercase;
+        }
+
+        .profile-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn-follow,
+        .btn-fav {
+            padding: 10px 24px;
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .btn-follow {
+            background: linear-gradient(90deg, #ff6ad1, #ff00c8);
+            color: #fff;
+        }
+
+        .btn-follow.following {
+            background: #3f3456;
+            color: #ccc;
+        }
+
+        .btn-fav {
+            background: linear-gradient(90deg, #ffb347, #ff6723);
+            color: #fff;
+        }
+
+        .btn-fav.favorited {
+            background: #3f3456;
+            color: #ccc;
+        }
+
+        .btn-follow:hover,
+        .btn-fav:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 0, 200, 0.3);
+        }
+
+        /* Games grid */
+        .profile-games h2 {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #ff00c8;
+            display: inline-block;
+            padding-bottom: 4px;
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .game-card {
+            background: #24192b;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .game-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .game-card img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+        }
+
+        .game-card-info {
+            padding: 14px;
+        }
+
+        .game-card-info h3 {
+            font-size: 1rem;
+            margin: 0 0 6px 0;
+            color: #fff;
+        }
+
+        .game-card-info .cats {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .game-card-info a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .empty-msg {
+            color: rgba(255, 255, 255, 0.4);
+            font-style: italic;
+        }
+
+        .member-since {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.4);
+            margin-top: 6px;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="menu container">
+            <input type="checkbox" id="menu" />
+            <label for="menu">
+                <img src="{{ url_for('static', filename='img/menu.png') }}" class="menu-icono" alt="menu">
+            </label>
+            <nav class="navbar">
+                <ul>
+                    <li><a href="{{ url_for('index') }}">Inicio</a></li>
+                    <li><a href="{{ url_for('informacion') }}">Servicios</a></li>
+                    {% if current_user %}
+                    <li><a href="{{ url_for('publish') }}">Publicar Juego</a></li>
+                    <li><a href="{{ url_for('settings') }}">Ajustes</a></li>
+                    <li><a href="{{ url_for('logout') }}">Cerrar sesión</a></li>
+                    {% else %}
+                    <li><a href="{{ url_for('login') }}">Iniciar sesión</a></li>
+                    {% endif %}
+                    <li><a href="{{ url_for('contactos') }}">Contacto</a></li>
+                    <li class="logo-item"><a href="{{ url_for('index') }}" class="logo"><img
+                                src="{{ url_for('static', filename='img/image__1_-removebg-preview (1) (1).png') }}"
+                                alt="New Era Games logo"></a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="profile-card container">
+        <div class="profile-header">
+            {% if profile.pic %}
+            <img src="{{ url_for('static', filename=profile.pic) }}" alt="{{ profile.username }}"
+                class="profile-avatar">
+            {% else %}
+            <div class="profile-avatar"
+                style="display:flex;align-items:center;justify-content:center;font-size:2.5rem;color:#ff00c8;">
+                {{ profile.username[0]|upper }}
+            </div>
+            {% endif %}
+
+            <div class="profile-info">
+                <h1>{{ profile.username }}</h1>
+                <span class="role-badge role-{{ profile.role }}">{{ profile.role }}</span>
+                <p class="member-since">Miembro desde {{ profile.created_at.strftime('%d/%m/%Y') }}</p>
+
+                <div class="profile-stats">
+                    <div class="stat">
+                        <span class="stat-value">{{ games|length }}</span>
+                        <span class="stat-label">Juegos</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-value">{{ follower_count }}</span>
+                        <span class="stat-label">Seguidores</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-value">{{ following_count }}</span>
+                        <span class="stat-label">Siguiendo</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-value">{{ fav_dev_count }}</span>
+                        <span class="stat-label">⭐ Favoritos</span>
+                    </div>
+                </div>
+
+                {% if current_user and current_user.id != profile.id %}
+                <div class="profile-actions">
+                    <form method="POST" action="{{ url_for('toggle_follow', username=profile.username) }}">
+                        <button type="submit" class="btn-follow {{ 'following' if is_following }}">
+                            {{ 'Dejar de seguir' if is_following else '+ Seguir' }}
+                        </button>
+                    </form>
+                    <form method="POST" action="{{ url_for('toggle_fav_developer', username=profile.username) }}">
+                        <button type="submit" class="btn-fav {{ 'favorited' if is_fav_dev }}">
+                            {{ '★ Favorito' if is_fav_dev else '☆ Añadir a favoritos' }}
+                        </button>
+                    </form>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="profile-games">
+            <h2>Juegos publicados</h2>
+            {% if games %}
+            <div class="games-grid">
+                {% for game in games %}
+                <div class="game-card">
+                    <a href="{{ url_for('game_detail', slug=game.slug or game.id) }}">
+                        <img src="{{ url_for('static', filename=game.cover) }}" alt="{{ game.title }}">
+                        <div class="game-card-info">
+                            <h3>{{ game.title }}</h3>
+                            <span class="cats">{{ game.categories }}</span>
+                        </div>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <p class="empty-msg">Este usuario aún no ha publicado juegos.</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+
+</html>

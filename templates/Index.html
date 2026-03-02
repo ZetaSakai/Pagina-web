@@ -7,10 +7,67 @@
     <title>New Era Games</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/css/estiloindex.css">
-    <link rel="icon" href="/img/1-17e21c9a.ico">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estiloindex.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='img/1-17e21c9a.ico') }}">
     <style>
-        html { scroll-behavior: smooth; }
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .user-welcome {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #ffffff;
+            font-weight: 700;
+        }
+
+        .user-welcome img {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .user-welcome .default-avatar {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: #cccccc;
+            display: inline-block;
+        }
+
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        .alert-success {
+            color: #155724;
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+        }
+
+        .alert-danger {
+            color: #721c24;
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+        }
+
+        .alert-warning {
+            color: #856404;
+            background-color: #fff3cd;
+            border-color: #ffeeba;
+        }
+
+        .alert-info {
+            color: #0c5460;
+            background-color: #d1ecf1;
+            border-color: #bee5eb;
+        }
     </style>
 </head>
 
@@ -20,18 +77,35 @@
         <div class="menu container">
             <input type="checkbox" id="menu" />
             <label for="menu">
-                <img src="/img/menu.png" class="menu-icono" alt="menu">
+                <img src="{{ url_for('static', filename='img/menu.png') }}" class="menu-icono" alt="menu">
             </label>
             <nav class="navbar">
                 <ul>
-                    <li><a href="Index.html">Inicio</a></li>
-                    <li><a href="Informació.html">Servicios</a></li>
-                    <li><a href="login.html">Iniciar sesión</a></li>
-                    <li><a href="http://localhost/wordpress/?page_id=153">Contacto</a></li>
-                    <li class="logo-item"><a href="#" class="logo"><img
-                    src="/img/image__1_-removebg-preview (1) (1).png" alt="New Era Games logo"></a></li>
+                    <li><a href="{{ url_for('index') }}">Inicio</a></li>
+                    <li><a href="{{ url_for('informacion') }}">Servicios</a></li>
+                    {% if current_user %}
+                    <li><a href="{{ url_for('publish') }}">Publicar Juego</a></li>
+                    <li><a href="{{ url_for('logout') }}">Cerrar sesión</a></li>
+                    {% else %}
+                    <li><a href="{{ url_for('login') }}">Iniciar sesión</a></li>
+                    {% endif %}
+                    <li><a href="{{ url_for('contactos') }}">Contacto</a></li>
+                    <li class="logo-item"><a href="{{ url_for('index') }}" class="logo"><img
+                                src="{{ url_for('static', filename='img/image__1_-removebg-preview (1) (1).png') }}"
+                                alt="New Era Games logo"></a></li>
                 </ul>
             </nav>
+
+            {% if current_user %}
+            <div class="user-welcome">
+                <span>Bienvenido! {{ current_user.username }}</span>
+                {% if current_user.pic %}
+                <img src="{{ url_for('static', filename=current_user.pic) }}" alt="Avatar">
+                {% else %}
+                <div class="default-avatar"></div>
+                {% endif %}
+            </div>
+            {% endif %}
         </div>
 
         <div class="header-content container">
@@ -39,14 +113,25 @@
                 <h1>Descubre tu <span>juego</span> <br> favorito aqui </h1>
                 <p>
                     Nosotros somos <strong>New Era Games</strong> una empresa dedicada a la creación de una página web
-                    especializada en videojuegos indie con el objetivo de <strong>facilitar el descubrimiento de nuevos juegos</strong> y
+                    especializada en videojuegos indie con el objetivo de <strong>facilitar el descubrimiento de nuevos
+                        juegos</strong> y
                     dar visibilidad a desarrolladores independientes.
                 </p>
                 <div class="butons">
                     <a href="#"></a>
-                    <a href="Informació.html" class="btn-1">Información</a>
+                    <a href="{{ url_for('informacion') }}" class="btn-1">Información</a>
                     <a href="#juegos" class="btn-1">Juegos</a>
                 </div>
+            </div>
+
+            <div class="flash-messages" style="margin-top: 20px;">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+                {% endif %}
+                {% endwith %}
             </div>
         </div>
     </header>
@@ -54,13 +139,13 @@
     <section class="popular-container container">
         <h2>Juegos populares</h2>
         <div class="popular-content">
-            <img src="/img/g1.jpg" alt="">
-            <img src="/img/g2.jpg" alt="">
-            <img src="/img/g3.jpg" alt="">
-            <img src="/img/g4.jpg" alt="">
-            <img src="/img/g5.jpg" alt="">
-            <img src="/img/g6.jpg" alt="">
-            <img src="/img/g7.jpg" alt="">
+            <img src="{{ url_for('static', filename='img/g1.jpg') }}" alt="">
+            <img src="{{ url_for('static', filename='img/g2.jpg') }}" alt="">
+            <img src="{{ url_for('static', filename='img/g3.jpg') }}" alt="">
+            <img src="{{ url_for('static', filename='img/g4.jpg') }}" alt="">
+            <img src="{{ url_for('static', filename='img/g5.jpg') }}" alt="">
+            <img src="{{ url_for('static', filename='img/g6.jpg') }}" alt="">
+            <img src="{{ url_for('static', filename='img/g7.jpg') }}" alt="">
         </div>
     </section>
 
@@ -70,19 +155,36 @@
 
         <div class="product-content">
 
+            {% if games %}
+            {% for g in games %}
             <div class="product-1">
-                <img src="/img/l1.jpg" alt="">
+                <img src="{{ url_for('static', filename=g.cover) }}" alt="{{ g.title }}"
+                    style="width:100%; height:250px; object-fit:cover;">
+                <div class="product-txt">
+                    <h3 style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" title="{{ g.title }}">{{
+                        g.title }}</h3>
+                    <div class="price">
+                        <p>Gratis</p>
+                        <a href="{{ url_for('game_detail', slug=g.game_slug or g.id) }}" class="btr-2">Ver Juego</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <!-- Static placeholders if database has no games yet -->
+            <div class="product-1">
+                <img src="{{ url_for('static', filename='img/l1.jpg') }}" alt="">
                 <div class="product-txt">
                     <h3>Juego lorem</h3>
                     <div class="price">
                         <p>$500</p>
-                        <a href="/templates/download.html" class="btr-2">Descargar</a>
+                        <a href="{{ url_for('download') }}" class="btr-2">Descargar</a>
                     </div>
                 </div>
             </div>
 
             <div class="product-1">
-                <img src="/img/l2.jpg" alt="">
+                <img src="{{ url_for('static', filename='img/l2.jpg') }}" alt="">
                 <div class="product-txt">
                     <h3>Juego lorem</h3>
                     <div class="price">
@@ -93,7 +195,7 @@
             </div>
 
             <div class="product-1">
-                <img src="/img/l3.jpg" alt="">
+                <img src="{{ url_for('static', filename='img/l3.jpg') }}" alt="">
                 <div class="product-txt">
                     <h3>Juego lorem</h3>
                     <div class="price">
@@ -103,71 +205,7 @@
                 </div>
             </div>
 
-            <div class="product-1">
-                <img src="/img/l4.jpg" alt="">
-                <div class="product-txt">
-                    <h3>Juego lorem</h3>
-                    <div class="price">
-                        <p>$500</p>
-                        <a href="#" class="btr-2">Descargar</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="product-1">
-                <img src="/img/l5.jpg" alt="">
-                <div class="product-txt">
-                    <h3>Juego lorem</h3>
-                    <div class="price">
-                        <p>$500</p>
-                        <a href="#" class="btr-2">Descargar</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="product-1">
-                <img src="/img/l6.jpg" alt="">
-                <div class="product-txt">
-                    <h3>Juego lorem</h3>
-                    <div class="price">
-                        <p>$500</p>
-                        <a href="#" class="btr-2">Descargar</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="product-1">
-                <img src="/img/l7.jpg" alt="">
-                <div class="product-txt">
-                    <h3>Juego lorem</h3>
-                    <div class="price">
-                        <p>$500</p>
-                        <a href="#" class="btr-2">Descargar</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="product-1">
-                <img src="/img/l8.jpg" alt="">
-                <div class="product-txt">
-                    <h3>Juego lorem</h3>
-                    <div class="price">
-                        <p>$500</p>
-                        <a href="#" class="btr-2">Descargar</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="product-1">
-                <img src="/img/l9.jpg" alt="">
-                <div class="product-txt">
-                    <h3>Juego lorem</h3>
-                    <div class="price">
-                        <p>$500</p>
-                        <a href="#" class="btr-2">Descargar</a>
-                    </div>
-                </div>
-            </div>
+            {% endif %}
 
         </div>
     </main>
@@ -190,7 +228,7 @@
             <a href="#" class="logo"></a>
         </div>
     </footer>
-    <script src="/js/script.js"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 
 </html>
