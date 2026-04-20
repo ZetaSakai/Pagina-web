@@ -1,0 +1,22 @@
+[Unit]
+Description=New Era Games Flask Debug Service
+After=network.target
+
+[Service]
+Type=simple
+User=nobody
+Group=nogroup
+WorkingDirectory=/app/Pagina-web
+EnvironmentFile=-/app/Pagina-web/.env
+Environment=PYTHONPATH=/app/Pagina-web/.local/lib/python3.12/site-packages
+Environment=DB_HOST=127.0.0.1
+Environment=DB_PORT=3310
+Environment=FLASK_USE_RELOADER=False
+ExecStart=/usr/bin/python3 /app/Pagina-web/app.py
+Restart=always
+RestartSec=3
+StandardOutput=append:/app/Pagina-web/app.log
+StandardError=append:/app/Pagina-web/app.log
+
+[Install]
+WantedBy=multi-user.target

@@ -2,11 +2,12 @@
 <html>
 
 <head>
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>{{ profile.username }} — New Era Games</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" href="{{ url_for('static', filename='img/fav.png') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.png') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/estilojuegos.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <style>
@@ -21,23 +22,199 @@
         header.header {
             min-height: auto !important;
             padding: 0 !important;
-            background: #1b1726 !important;
+            background: transparent !important;
             display: block !important;
             position: relative !important;
             z-index: 1000;
         }
 
+        /* ── Override estilojuegos.css fullscreen .menu overlay ── */
         header.header .menu {
             position: relative !important;
-            padding: 20px 0;
-            background: transparent !important;
+            width: 100% !important;
             height: auto !important;
+            min-height: 0 !important;
+            background: transparent !important;
             clip-path: none !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            padding: 14px 24px !important;
+            z-index: 1100 !important;
+            transition: none !important;
         }
 
+        /* Hamburger label */
+        header.header .menu label {
+            display: none;
+            cursor: pointer;
+            order: 0;
+        }
+
+        header.header .menu .menu-icono {
+            width: 28px;
+        }
+
+        /* Nav links – always left-aligned */
+        header.header .menu .navbar {
+            display: flex !important;
+            text-align: left !important;
+            padding: 0 !important;
+            row-gap: 0 !important;
+            margin-left: 10px;
+            margin-right: auto;
+        }
+
+        header.header .menu .navbar ul {
+            display: flex !important;
+            flex-direction: row !important;
+            align-items: center;
+            gap: 4px;
+        }
+
+        header.header .menu .navbar ul li {
+            float: none;
+        }
+
+        header.header .menu .navbar ul li a {
+            font-size: 17px !important;
+            font-weight: 600;
+            color: #fff !important;
+            padding: 10px 14px;
+            display: block;
+            border-bottom: none !important;
+            transition: color 0.15s ease, transform 0.15s ease;
+        }
+
+        header.header .menu .navbar ul li a:hover {
+            color: #ff00c8 !important;
+            font-size: 17px !important;
+            border-bottom: none !important;
+            transform: scale(1.06);
+        }
+
+        /* Logo in nav desktop */
+        header.header .menu .navbar ul li.logo-item img {
+            height: 38px;
+            display: block;
+        }
+
+        /* User welcome pill */
+        .user-welcome {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 6px 12px;
+            border-radius: 999px;
+            color: #fff;
+            font-weight: 700;
+            text-decoration: none;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.2s ease, background 0.2s ease;
+            order: 2;
+            flex-shrink: 0;
+        }
+
+        .user-welcome:hover {
+            transform: translateY(-2px) scale(1.02);
+            background: rgba(255, 255, 255, 0.16);
+        }
+
+        .user-welcome img,
+        .user-welcome .default-avatar {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            object-fit: cover;
+            background: #ccc;
+            display: inline-block;
+        }
+
+        #menu {
+            display: none;
+        }
+
+        /* ── MOBILE ── */
         @media (max-width: 991px) {
             header.header .menu {
-                padding: 20px;
+                padding: 14px 16px !important;
+                flex-wrap: wrap;
+            }
+
+            header.header .menu label {
+                display: block !important;
+                z-index: 1200;
+                order: 0;
+            }
+
+            header.header .menu .navbar {
+                display: none !important;
+                position: absolute !important;
+                top: 100% !important;
+                left: 0 !important;
+                right: 0 !important;
+                background: rgba(22, 14, 34, 0.97) !important;
+                padding: 12px 18px !important;
+                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5) !important;
+                margin: 0 !important;
+                z-index: 1150 !important;
+                border-radius: 0 0 12px 12px;
+            }
+
+            header.header .menu .navbar ul {
+                flex-direction: column !important;
+                gap: 4px !important;
+                align-items: flex-start !important;
+            }
+
+            header.header .menu .navbar ul li {
+                width: 100%;
+            }
+
+            header.header .menu .navbar ul li a {
+                padding: 12px 10px !important;
+                font-size: 17px !important;
+            }
+
+            /* Logo centered below all links */
+            header.header .menu .navbar ul li.logo-item {
+                width: 100% !important;
+                display: flex !important;
+                justify-content: center !important;
+                align-items: center !important;
+                padding: 12px 0 4px 0 !important;
+                margin-top: 8px !important;
+                border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+                margin-left: 0 !important;
+            }
+
+            header.header .menu .navbar ul li.logo-item a.logo {
+                display: flex !important;
+                justify-content: center !important;
+                align-items: center !important;
+                width: 100% !important;
+                text-align: center !important;
+                margin: 0 auto !important;
+            }
+
+            header.header .menu .navbar ul li.logo-item img {
+                height: 44px !important;
+                width: auto !important;
+                display: block !important;
+                margin: 0 auto !important;
+            }
+
+            header.header .menu #menu:checked~.navbar {
+                display: block !important;
+            }
+
+            .user-welcome {
+                order: 1;
+                margin-left: auto;
+                font-size: 14px;
+                padding: 5px 10px;
             }
         }
 
@@ -72,11 +249,14 @@
         .profile-info {
             flex: 1;
             min-width: 200px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
         }
 
         .profile-info h1 {
             font-size: 2rem;
-            margin: 0 0 6px 0;
+            margin: 0;
         }
 
         .role-badge {
@@ -106,8 +286,10 @@
 
         .profile-stats {
             display: flex;
-            gap: 24px;
-            margin-top: 14px;
+            gap: 28px;
+            margin-top: 18px;
+            padding-top: 18px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
             flex-wrap: wrap;
         }
 
@@ -127,48 +309,209 @@
             text-transform: uppercase;
         }
 
+        .social-links {
+            margin-top: 24px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .social-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(4px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .social-btn:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.12);
+            border-color: #ff00c8;
+            color: #fff;
+            box-shadow: 0 10px 20px rgba(255, 0, 200, 0.2);
+        }
+
+        .social-btn svg {
+            transition: transform 0.3s ease;
+        }
+
+        .social-btn:hover svg {
+            transform: scale(1.15);
+        }
+
         .profile-actions {
             display: flex;
-            gap: 12px;
+            gap: 10px;
             margin-top: 16px;
             flex-wrap: wrap;
+            align-items: center;
         }
 
+        /* Forms inside profile-actions must not break flex alignment */
+        .profile-actions form {
+            display: contents;
+        }
+
+        /* Shared base for all action buttons */
         .btn-follow,
-        .btn-fav {
-            padding: 10px 24px;
-            border: none;
+        .btn-fav,
+        .btn-donate,
+        .btn-report {
+            padding: 0 20px;
+            height: 42px;
             border-radius: 25px;
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.88rem;
             cursor: pointer;
-            transition: transform 0.15s ease, box-shadow 0.15s ease;
-        }
-
-        .btn-follow {
-            background: linear-gradient(90deg, #ff6ad1, #ff00c8);
-            color: #fff;
-        }
-
-        .btn-follow.following {
-            background: #3f3456;
-            color: #ccc;
-        }
-
-        .btn-fav {
-            background: linear-gradient(90deg, #ffb347, #ff6723);
-            color: #fff;
-        }
-
-        .btn-fav.favorited {
-            background: #3f3456;
-            color: #ccc;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            text-decoration: none;
+            white-space: nowrap;
+            box-sizing: border-box;
+            transition: opacity 0.15s ease;
         }
 
         .btn-follow:hover,
-        .btn-fav:hover {
+        .btn-fav:hover,
+        .btn-donate:hover,
+        .btn-report:hover {
+            opacity: 0.82;
+        }
+
+        .btn-follow {
+            background: transparent;
+            border: 1px solid rgba(108, 63, 197, 0.6);
+            color: #a78bfa;
+        }
+
+        .btn-follow.following {
+            background: transparent;
+            border: 1px solid rgba(63, 52, 86, 0.6);
+            color: #999;
+        }
+
+        .btn-fav {
+            background: transparent;
+            border: 1px solid rgba(37, 99, 235, 0.6);
+            color: #60a5fa;
+        }
+
+        .btn-fav.favorited {
+            background: transparent;
+            border: 1px solid rgba(63, 52, 86, 0.6);
+            color: #999;
+        }
+
+        .btn-donate {
+            background: transparent;
+            border: 1px solid rgba(15, 118, 110, 0.6);
+            color: #5eead4;
+            font-weight: 700;
+        }
+
+        .btn-report {
+            background: transparent;
+            border: 1px solid rgba(180, 60, 60, 0.6);
+            color: #c96060;
+        }
+
+        @media (max-width: 600px) {
+            .profile-actions {
+                gap: 8px;
+            }
+
+            .btn-follow,
+            .btn-fav,
+            .btn-donate,
+            .btn-report {
+                height: 38px;
+                padding: 0 14px;
+                font-size: 0.82rem;
+            }
+        }
+
+        /* ─── MODAL REPORTE ─────────────────────────────── */
+        #report-modal .modal-content.glass h2 {
+            color: #ff6b6b;
+        }
+
+        .report-reasons {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin: 14px 0;
+            text-align: left;
+        }
+
+        .report-reason-btn {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 10px;
+            color: #ddd;
+            padding: 10px 14px;
+            cursor: pointer;
+            font-size: 0.88rem;
+            transition: all 0.2s;
+            text-align: left;
+        }
+
+        .report-reason-btn:hover,
+        .report-reason-btn.selected {
+            background: rgba(255, 77, 77, 0.18);
+            border-color: rgba(255, 77, 77, 0.5);
+            color: #ff9a9a;
+        }
+
+        #report-desc {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            padding: 10px 12px;
+            color: #fff;
+            font-size: 0.88rem;
+            resize: vertical;
+            min-height: 70px;
+            outline: none;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+
+        #report-desc:focus {
+            border-color: #ff4d4d;
+        }
+
+        .btn-report-submit {
+            width: 100%;
+            background: linear-gradient(45deg, #ff4d4d, #c0392b);
+            color: #fff;
+            border: none;
+            padding: 12px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 12px;
+            transition: all 0.2s;
+        }
+
+        .btn-report-submit:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(255, 0, 200, 0.3);
+            box-shadow: 0 10px 24px rgba(255, 77, 77, 0.4);
         }
 
         /* Games grid */
@@ -230,16 +573,263 @@
         }
 
         .member-since {
-            font-size: 0.8rem;
+            font-size: 0.82rem;
             color: rgba(255, 255, 255, 0.4);
-            margin-top: 6px;
+            margin: 2px 0 0 0;
+        }
+
+        .profile-description {
+            margin-top: 14px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.7);
+            max-width: 520px;
+        }
+
+        .btn-settings {
+            padding: 10px 24px;
+            border: none;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.12);
+            color: #fff;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .btn-settings:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 0, 200, 0.3);
+        }
+
+        /* ─── MODAL DONACIÓN ─────────────────────────────── */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .modal-content.glass {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 22px;
+            padding: 28px 26px;
+            width: min(90%, 520px);
+            max-width: 520px;
+            max-height: 90vh;
+            overflow-y: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            -webkit-overflow-scrolling: touch;
+            position: relative;
+            box-shadow: 0 30px 60px -18px rgba(0, 0, 0, 0.6);
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        .modal-content.glass::-webkit-scrollbar {
+            display: none;
+        }
+
+        .modal-content.glass h2 {
+            margin: 0 0 10px;
+            font-size: 1.5rem;
+            letter-spacing: 0.3px;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 12px;
+            right: 18px;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 2.1rem;
+            cursor: pointer;
+            opacity: 0.6;
+        }
+
+        .close-modal:hover {
+            opacity: 1;
+        }
+
+        #payment-form {
+            text-align: left;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            align-items: start;
+            margin-top: 20px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #aaa;
+            font-size: 0.82rem;
+            margin-bottom: 4px;
+        }
+
+        .form-group input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 10px;
+            padding: 10px 12px;
+            color: #fff;
+            font-size: 0.9rem;
+            outline: none;
+            box-sizing: border-box;
+        }
+
+        .form-group input:focus {
+            border-color: #ff00c8;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-pay {
+            width: 100%;
+            background: linear-gradient(45deg, #ff00c8, #7000ff);
+            color: #fff;
+            border: none;
+            padding: 12px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: all 0.2s;
+        }
+
+        .btn-pay:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px rgba(255, 0, 200, 0.35);
+        }
+
+        .secure-notice {
+            margin-top: 16px;
+            font-size: 0.8rem;
+            color: #888;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .amount-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-top: 10px;
+            margin-bottom: 5px;
+        }
+
+        .amount-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #ddd;
+            padding: 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+
+        .amount-btn:hover,
+        .amount-btn.active {
+            background: rgba(255, 0, 200, 0.2);
+            border-color: rgba(255, 0, 200, 0.5);
+            color: #fff;
+        }
+
+        @media (max-width: 768px) {
+            .modal-content.glass {
+                max-height: 92vh;
+                padding: 22px 18px;
+                width: min(90%, 460px);
+            }
+        }
+
+        /* User Dropdown CSS added by Assistant */
+        .user-dropdown-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .user-dropdown-menu {
+            position: absolute;
+            top: calc(100% + 10px);
+            right: 0;
+            background: #2a2238;
+            /* Matches dark theme */
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 8px 0;
+            min-width: 180px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .user-dropdown-menu.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .user-dropdown-menu a {
+            display: block;
+            padding: 10px 20px;
+            color: #ddd;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: background 0.2s, color 0.2s;
+            text-align: left;
+        }
+
+        .user-dropdown-menu a:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+        }
+
+        .user-dropdown-menu hr {
+            border: none;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin: 8px 0;
         }
     </style>
 </head>
 
 <body>
     <header class="header">
-        <div class="menu container">
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}">
+    <div class="menu container">
             <input type="checkbox" id="menu" />
             <label for="menu">
                 <img src="{{ url_for('static', filename='img/menu.png') }}" class="menu-icono" alt="menu">
@@ -248,19 +838,56 @@
                 <ul>
                     <li><a href="{{ url_for('index') }}">Inicio</a></li>
                     <li><a href="{{ url_for('informacion') }}">Servicios</a></li>
+                    <li><a href="{{ url_for('pricing') }}">Planes</a></li>
+                    <li><a href="{{ url_for('donar') }}">Donaciones</a></li>
                     {% if current_user %}
-                    <li><a href="{{ url_for('publish') }}">Publicar Juego</a></li>
-                    <li><a href="{{ url_for('settings') }}">Ajustes</a></li>
-                    <li><a href="{{ url_for('logout') }}">Cerrar sesión</a></li>
+                    <li><a href="{{ url_for('publish') }}">Juegos</a></li>
                     {% else %}
                     <li><a href="{{ url_for('login') }}">Iniciar sesión</a></li>
                     {% endif %}
                     <li><a href="{{ url_for('contactos') }}">Contacto</a></li>
                     <li class="logo-item"><a href="{{ url_for('index') }}" class="logo"><img
-                                src="{{ url_for('static', filename='img/image__1_-removebg-preview (1) (1).png') }}"
-                                alt="New Era Games logo"></a></li>
+                                src="{{ url_for('static', filename='img/logo.png') }}" alt="New Era Games logo"></a>
+                    </li>
                 </ul>
             </nav>
+            {% if current_user %}
+            <div class="user-dropdown-container">
+                <button class="user-welcome" onclick="this.nextElementSibling.classList.toggle('active')">
+                    <span class="welcome-text" {% if not show_welcome %}style="display: none;"{% endif %}>Bienvenido! </span>
+                    <span class="username-text">{{ current_user.username }}</span>
+                    {% if current_user.pic %}
+                    <img src="{{ url_for('static', filename=current_user.pic) }}" alt="Avatar">
+                    {% else %}
+                    <div class="default-avatar"></div>
+                    {% endif %}
+                    <svg style="width:14px; margin-left:4px;" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </button>
+                <div class="user-dropdown-menu">
+                    <a href="{{ url_for('user_profile', username=current_user.username) }}">Mi perfil</a>
+                    <a href="{{ url_for('settings', tab='account') }}">Mis datos</a>
+                    <a href="{{ url_for('settings', tab='profile') }}">Configuración</a>
+                    <hr>
+                    <a href="{{ url_for('logout') }}" style="color: #ff4757;">Cerrar sesión</a>
+                </div>
+            </div>
+            <script>
+
+
+                // Cierra el menu si clica fuera
+                window.addEventListener('click', function (e) {
+                    if (!e.target.closest('.user-dropdown-container')) {
+                        document.querySelectorAll('.user-dropdown-menu.active').forEach(menu => {
+                            menu.classList.remove('active');
+                        });
+                    }
+                });
+            </script>
+            {% endif %}
+
         </div>
     </header>
 
@@ -277,9 +904,35 @@
             {% endif %}
 
             <div class="profile-info">
-                <h1>{{ profile.username }}</h1>
-                <span class="role-badge role-{{ profile.role }}">{{ profile.role }}</span>
+                <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+                    <h1 style="margin: 0;">{{ profile.username }}</h1>
+                    {% if profile.developer_plan and profile.developer_plan != 'none' %}
+                    <span class="plan-badge plan-badge-{{ profile.developer_plan }}"
+                        style="font-size: 0.9rem; padding: 4px 12px;">
+                        {{ profile.developer_plan }}
+                    </span>
+                    {% endif %}
+                    {% if current_user and current_user.id == profile.id and profile.developer_plan not in ['pro',
+                    'ultimate'] %}
+                    <a href="javascript:void(0)" id="upgrade-plan-trigger"
+                        style="font-size: 0.85rem; color: #ff73d7; text-decoration: none; font-weight: 600; border-bottom: 1px dashed #ff73d7;">
+                        {% if not profile.developer_plan or profile.developer_plan == 'none' %}
+                        🚀 Activar Plan
+                        {% else %}
+                        ✨ Mejorar Plan
+                        {% endif %}
+                    </a>
+                    {% endif %}
+                </div>
                 <p class="member-since">Miembro desde {{ profile.created_at.strftime('%d/%m/%Y') }}</p>
+
+                <div class="profile-description">
+                    {% if profile.description %}
+                    {{ profile.description }}
+                    {% else %}
+                    <span style="color: rgba(255,255,255,0.55);">Este usuario aún no ha escrito una descripción.</span>
+                    {% endif %}
+                </div>
 
                 <div class="profile-stats">
                     <div class="stat">
@@ -300,36 +953,115 @@
                     </div>
                 </div>
 
+                {% if profile.social_x or profile.social_youtube or profile.social_instagram or profile.social_github or (current_user and current_user.id == profile.id) %}
+                <div class="social-links">
+                    {% if profile.social_x %}
+                    <a href="{{ profile.social_x }}" target="_blank" rel="noopener noreferrer" class="social-btn" title="X (Twitter)">
+                        <svg viewBox="0 0 24 24" aria-hidden="true" style="width: 18px; fill: currentColor;"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
+                    </a>
+                    {% endif %}
+                    {% if profile.social_youtube %}
+                    <a href="{{ profile.social_youtube }}" target="_blank" rel="noopener noreferrer" class="social-btn" title="YouTube">
+                        <svg viewBox="0 0 24 24" style="width: 20px; fill: currentColor;"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"></path></svg>
+                    </a>
+                    {% endif %}
+                    {% if profile.social_instagram %}
+                    <a href="{{ profile.social_instagram }}" target="_blank" rel="noopener noreferrer" class="social-btn" title="Instagram">
+                        <svg viewBox="0 0 24 24" style="width: 20px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                    </a>
+                    {% endif %}
+                    {% if profile.social_github %}
+                    <a href="{{ profile.social_github }}" target="_blank" rel="noopener noreferrer" class="social-btn" title="GitHub">
+                        <svg viewBox="0 0 24 24" style="width: 20px; fill: currentColor;"><path d="M12 .5C5.37.5 0 5.87 0 12.5c0 5.3 3.438 9.8 8.205 11.385.6.11.82-.26.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.22 0 4.61-2.805 5.625-5.475 5.92.43.372.823 1.102.823 2.222 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.292 24 17.81 24 12.5 24 5.87 18.627.5 12 .5z"></path></svg>
+                    </a>
+                    {% endif %}
+                    {% if current_user and current_user.id == profile.id %}
+                    <a href="{{ url_for('settings') }}" class="social-btn" title="Ajustes de Perfil">
+                        <svg viewBox="0 0 24 24" style="width: 20px; fill: currentColor;"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.488.488 0 0 0-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.484.484 0 0 0-.48-.41h-3.84a.483.483 0 0 0-.48.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96a.488.488 0 0 0-.59.22L3.07 7.89a.49.49 0 0 0 .12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.27.41.48.41h3.84c.21 0 .43-.17.48-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.07.47 0 .59-.22l1.92-3.32a.49.49 0 0 0-.12-.61l-2.03-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"></path></svg>
+                    </a>
+                    {% endif %}
+                </div>
+                {% endif %}
+
                 {% if current_user and current_user.id != profile.id %}
-                <div class="profile-actions">
+                <div class="profile-actions" style="flex-wrap: wrap; align-items: center;">
                     <form method="POST" action="{{ url_for('toggle_follow', username=profile.username) }}">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                         <button type="submit" class="btn-follow {{ 'following' if is_following }}">
                             {{ 'Dejar de seguir' if is_following else '+ Seguir' }}
                         </button>
                     </form>
                     <form method="POST" action="{{ url_for('toggle_fav_developer', username=profile.username) }}">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                         <button type="submit" class="btn-fav {{ 'favorited' if is_fav_dev }}">
                             {{ '★ Favorito' if is_fav_dev else '☆ Añadir a favoritos' }}
                         </button>
                     </form>
+                    {% if profile.role in ['developer', 'admin'] %}
+                    <button class="btn-donate" id="btn-donate-profile" data-username="{{ profile.username }}">
+                        Donar a {{ profile.username }}
+                    </button>
+                    {% endif %}
+                    <button class="btn-report" id="btn-open-report">⚑ Reportar</button>
                 </div>
                 {% endif %}
             </div>
         </div>
 
         <div class="profile-games">
-            <h2>Juegos publicados</h2>
+            <h2 style="font-size: 1.8rem; margin-bottom: 30px; border-bottom: 3px solid #ff00c8; display: inline-block; padding-bottom: 6px;">Juegos publicados</h2>
             {% if games %}
-            <div class="games-grid">
+            <div class="product-content" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px;">
                 {% for game in games %}
-                <div class="game-card">
-                    <a href="{{ url_for('game_detail', slug=game.slug or game.id) }}">
-                        <img src="{{ url_for('static', filename=game.cover) }}" alt="{{ game.title }}">
-                        <div class="game-card-info">
-                            <h3>{{ game.title }}</h3>
-                            <span class="cats">{{ game.categories }}</span>
+                <div class="product-1" onclick="window.location='{{ url_for('game_detail', slug=game.slug or game.id) }}'"
+                    style="cursor: pointer;">
+                    <img src="{{ url_for('static', filename=game.cover) }}" alt="{{ game.title }}"
+                        style="width:100%; height:200px; object-fit:cover; border-radius: 12px;">
+                    <div class="product-txt">
+                        <div class="creator-info" style="display: flex; align-items: center; gap: 10px; margin: 5px 0 10px 0;">
+                            {% if profile.pic %}
+                            <img src="{{ url_for('static', filename=profile.pic) }}" alt="{{ profile.username }}"
+                                style="width: 24px; height: 24px; border-radius: 50%; object-fit: cover; margin: 0;">
+                            {% else %}
+                            <div style="width: 24px; height: 24px; border-radius: 50%; background: #332b45; display: inline-block;"></div>
+                            {% endif %}
+                            <span style="color: rgba(255,255,255,0.6); font-size: 0.82rem; font-weight: 600;">{{ profile.username }}</span>
                         </div>
-                    </a>
+
+                        <h3 style="font-size: 1.25rem; color: #fff; font-weight: 800; margin-bottom: 15px;">{{ game.title }}</h3>
+                        
+                        <div class="price" style="display: flex; justify-content: space-between; align-items: center; margin-top: auto; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.05);">
+                            <span class="price-badge {% if not game.price or game.price <= 0 %}free{% endif %}" 
+                                  style="background: #ff00c8; color: #fff; padding: 6px 14px; border-radius: 10px; font-weight: 800; font-size: 0.85rem;">
+                                {% if game.price and game.price > 0 %}${{ "%.2f"|format(game.price) }}{% else %}Gratis{% endif %}
+                            </span>
+                            <a href="{{ url_for('game_detail', slug=game.slug or game.id) }}" 
+                               class="btr-2" 
+                               onclick="event.stopPropagation();"
+                               style="background: #ff00c8; color: #fff; padding: 8px 18px; border-radius: 999px; font-weight: 700; font-size: 0.85rem;">
+                                Ver Juego
+                            </a>
+                        </div>
+
+                        {# Management buttons for owner or admin #}
+                        {% if current_user and (current_user.id == profile.id or current_user.role == 'admin') %}
+                        <div style="margin-top: 15px; padding-top: 12px; border-top: 1px dashed rgba(255,255,255,0.1); display: flex; gap: 8px;" onclick="event.stopPropagation();">
+                            <a href="{{ url_for('edit_game', game_id=game.id) }}"
+                                style="flex: 1; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 600; color: #a78bfa; text-decoration: none; padding: 7px; border: 1px solid rgba(167,139,250,0.4); border-radius: 8px; transition: all 0.2s;">
+                                ✎ Editar
+                            </a>
+                            <form method="POST" action="{{ url_for('delete_game', game_id=game.id) }}"
+                                style="flex: 1; margin: 0; display: flex;"
+                                onsubmit="return confirm('Seguro que quieres borrar tu juego?') && confirm('si borras el juego, no podras recuperarlo de ninguna forma, estas SEGURO?');">
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                                <button type="submit"
+                                    style="flex: 1; display: flex; align-items: center; justify-content: center; width: 100%; font-size: 0.8rem; font-weight: 600; color: #ff4d4d; background: transparent; border: 1px solid rgba(255,77,77,0.4); border-radius: 8px; padding: 7px; cursor: pointer; transition: all 0.2s;">
+                                    🗑 Borrar
+                                </button>
+                            </form>
+                        </div>
+                        {% endif %}
+                    </div>
                 </div>
                 {% endfor %}
             </div>
@@ -338,6 +1070,368 @@
             {% endif %}
         </div>
     </div>
+
+    {% if profile.role in ['developer', 'admin'] %}
+    <!-- ── MODAL DONACIÓN DIRECTA ── -->
+    <div id="donate-modal" class="modal-overlay hidden">
+        <div class="modal-content glass">
+            <button class="close-modal">&times;</button>
+            <h2 style="color: #fff;">Apoyar a {{ profile.username }}</h2>
+            <p style="color: #bbb; font-size: 0.95rem;">Tu donación directa ayuda al creador a seguir desarrollando
+                juegos.</p>
+
+            <form id="payment-form" action="{{ url_for('donar_developer', username=profile.username) }}" method="POST">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                <div class="form-group" style="text-align: center; margin-bottom: 5px;">
+                    <label style="text-align: center; color: #fff;">Selecciona un monto ($)</label>
+                    <div class="amount-options">
+                        <button type="button" class="amount-btn" data-amt="5">$5</button>
+                        <button type="button" class="amount-btn" data-amt="10">$10</button>
+                        <button type="button" class="amount-btn" data-amt="25">$25</button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Monto personalizado ($)</label>
+                    <input type="number" id="custom-amount" name="amount" step="0.01" min="1" value="5.00" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Nombre en la tarjeta</label>
+                    <input type="text" name="card_name" placeholder="Ej: Juan Pérez" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Correo electrónico</label>
+                    <input type="email" name="email" placeholder="tu@email.com"
+                        value="{{ current_user.email if current_user else '' }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Número de tarjeta</label>
+                    <input type="text" name="card_number" placeholder="0000 0000 0000 0000" maxlength="19" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Vencimiento</label>
+                        <input type="text" name="expiry" placeholder="MM/YY" maxlength="5" required>
+                    </div>
+                    <div class="form-group">
+                        <label>CVV</label>
+                        <input type="text" name="cvv" placeholder="123" maxlength="4" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-pay">Contribuir</button>
+            </form>
+            <p class="secure-notice">🔒 Pago seguro y encriptado de prueba</p>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if current_user and current_user.id != profile.id %}
+    <!-- ── MODAL REPORTE ── -->
+    <div id="report-modal" class="modal-overlay hidden">
+        <div class="modal-content glass" style="max-width: 420px;">
+            <button class="close-modal" id="close-report-modal">&times;</button>
+            <h2>⚑ Reportar a {{ profile.username }}</h2>
+            <p style="color: #bbb; font-size: 0.9rem; margin-bottom: 6px;">Selecciona el motivo del reporte:</p>
+            <div class="report-reasons">
+                <button type="button" class="report-reason-btn" data-reason="Contenido inapropiado">🔞 Contenido
+                    inapropiado</button>
+                <button type="button" class="report-reason-btn" data-reason="Acoso o amenazas">😠 Acoso o
+                    amenazas</button>
+                <button type="button" class="report-reason-btn" data-reason="Spam o publicidad">📢 Spam o
+                    publicidad</button>
+                <button type="button" class="report-reason-btn" data-reason="Cuenta falsa o suplantación">🎭 Cuenta
+                    falsa o suplantación</button>
+                <button type="button" class="report-reason-btn" data-reason="Otro">❓ Otro</button>
+            </div>
+            <label
+                style="color: #aaa; font-size: 0.82rem; display: block; text-align: left; margin-bottom: 4px;">Descripción
+                adicional (opcional)</label>
+            <textarea id="report-desc" placeholder="Describe brevemente el problema..."></textarea>
+            <input type="hidden" id="report-reason-value" value="">
+            <button class="btn-report-submit" id="btn-send-report">Enviar reporte</button>
+            <p class="secure-notice">Los reportes son anónimos y revisados por el equipo.</p>
+        </div>
+    </div>
+    {% endif %}
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const btnDonate = document.getElementById('btn-donate-profile');
+            const donateModal = document.getElementById('donate-modal');
+            const closeModal = document.querySelector('.close-modal');
+
+            // Modal visibility
+            if (btnDonate && donateModal) {
+                btnDonate.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    donateModal.classList.remove('hidden');
+                });
+            }
+
+            if (closeModal && donateModal) {
+                closeModal.addEventListener('click', () => {
+                    donateModal.classList.add('hidden');
+                });
+
+                donateModal.addEventListener('click', (e) => {
+                    if (e.target === donateModal) {
+                        donateModal.classList.add('hidden');
+                    }
+                });
+            }
+
+            // Amount buttons
+            const amountBtns = document.querySelectorAll('.amount-btn');
+            const customInput = document.getElementById('custom-amount');
+
+            if (amountBtns.length > 0 && customInput) {
+                amountBtns.forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        customInput.value = parseFloat(btn.dataset.amt).toFixed(2);
+                    });
+                });
+            }
+
+            // Card formatting
+            const cardInput = document.querySelector('input[name="card_number"]');
+            if (cardInput) {
+                cardInput.addEventListener('input', (e) => {
+                    let val = e.target.value.replace(/\D/g, '');
+                    let formatted = '';
+                    for (let i = 0; i < val.length; i++) {
+                        if (i > 0 && i % 4 === 0) formatted += ' ';
+                        formatted += val[i];
+                    }
+                    e.target.value = formatted.substring(0, 19);
+                });
+            }
+
+            // Expiry formatting
+            const expiryInput = document.querySelector('input[name="expiry"]');
+            if (expiryInput) {
+                expiryInput.addEventListener('input', (e) => {
+                    let val = e.target.value.replace(/\D/g, '');
+                    if (val.length > 2) {
+                        e.target.value = val.substring(0, 2) + '/' + val.substring(2, 4);
+                    } else {
+                        e.target.value = val;
+                    }
+                });
+            }
+
+            setTimeout(() => {
+                document.querySelectorAll('.flash-msg').forEach(el => el.style.display = 'none');
+            }, 4000);
+
+            // ── REPORTE ──
+            const btnOpenReport = document.getElementById('btn-open-report');
+            const reportModal = document.getElementById('report-modal');
+            const closeReportModal = document.getElementById('close-report-modal');
+            const reportReasonBtns = document.querySelectorAll('.report-reason-btn');
+            const reportReasonValue = document.getElementById('report-reason-value');
+            const btnSendReport = document.getElementById('btn-send-report');
+            const reportDesc = document.getElementById('report-desc');
+
+            if (btnOpenReport && reportModal) {
+                btnOpenReport.addEventListener('click', () => {
+                    reportModal.classList.remove('hidden');
+                });
+            }
+
+            if (closeReportModal && reportModal) {
+                closeReportModal.addEventListener('click', () => reportModal.classList.add('hidden'));
+                reportModal.addEventListener('click', e => {
+                    if (e.target === reportModal) reportModal.classList.add('hidden');
+                });
+            }
+
+            reportReasonBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    reportReasonBtns.forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                    if (reportReasonValue) reportReasonValue.value = btn.dataset.reason;
+                });
+            });
+
+            if (btnSendReport) {
+                btnSendReport.addEventListener('click', () => {
+                    const reason = reportReasonValue ? reportReasonValue.value : '';
+                    if (!reason) {
+                        alert('Por favor selecciona un motivo para el reporte.');
+                        return;
+                    }
+                    // Aquí se enviaría el reporte al backend
+                    // fetch('/report/user/{{ profile.username }}', { method: 'POST', ... })
+                    reportModal.classList.add('hidden');
+                    const toast = document.createElement('div');
+                    toast.textContent = '✅ Reporte enviado. Gracias por ayudarnos a mantener la comunidad segura.';
+                    toast.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:rgba(30,20,45,0.97);color:#fff;padding:14px 22px;border-radius:12px;font-size:0.9rem;box-shadow:0 8px 24px rgba(0,0,0,0.5);z-index:99999;border:1px solid rgba(255,77,77,0.3);';
+                    document.body.appendChild(toast);
+                    setTimeout(() => toast.remove(), 4000);
+                });
+            }
+        });
+    </script>
+    <!-- Modal de Mejora de Plan -->
+    {% if current_user and current_user.id == profile.id %}
+    <div class="plan-modal-overlay" id="planModalOverlay"
+        style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); z-index: 10001; display: none; align-items: center; justify-content: center;">
+        <div class="plan-modal" id="planModal"
+            style="background: rgba(30, 22, 45, 0.95); border: 1px solid rgba(255, 0, 200, 0.3); border-radius: 24px; padding: 40px; max-width: 900px; width: 90%; text-align: center; position: relative;">
+            <button class="close-modal" id="closePlanModalBtn"
+                style="position: absolute; top: 15px; right: 20px; background: none; border: none; color: #fff; font-size: 2rem; cursor: pointer;">&times;</button>
+            <h3
+                style="font-size: 2.2rem; margin-top: 0; background: linear-gradient(90deg, #fff, #ff6ad1, #ff00c8); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; font-weight: 800;">
+                Mejora tu Experiencia</h3>
+            <p style="color: rgba(255,255,255,0.7); margin-bottom: 35px;">Selecciona el plan que mejor se adapte a tus
+                necesidades</p>
+
+            <div class="plans-container"
+                style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px;">
+                <div class="plan-card" data-plan="estandar"
+                    style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 30px 20px; cursor: pointer; transition: all 0.3s ease;">
+                    <div class="plan-title" style="font-size: 1.5rem; font-weight: 800; margin-bottom: 5px;">Estándar
+                    </div>
+                    <div class="plan-price" style="font-size: 1.2rem; color: #ff6ad1; margin-bottom: 15px;">Gratis</div>
+                    <p style="font-size: 0.9rem; color: rgba(255,255,255,0.8);">Sube juegos básicos con almacenamiento
+                        estándar.</p>
+                    <div class="plan-btn"
+                        style="padding: 10px; border-radius: 8px; background: rgba(255, 255, 255, 0.1); font-weight: 600;">
+                        Seleccionar</div>
+                </div>
+                <div class="plan-card" data-plan="pro"
+                    style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 30px 20px; cursor: pointer; transition: all 0.3s ease;">
+                    <div class="plan-title" style="font-size: 1.5rem; font-weight: 800; margin-bottom: 5px;">Pro</div>
+                    <div class="plan-price" style="font-size: 1.2rem; color: #ff6ad1; margin-bottom: 15px;">$4.99/mes
+                    </div>
+                    <p style="font-size: 0.9rem; color: rgba(255,255,255,0.8);">Más espacio y herramientas exclusivas
+                        del editor.</p>
+                    <div class="plan-btn"
+                        style="padding: 10px; border-radius: 8px; background: rgba(255, 255, 255, 0.1); font-weight: 600;">
+                        Seleccionar</div>
+                </div>
+                <div class="plan-card" data-plan="ultimate"
+                    style="background: rgba(255, 0, 200, 0.08); border: 1px solid rgba(255, 0, 200, 0.4); border-radius: 16px; padding: 30px 20px; cursor: pointer; transition: all 0.3s ease;">
+                    <div class="plan-title"
+                        style="font-size: 1.5rem; font-weight: 800; margin-bottom: 5px; color: #ff6ad1;">Ultimate</div>
+                    <div class="plan-price" style="font-size: 1.2rem; color: #fff; margin-bottom: 15px;">$9.99/mes</div>
+                    <p style="font-size: 0.9rem; color: rgba(255,255,255,0.8);">Todo ilimitado y acceso anticipado a
+                        novedades.</p>
+                    <div class="plan-btn"
+                        style="padding: 10px; border-radius: 8px; background: linear-gradient(90deg, #ff6ad1, #ff00c8); font-weight: 600;">
+                        Seleccionar</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="paywall-modal" id="paywallModal"
+            style="display: none; background: rgba(30, 22, 45, 0.95); border: 1px solid rgba(255, 0, 200, 0.3); border-radius: 24px; padding: 40px; max-width: 500px; width: 90%; text-align: left; position: relative;">
+            <button class="close-modal" id="closePaywallModalBtn"
+                style="position: absolute; top: 15px; right: 20px; background: none; border: none; color: #fff; font-size: 2rem; cursor: pointer;">&times;</button>
+            <h3 id="paywallTitle"
+                style="text-align: center; font-size: 1.8rem; background: linear-gradient(90deg, #fff, #ff6ad1, #ff00c8); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; font-weight: 800; margin-bottom: 5px;">
+                Activar Plan</h3>
+            <p style="text-align: center; color: rgba(255,255,255,0.7); margin-bottom: 25px;">Ingresa tus datos para
+                continuar</p>
+
+            <div style="margin-bottom: 15px;">
+                <label
+                    style="display: block; margin-bottom: 5px; color: rgba(255,255,255,0.8); font-size: 0.9rem;">Nombre
+                    en la tarjeta</label>
+                <input type="text" id="pw_card_name" placeholder="Juan Perez"
+                    style="width: 100%; padding: 12px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.05); color: #fff; font-family: inherit;">
+            </div>
+            <div style="margin-bottom: 15px;">
+                <label
+                    style="display: block; margin-bottom: 5px; color: rgba(255,255,255,0.8); font-size: 0.9rem;">Número
+                    de tarjeta</label>
+                <input type="text" id="pw_card_number" placeholder="4532 1234 5678 9012" maxlength="19"
+                    style="width: 100%; padding: 12px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.05); color: #fff; font-family: inherit;">
+            </div>
+            <button id="paywallSubmitBtn"
+                style="width: 100%; margin-top: 15px; padding: 14px; border-radius: 12px; background: linear-gradient(90deg, #ff6ad1, #ff00c8); color: #fff; font-size: 1.1rem; font-weight: 700; border: none; cursor: pointer;">Pagar
+                y Activar</button>
+        </div>
+    </div>
+    {% endif %}
+
+    <script>
+        // Modal logic
+        const upgradeTrigger = document.getElementById('upgrade-plan-trigger');
+        const planModalOverlay = document.getElementById('planModalOverlay');
+        const planModal = document.getElementById('planModal');
+        const paywallModal = document.getElementById('paywallModal');
+        const closePlanBtn = document.getElementById('closePlanModalBtn');
+        const closePaywallBtn = document.getElementById('closePaywallModalBtn');
+        let selectedPlan = '';
+
+        if (upgradeTrigger) {
+            upgradeTrigger.onclick = () => {
+                planModalOverlay.style.display = 'flex';
+                planModal.style.display = 'block';
+                paywallModal.style.display = 'none';
+            };
+        }
+
+        const closeAll = () => planModalOverlay.style.display = 'none';
+        if (closePlanBtn) closePlanBtn.onclick = closeAll;
+        if (closePaywallBtn) closePaywallBtn.onclick = closeAll;
+
+        document.querySelectorAll('.plan-card').forEach(card => {
+            card.onclick = () => {
+                selectedPlan = card.getAttribute('data-plan');
+                if (selectedPlan === 'estandar') {
+                    finalizeUpgrade(selectedPlan);
+                } else {
+                    planModal.style.display = 'none';
+                    paywallModal.style.display = 'block';
+                    document.getElementById('paywallTitle').innerText = 'Activar ' + selectedPlan.charAt(0).toUpperCase() + selectedPlan.slice(1);
+                }
+            };
+        });
+
+        const paywallSubmit = document.getElementById('paywallSubmitBtn');
+        if (paywallSubmit) {
+            paywallSubmit.onclick = () => {
+                const name = document.getElementById('pw_card_name').value;
+                const card = document.getElementById('pw_card_number').value;
+                if (!name || card.length < 15) {
+                    alert('Por favor completa los datos');
+                    return;
+                }
+                finalizeUpgrade(selectedPlan);
+            };
+        }
+
+        function finalizeUpgrade(plan) {
+            const formData = new FormData();
+            formData.append('plan', plan);
+            formData.append('csrf_token', '{{ csrf_token() }}');
+
+            fetch('/upgrade_plan', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token() }}'
+                }
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        location.reload();
+                    } else {
+                        alert('Error: ' + data.error);
+                    }
+                });
+        }
+    </script>
 </body>
+
 
 </html>

@@ -2,13 +2,14 @@
 <html lang="en">
 
 <head>
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>{{ game.title }} — New Era Games</title>
     <meta name="description" content="{{ game.description }}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style copy.css') }}">
-    <link rel="icon" href="{{ url_for('static', filename='img/1-17e21c9a.ico') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <style>
         html {
             scroll-behavior: smooth;
@@ -29,6 +30,17 @@
             color: #fff;
             font-size: 14px;
             animation: fadeIn .3s ease;
+            transition: opacity 0.6s ease, transform 0.6s ease, margin 0.6s ease, padding 0.6s ease;
+            overflow: hidden;
+        }
+
+        .flash-msg.fade-out {
+            opacity: 0;
+            transform: translateY(-20px);
+            margin-bottom: -50px;
+            padding-top: 0;
+            padding-bottom: 0;
+            pointer-events: none;
         }
 
         .flash-msg.success {
@@ -59,25 +71,235 @@
             }
         }
 
-        /* Game detail styles */
-        .game-detail {
-            max-width: 900px;
-            margin: 40px auto;
-            padding: 0 20px;
-            color: #fff;
+        /* ─── FIX HEADER HEIGHT ON INNER PAGES ─────────────────── */
+        header.header {
+            min-height: auto !important;
+            padding: 0 !important;
+            background: transparent !important;
+            display: block !important;
+            position: relative !important;
+            z-index: 1000;
         }
 
+        header.header .menu {
+            position: relative !important;
+            width: 100% !important;
+            height: auto !important;
+            min-height: 0 !important;
+            background: transparent !important;
+            clip-path: none !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            padding: 14px 24px !important;
+            z-index: 1100 !important;
+            transition: none !important;
+        }
+
+        header.header .menu label {
+            display: none;
+            cursor: pointer;
+            order: 0;
+        }
+
+        header.header .menu .menu-icono {
+            width: 28px;
+        }
+
+        header.header .menu .navbar {
+            display: flex !important;
+            text-align: left !important;
+            padding: 0 !important;
+            row-gap: 0 !important;
+            margin-left: 10px;
+            margin-right: auto;
+        }
+
+        header.header .menu .navbar ul {
+            display: flex !important;
+            flex-direction: row !important;
+            align-items: center;
+            gap: 4px;
+        }
+
+        header.header .menu .navbar ul li {
+            float: none;
+        }
+
+        header.header .menu .navbar ul li a {
+            font-size: 17px !important;
+            font-weight: 600;
+            color: #fff !important;
+            padding: 10px 14px;
+            display: block;
+            border-bottom: none !important;
+            transition: color 0.15s ease, transform 0.15s ease;
+        }
+
+        header.header .menu .navbar ul li a:hover {
+            color: #ff00c8 !important;
+            font-size: 17px !important;
+            border-bottom: none !important;
+            transform: scale(1.06);
+        }
+
+        header.header .menu .navbar ul li.logo-item img {
+            height: 38px;
+            display: block;
+        }
+
+        .user-welcome {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 6px 12px;
+            border-radius: 999px;
+            color: #fff;
+            font-weight: 700;
+            text-decoration: none;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.2s ease, background 0.2s ease;
+            order: 2;
+            flex-shrink: 0;
+        }
+
+        .user-welcome:hover {
+            transform: translateY(-2px) scale(1.02);
+            background: rgba(255, 255, 255, 0.16);
+        }
+
+        .user-welcome img,
+        .user-welcome .default-avatar {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            object-fit: cover;
+            background: #ccc;
+            display: inline-block;
+        }
+
+        #menu {
+            display: none;
+        }
+
+        @media (max-width: 991px) {
+            header.header .menu {
+                padding: 14px 16px !important;
+                flex-wrap: wrap;
+            }
+
+            header.header .menu label {
+                display: block !important;
+                z-index: 1200;
+                order: 0;
+            }
+
+            header.header .menu .navbar {
+                display: none !important;
+                position: absolute !important;
+                top: 100% !important;
+                left: 0 !important;
+                right: 0 !important;
+                background: rgba(22, 14, 34, 0.97) !important;
+                padding: 12px 18px !important;
+                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5) !important;
+                margin: 0 !important;
+                z-index: 1150 !important;
+                border-radius: 0 0 12px 12px;
+            }
+
+            header.header .menu .navbar ul {
+                flex-direction: column !important;
+                gap: 4px !important;
+                align-items: flex-start !important;
+            }
+
+            header.header .menu .navbar ul li {
+                width: 100%;
+            }
+
+            header.header .menu .navbar ul li a {
+                padding: 12px 10px !important;
+                font-size: 17px !important;
+            }
+
+            header.header .menu .navbar ul li.logo-item {
+                width: 100% !important;
+                display: flex !important;
+                justify-content: center !important;
+                align-items: center !important;
+                padding: 12px 0 4px 0 !important;
+                margin-top: 8px !important;
+                border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+                margin-left: 0 !important;
+            }
+
+            header.header .menu .navbar ul li.logo-item a.logo {
+                display: flex !important;
+                justify-content: center !important;
+                align-items: center !important;
+                width: 100% !important;
+                text-align: center !important;
+                margin: 0 auto !important;
+            }
+
+            header.header .menu .navbar ul li.logo-item img {
+                height: 44px !important;
+                width: auto !important;
+                display: block !important;
+                margin: 0 auto !important;
+            }
+
+            header.header .menu #menu:checked~.navbar {
+                display: block !important;
+            }
+
+            .user-welcome {
+                order: 1;
+                margin-left: auto;
+                font-size: 14px;
+                padding: 5px 10px;
+            }
+        }
+
+        /* ─── PAGE WRAPPER ─────────────────────────────────────── */
+        .page-wrapper {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 80px 20px 60px;
+            /* 80px = espacio bajo el navbar */
+        }
+
+        /* ─── COVER IMAGE ──────────────────────────────────────── */
         .game-cover {
             width: 100%;
-            max-height: 400px;
+            max-height: 480px;
             object-fit: cover;
-            border-radius: 16px;
-            margin-bottom: 24px;
+            border-radius: 18px;
+            margin-bottom: 32px;
+            display: block;
+        }
+
+        /* ─── TWO-COLUMN BODY (desktop) ────────────────────────── */
+        .game-body {
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 40px;
+            align-items: start;
+        }
+
+        /* ─── LEFT: info + comments ────────────────────────────── */
+        .game-info {
+            color: #fff;
+            min-width: 0;
+            /* prevent grid blowout */
         }
 
         .game-info h1 {
             font-size: 2rem;
-            margin-bottom: 8px;
+            margin: 0 0 8px;
         }
 
         .game-info .categories {
@@ -90,71 +312,409 @@
             font-size: 1rem;
             line-height: 1.7;
             color: #ccc;
-            margin-bottom: 24px;
+            margin-bottom: 0;
+            white-space: pre-wrap;
         }
 
+        /* ─── RIGHT: sidebar ───────────────────────────────────── */
+        .game-sidebar {
+            position: sticky;
+            top: 24px;
+        }
+
+        /* Creator card */
         .game-creator {
             display: flex;
             align-items: center;
-            gap: 12px;
-            margin-bottom: 40px;
-            padding: 16px;
+            gap: 14px;
+            padding: 18px;
             background: rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
+            border-radius: 14px;
+            margin-bottom: 16px;
         }
 
         .game-creator img {
-            width: 48px;
-            height: 48px;
+            width: 52px;
+            height: 52px;
             border-radius: 50%;
             object-fit: cover;
+            flex-shrink: 0;
         }
 
-        .game-creator .creator-name {
+        .creator-link {
+            color: #a78bfa;
+            text-decoration: none;
             font-weight: 600;
         }
 
-        /* Comments */
+        .creator-link:hover {
+            text-decoration: none;
+            color: #ff00c8;
+        }
+
+        .role-badge {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-left: 6px;
+        }
+
+        .role-standard {
+            background: #3f3456;
+            color: #aaa;
+        }
+
+        .role-developer {
+            background: linear-gradient(90deg, #6a11cb, #2575fc);
+            color: #fff;
+        }
+
+        .role-admin {
+            background: linear-gradient(90deg, #ff0844, #ffb199);
+            color: #fff;
+        }
+
+        /* Action buttons */
+        /* Action buttons */
+        .game-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .btn-download {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            padding: 13px 20px;
+            background: transparent;
+            border: 2px solid #00e676;
+            color: #00e676;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.15s ease;
+        }
+
+        .btn-download:hover {
+            transform: translateY(-2px);
+            background: rgba(0, 230, 118, 0.05);
+            box-shadow: 0 6px 20px rgba(0, 230, 118, 0.15);
+        }
+
+        .btn-fav-game {
+            padding: 13px 20px;
+            border: 2px solid #ff00c8;
+            background: transparent;
+            color: #ff00c8;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            width: 100%;
+            display: block;
+            transition: all 0.15s ease;
+        }
+
+        .btn-fav-game.favorited {
+            background: rgba(255, 0, 200, 0.1);
+            color: #ff00c8;
+            border-style: solid;
+        }
+
+        .btn-fav-game:hover {
+            transform: translateY(-2px);
+            background: rgba(255, 0, 200, 0.05);
+            box-shadow: 0 6px 20px rgba(255, 0, 200, 0.15);
+        }
+
+        .manage-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .btn-edit,
+        .btn-delete {
+            padding: 11px;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 0.88rem;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all 0.15s ease;
+            background: transparent;
+        }
+
+        .btn-edit {
+            border: 1px solid rgba(167, 139, 250, 0.6);
+            color: #a78bfa;
+        }
+
+        .btn-edit:hover {
+            background: rgba(167, 139, 250, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .btn-delete {
+            border: 1px solid rgba(255, 71, 87, 0.6);
+            color: #ff4757;
+        }
+
+        .btn-delete:hover {
+            background: rgba(255, 71, 87, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .btn-delete button {
+            background: none;
+            border: none;
+            color: inherit;
+            font: inherit;
+            cursor: inherit;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .game-price-tag {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 12px;
+            background: rgba(255, 0, 200, 0.05);
+            border: 1px solid rgba(255, 0, 200, 0.15);
+            border-radius: 12px;
+        }
+
+        .game-price-tag .price-free {
+            color: #00e676;
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .game-price-tag .price-amount {
+            color: #fff;
+            font-size: 1.8rem;
+            font-weight: 800;
+        }
+
+        /* ─── RATING SYSTEM ─────────────────────────────────────── */
+        .game-rating {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 14px;
+            text-align: center;
+        }
+
+        .rating-stars {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: center;
+            gap: 5px;
+            margin-top: 10px;
+        }
+
+        .rating-stars input {
+            display: none;
+        }
+
+        .rating-stars label {
+            font-size: 2rem;
+            color: rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .rating-stars label:hover,
+        .rating-stars label:hover~label,
+        .rating-stars input:checked~label {
+            color: #ffca28;
+        }
+
+        .avg-rating-display {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #ffca28;
+            margin-bottom: 5px;
+        }
+
+        .rating-count {
+            font-size: 0.8rem;
+            color: #888;
+        }
+
+        /* Manage row (edit + delete) */
+        .manage-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .manage-row form {
+            margin: 0;
+        }
+
+        .btn-edit {
+            display: block;
+            padding: 11px 10px;
+            border: 2px solid #7c3aed;
+            background: transparent;
+            color: #7c3aed;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 0.88rem;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            transition: all 0.15s ease;
+        }
+
+        .btn-edit:hover {
+            background: #7c3aed;
+            color: #fff;
+        }
+
+        .btn-delete {
+            display: block;
+            width: 100%;
+            padding: 11px 10px;
+            border: 2px solid #e74c3c;
+            background: transparent;
+            color: #e74c3c;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 0.88rem;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.15s ease;
+        }
+
+        .btn-delete:hover {
+            background: #e74c3c;
+            color: #fff;
+        }
+
+        /* ─── COMMENTS ─────────────────────────────────────────── */
         .comments-section {
-            max-width: 900px;
-            margin: 0 auto 60px;
-            padding: 0 20px;
+            margin-top: 48px;
             color: #fff;
         }
 
         .comments-section h2 {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             margin-bottom: 20px;
             border-bottom: 2px solid rgba(255, 255, 255, 0.1);
             padding-bottom: 12px;
         }
 
+        .comment-form {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 6px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .comment-form:focus-within {
+            border-color: rgba(167, 139, 250, 0.5);
+            background: rgba(255, 255, 255, 0.06);
+            box-shadow: 0 4px 20px rgba(167, 139, 250, 0.15);
+        }
+
         .comment-form textarea {
-            width: 100%;
-            min-height: 80px;
-            padding: 12px;
-            border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            background: rgba(255, 255, 255, 0.05);
+            flex: 1;
+            height: 48px;
+            min-height: 48px;
+            max-height: 48px;
+            padding: 14px 16px;
+            border: none;
+            background: transparent;
             color: #fff;
             font-size: 0.95rem;
-            resize: vertical;
-            margin-bottom: 10px;
+            resize: none;
+            box-sizing: border-box;
+            line-height: 1.4;
+            overflow: hidden;
+            outline: none;
+        }
+
+        .comment-form textarea::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+            transition: color 0.3s ease;
+        }
+
+        .comment-form textarea:focus::placeholder {
+            color: rgba(255, 255, 255, 0.2);
         }
 
         .comment-form button {
-            padding: 10px 28px;
+            height: 48px;
+            padding: 0 28px;
             border: none;
-            border-radius: 8px;
-            background: linear-gradient(135deg, #7c3aed, #a78bfa);
+            border-radius: 10px;
+            background: linear-gradient(135deg, #7c3aed 0%, #ff00c8 100%);
             color: #fff;
-            font-weight: 600;
+            font-weight: 700;
+            font-size: 0.95rem;
+            letter-spacing: 0.3px;
             cursor: pointer;
-            transition: transform 0.2s;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            white-space: nowrap;
+            flex-shrink: 0;
+            box-shadow: 0 4px 15px rgba(255, 0, 200, 0.3);
+            margin-left: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .comment-form button::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: all 0.5s ease;
         }
 
         .comment-form button:hover {
-            transform: scale(1.05);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 0, 200, 0.5);
+            background: linear-gradient(135deg, #8a2be2 0%, #ff14d2 100%);
+        }
+
+        .comment-form button:hover::after {
+            left: 100%;
+        }
+
+        .comment-form button:active {
+            transform: translateY(1px);
+            box-shadow: 0 2px 10px rgba(255, 0, 200, 0.3);
         }
 
         .comment-card {
@@ -222,7 +782,7 @@
 
         .like-btn:hover,
         .reply-toggle:hover {
-            text-decoration: underline;
+            text-decoration: none;
         }
 
         .replies {
@@ -243,27 +803,95 @@
             margin-left: 40px;
         }
 
-        .reply-form textarea {
-            width: 100%;
-            min-height: 50px;
-            padding: 10px;
-            border-radius: 8px;
+        .reply-form form {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 14px;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            background: rgba(255, 255, 255, 0.03);
+            padding: 6px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .reply-form form:focus-within {
+            border-color: rgba(167, 139, 250, 0.5);
+            background: rgba(255, 255, 255, 0.06);
+            box-shadow: 0 4px 20px rgba(167, 139, 250, 0.15);
+        }
+
+        .reply-form textarea {
+            flex: 1;
+            height: 44px;
+            min-height: 44px;
+            max-height: 44px;
+            padding: 12px 14px;
+            border: none;
+            background: transparent;
             color: #fff;
             font-size: 0.9rem;
-            resize: vertical;
-            margin-bottom: 6px;
+            resize: none;
+            box-sizing: border-box;
+            line-height: 1.4;
+            overflow: hidden;
+            outline: none;
+            margin-bottom: 0;
+        }
+
+        .reply-form textarea::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+            transition: color 0.3s ease;
+        }
+
+        .reply-form textarea:focus::placeholder {
+            color: rgba(255, 255, 255, 0.2);
         }
 
         .reply-form button {
-            padding: 6px 18px;
+            height: 44px;
+            padding: 0 20px;
             border: none;
-            border-radius: 6px;
-            background: #7c3aed;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #7c3aed 0%, #ff00c8 100%);
             color: #fff;
+            font-weight: 700;
+            font-size: 0.9rem;
+            letter-spacing: 0.3px;
             cursor: pointer;
-            font-size: 0.85rem;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            white-space: nowrap;
+            flex-shrink: 0;
+            box-shadow: 0 4px 15px rgba(255, 0, 200, 0.3);
+            margin-left: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .reply-form button::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: all 0.5s ease;
+        }
+
+        .reply-form button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 0, 200, 0.5);
+            background: linear-gradient(135deg, #8a2be2 0%, #ff14d2 100%);
+        }
+
+        .reply-form button:hover::after {
+            left: 100%;
+        }
+
+        .reply-form button:active {
+            transform: translateY(1px);
+            box-shadow: 0 2px 10px rgba(255, 0, 200, 0.3);
         }
 
         .no-comments {
@@ -277,94 +905,224 @@
 
         .login-prompt a {
             color: #fff;
-            text-decoration: underline;
+            text-decoration: none;
         }
 
         .hidden {
             display: none;
         }
 
-        /* Download & Favorite buttons */
-        .game-actions {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            margin-bottom: 24px;
-        }
-
-        .btn-download {
+        /* ─── COMMENT MANAGEMENT BUTTONS ─────────────────────────── */
+        .comment-manage-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 0.82rem;
+            padding: 2px 8px;
+            border-radius: 6px;
+            transition: background 0.15s, color 0.15s;
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            padding: 12px 28px;
-            background: linear-gradient(90deg, #00c853, #00e676);
-            color: #fff;
-            border: none;
-            border-radius: 25px;
-            font-weight: 600;
-            font-size: 1rem;
-            cursor: pointer;
-            text-decoration: none;
-            transition: transform 0.15s ease, box-shadow 0.15s ease;
-        }
-
-        .btn-download:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 200, 83, 0.3);
-        }
-
-        .btn-fav-game {
-            padding: 12px 28px;
-            border: 2px solid #ff00c8;
-            background: transparent;
-            color: #ff00c8;
-            border-radius: 25px;
-            font-weight: 600;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.15s ease;
-        }
-
-        .btn-fav-game.favorited {
-            background: #ff00c8;
-            color: #fff;
-        }
-
-        .btn-fav-game:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(255, 0, 200, 0.3);
-        }
-
-        .creator-link {
-            color: #a78bfa;
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        .creator-link:hover {
-            text-decoration: underline;
-            color: #ff00c8;
-        }
-
-        .role-badge {
-            display: inline-block;
-            padding: 2px 10px;
-            border-radius: 12px;
-            font-size: 0.65rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            gap: 3px;
             margin-left: 8px;
+            /* Added margin to push them away from other elements */
         }
 
-        .role-developer {
-            background: linear-gradient(90deg, #6a11cb, #2575fc);
+        .btn-edit-comment {
+            color: #a78bfa;
+            border: 1px solid rgba(167, 139, 250, 0.35);
+        }
+
+        .btn-edit-comment:hover {
+            background: rgba(167, 139, 250, 0.15);
+        }
+
+        .btn-delete-comment {
+            color: #e74c3c;
+            border: 1px solid rgba(231, 76, 60, 0.35);
+        }
+
+        .btn-delete-comment:hover {
+            background: rgba(231, 76, 60, 0.15);
+        }
+
+        .edit-window-timer {
+            font-size: 0.75rem;
+            color: #888;
+            margin-left: 4px;
+        }
+
+        .edited-label {
+            font-size: 0.75rem;
+            color: #888;
+            font-style: italic;
+            margin-left: 6px;
+        }
+
+        .inline-edit-form {
+            margin-top: 10px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 8px;
+            border: 1px solid rgba(167, 139, 250, 0.2);
+        }
+
+        .inline-edit-form textarea {
+            width: 100%;
+            min-height: 60px;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            font-size: 0.9rem;
+            resize: vertical;
+            margin-bottom: 8px;
+            box-sizing: border-box;
+        }
+
+        .inline-edit-form .edit-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .inline-edit-form .btn-save-edit {
+            padding: 6px 16px;
+            border: none;
+            border-radius: 6px;
+            background: linear-gradient(135deg, #7c3aed, #a78bfa);
+            color: #fff;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.15s;
+        }
+
+        .inline-edit-form .btn-save-edit:hover {
+            transform: scale(1.04);
+        }
+
+        .inline-edit-form .btn-cancel-edit {
+            padding: 6px 14px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+            background: transparent;
+            color: #aaa;
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+
+        .inline-edit-form .btn-cancel-edit:hover {
             color: #fff;
         }
 
-        .role-admin {
-            background: linear-gradient(90deg, #ff0844, #ffb199);
+        /* ─── MOBILE ────────────────────────────────────────────── */
+        @media (max-width: 768px) {
+            .page-wrapper {
+                padding: 20px 16px 40px;
+            }
+
+            .game-body {
+                grid-template-columns: 1fr;
+            }
+
+            .game-sidebar {
+                position: static;
+            }
+
+            .game-info h1 {
+                font-size: 1.6rem;
+            }
+
+            .game-creator {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .manage-row {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .replies {
+                margin-left: 15px;
+            }
+
+            .comment-form,
+            .reply-form form {
+                flex-direction: column;
+                align-items: stretch;
+                padding: 12px;
+            }
+
+            .comment-form textarea,
+            .reply-form textarea {
+                width: 100%;
+                height: 80px;
+                min-height: 80px;
+                max-height: 150px;
+                padding: 8px 10px;
+                margin-bottom: 12px;
+                resize: vertical;
+            }
+
+            .comment-form button,
+            .reply-form button {
+                margin-left: 0;
+                width: 100%;
+            }
+        }
+
+        /* User Dropdown CSS added by Assistant */
+        .user-dropdown-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .user-dropdown-menu {
+            position: absolute;
+            top: calc(100% + 10px);
+            right: 0;
+            background: #2a2238;
+            /* Matches dark theme */
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 8px 0;
+            min-width: 180px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .user-dropdown-menu.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .user-dropdown-menu a {
+            display: block;
+            padding: 10px 20px;
+            color: #ddd;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: background 0.2s, color 0.2s;
+            text-align: left;
+        }
+
+        .user-dropdown-menu a:hover {
+            background: rgba(255, 255, 255, 0.05);
             color: #fff;
+        }
+
+        .user-dropdown-menu hr {
+            border: none;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin: 8px 0;
         }
     </style>
 </head>
@@ -381,6 +1139,7 @@
     {% endwith %}
 
     <header class="header">
+        <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}">
         <div class="menu container">
             <input type="checkbox" id="menu" />
             <label for="menu">
@@ -390,163 +1149,1012 @@
                 <ul>
                     <li><a href="{{ url_for('index') }}">Inicio</a></li>
                     <li><a href="{{ url_for('informacion') }}">Servicios</a></li>
+                    <li><a href="{{ url_for('pricing') }}">Planes</a></li>
+                    <li><a href="{{ url_for('donar') }}">Donaciones</a></li>
                     {% if current_user %}
-                    <li><a href="{{ url_for('publish') }}">Publicar Juego</a></li>
-                    <li><a href="{{ url_for('logout') }}">Cerrar sesión ({{ current_user.username }})</a></li>
+                    <li><a href="{{ url_for('publish') }}">Juegos</a></li>
                     {% else %}
                     <li><a href="{{ url_for('login') }}">Iniciar sesión</a></li>
                     {% endif %}
                     <li><a href="{{ url_for('contactos') }}">Contacto</a></li>
                     <li class="logo-item"><a href="{{ url_for('index') }}" class="logo"><img
-                                src="{{ url_for('static', filename='img/image__1_-removebg-preview (1) (1).png') }}"
-                                alt="New Era Games logo"></a></li>
+                                src="{{ url_for('static', filename='img/logo.png') }}" alt="New Era Games logo"></a>
+                    </li>
                 </ul>
             </nav>
+            {% if current_user %}
+            <div class="user-dropdown-container">
+                <button class="user-welcome" onclick="this.nextElementSibling.classList.toggle('active')">
+                    <span class="welcome-text" {% if not show_welcome %}style="display: none;" {% endif %}>Bienvenido!
+                    </span>
+                    <span class="username-text">{{ current_user.username }}</span>
+                    {% if current_user.pic %}
+                    <img src="{{ url_for('static', filename=current_user.pic) }}" alt="Avatar">
+                    {% else %}
+                    <div class="default-avatar"></div>
+                    {% endif %}
+                    <svg style="width:14px; margin-left:4px;" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </button>
+                <div class="user-dropdown-menu">
+                    <a href="{{ url_for('user_profile', username=current_user.username) }}">Mi perfil</a>
+                    <a href="{{ url_for('settings', tab='account') }}">Mis datos</a>
+                    <a href="{{ url_for('settings', tab='profile') }}">Configuración</a>
+                    <hr>
+                    <a href="{{ url_for('logout') }}" style="color: #ff4757;">Cerrar sesión</a>
+                </div>
+            </div>
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    const welcomeSpans = document.querySelectorAll('.welcome-text');
+                    const viewedKey = 'welcomed_user_{{ current_user.username }}';
+                    if (!sessionStorage.getItem(viewedKey)) {
+                        welcomeSpans.forEach(span => span.style.display = 'inline');
+                        sessionStorage.setItem(viewedKey, 'true');
+                    }
+                });
+
+                // Cierra el menu si clica fuera
+                window.addEventListener('click', function (e) {
+                    if (!e.target.closest('.user-dropdown-container')) {
+                        document.querySelectorAll('.user-dropdown-menu.active').forEach(menu => {
+                            menu.classList.remove('active');
+                        });
+                    }
+                });
+            </script>
+            {% endif %}
+
         </div>
     </header>
 
-    <!-- Game Detail -->
-    <div class="game-detail">
+    <!-- ── PAGE WRAPPER ─────────────────────────────────────────── -->
+    <div class="page-wrapper">
+
+        <!-- Cover (full width) -->
         <img class="game-cover" src="{{ url_for('static', filename=game.cover) }}" alt="{{ game.title }}">
-        <div class="game-info">
-            <h1>{{ game.title }}</h1>
-            <p class="categories">{{ game.categories }}</p>
-            <p class="description">{{ game.description }}</p>
+
+        <!-- Two-column body -->
+        <div class="game-body">
+
+            <!-- LEFT column -->
+            <div class="game-info">
+                <h1>{{ game.title }}</h1>
+                <p class="categories">{{ game.categories }}</p>
+                <p class="description">{{ game.description }}</p>
+
+                <!-- Comments sit under the description on the left -->
+                <div class="comments-section">
+                    <h2>Comentarios ({{ comments|length }})</h2>
+
+                    {% if current_user %}
+                    <form class="comment-form" method="POST" action="{{ url_for('post_comment', game_id=game.id) }}">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                        <textarea name="content" placeholder="Escribe un comentario..." required></textarea>
+                        <button type="submit">Comentar</button>
+                    </form>
+                    {% else %}
+                    <p class="login-prompt">
+                        <a href="{{ url_for('login') }}">Inicia sesión</a> para dejar un comentario.
+                    </p>
+                    {% endif %}
+
+                    <div style="margin-top:24px;">
+                        {% if comments %}
+                        {% for comment in comments %}
+                        <div class="comment-card">
+                            <div class="comment-header">
+                                {% if comment.user_pic %}
+                                <img src="{{ url_for('static', filename=comment.user_pic) }}"
+                                    alt="{{ comment.username }}">
+                                {% else %}
+                                <img src="{{ url_for('static', filename='img/logo.png') }}" alt="default">
+                                {% endif %}
+                                <span class="comment-user"><a
+                                        href="{{ url_for('user_profile', username=comment.user_slug or comment.username) }}"
+                                        style="color:inherit;text-decoration:none;">{{ comment.username }}</a></span>
+                                <span class="comment-date">
+                                    {{ comment.created_at.strftime('%d/%m/%Y %H:%M') }}
+                                    {% if comment.updated_at %}<span class="edited-label">(editado)</span>{% endif %}
+                                </span>
+                            </div>
+                            <div class="comment-body" id="comment-text-{{ comment.id }}">{{ comment.content }}</div>
+                            <div class="comment-actions">
+                                {% if current_user %}
+                                <form method="POST" action="{{ url_for('like_comment', comment_id=comment.id) }}">
+                                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                                    <button type="submit" class="like-btn {{ 'liked' if comment.user_liked }}">
+                                        ♥ {{ comment.like_count }}
+                                    </button>
+                                </form>
+                                <button class="reply-toggle"
+                                    onclick="document.getElementById('reply-form-{{ comment.id }}').classList.toggle('hidden')">
+                                    ↩ Responder
+                                </button>
+                                {# ─ Edit button (owner only, within time window) ─ #}
+                                {% if current_user.id == comment.user_id %}
+                                {% set c_created = comment.created_at.replace(tzinfo=none) %}
+                                {% set elapsed = (now_utc.replace(tzinfo=none) - c_created).total_seconds() %}
+                                {% if elapsed <= comment_edit_window %} <button
+                                    class="comment-manage-btn btn-edit-comment"
+                                    onclick="toggleEditForm('edit-form-comment-{{ comment.id }}')"
+                                    data-deadline="{{ comment.edit_deadline }}" id="edit-btn-comment-{{ comment.id }}">
+                                    ✎ Editar
+                                    <span class="edit-window-timer" id="timer-comment-{{ comment.id }}"></span>
+                                    </button>
+                                    {% endif %}
+                                    {% endif %}
+                                    {# ─ Delete button (owner or admin) ─ #}
+                                    {% if current_user.id == comment.user_id or current_user.role == 'admin' %}
+                                    <form method="POST" action="{{ url_for('delete_comment', comment_id=comment.id) }}"
+                                        onsubmit="return confirm('¿Eliminar este comentario y todas sus respuestas?');"
+                                        style="display:inline; margin-left: auto;">
+                                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                                        <button type="submit" class="comment-manage-btn btn-delete-comment">🗑
+                                            Eliminar</button>
+                                    </form>
+                                    {% endif %}
+                                    {% else %}
+                                    <span class="like-btn">♥ {{ comment.like_count }}</span>
+                                    {% endif %}
+                            </div>
+
+                            {# ─ Inline edit form for comment ─ #}
+                            {% if current_user and current_user.id == comment.user_id %}
+                            {% set c_created = comment.created_at.replace(tzinfo=none) %}
+                            {% set elapsed = (now_utc.replace(tzinfo=none) - c_created).total_seconds() %}
+                            {% if elapsed <= comment_edit_window %} <div id="edit-form-comment-{{ comment.id }}"
+                                class="inline-edit-form hidden">
+                                <form method="POST" action="{{ url_for('edit_comment', comment_id=comment.id) }}">
+                                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                                    <textarea name="content" required>{{ comment.content }}</textarea>
+                                    <div class="edit-actions">
+                                        <button type="submit" class="btn-save-edit">Guardar</button>
+                                        <button type="button" class="btn-cancel-edit"
+                                            onclick="toggleEditForm('edit-form-comment-{{ comment.id }}')">Cancelar</button>
+                                    </div>
+                                </form>
+                        </div>
+                        {% endif %}
+                        {% endif %}
+
+                        {% if current_user %}
+                        <div id="reply-form-{{ comment.id }}" class="reply-form hidden">
+                            <form method="POST" action="{{ url_for('reply_comment', comment_id=comment.id) }}">
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                                <textarea name="content" placeholder="Escribe una respuesta..." required></textarea>
+                                <button type="submit">Responder</button>
+                            </form>
+                        </div>
+                        {% endif %}
+
+                        {% if comment.replies %}
+                        <div class="replies">
+                            {% for reply in comment.replies %}
+                            <div class="reply-card">
+                                <div class="comment-header">
+                                    {% if reply.user_pic %}
+                                    <img src="{{ url_for('static', filename=reply.user_pic) }}"
+                                        alt="{{ reply.username }}">
+                                    {% else %}
+                                    <img src="{{ url_for('static', filename='img/logo.png') }}" alt="default">
+                                    {% endif %}
+                                    <span class="comment-user"><a
+                                            href="{{ url_for('user_profile', username=reply.user_slug or reply.username) }}"
+                                            style="color:inherit;text-decoration:none;">{{ reply.username }}</a></span>
+                                    <span class="comment-date">
+                                        {{ reply.created_at.strftime('%d/%m/%Y %H:%M') }}
+                                        {% if reply.updated_at %}<span class="edited-label">(editado)</span>{% endif %}
+                                    </span>
+                                </div>
+                                <div class="comment-body">{{ reply.content }}</div>
+                                {# ─ Reply manage actions ─ #}
+                                {% if current_user %}
+                                <div class="comment-actions" style="margin-top:6px;">
+                                    {% if current_user.id == reply.user_id %}
+                                    {% set r_created = reply.created_at.replace(tzinfo=none) %}
+                                    {% set r_elapsed = (now_utc.replace(tzinfo=none) - r_created).total_seconds() %}
+                                    {% if r_elapsed <= comment_edit_window %} <button
+                                        class="comment-manage-btn btn-edit-comment"
+                                        onclick="toggleEditForm('edit-form-reply-{{ reply.id }}')"
+                                        data-deadline="{{ reply.edit_deadline }}" id="edit-btn-reply-{{ reply.id }}">
+                                        ✎ Editar
+                                        <span class="edit-window-timer" id="timer-reply-{{ reply.id }}"></span>
+                                        </button>
+                                        {% endif %}
+                                        {% endif %}
+                                        {% if current_user.id == reply.user_id or current_user.role == 'admin' %}
+                                        <form method="POST" action="{{ url_for('delete_reply', reply_id=reply.id) }}"
+                                            onsubmit="return confirm('¿Eliminar esta respuesta?');"
+                                            style="display:inline; margin-left: auto;">
+                                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                                            <button type="submit" class="comment-manage-btn btn-delete-comment">🗑
+                                                Eliminar</button>
+                                        </form>
+                                        {% endif %}
+                                </div>
+                                {# Inline edit form for reply #}
+                                {% if current_user.id == reply.user_id %}
+                                {% set r_created = reply.created_at.replace(tzinfo=none) %}
+                                {% set r_elapsed = (now_utc.replace(tzinfo=none) - r_created).total_seconds() %}
+                                {% if r_elapsed <= comment_edit_window %} <div id="edit-form-reply-{{ reply.id }}"
+                                    class="inline-edit-form hidden" style="margin-top:8px;">
+                                    <form method="POST" action="{{ url_for('edit_reply', reply_id=reply.id) }}">
+                                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                                        <textarea name="content" required>{{ reply.content }}</textarea>
+                                        <div class="edit-actions">
+                                            <button type="submit" class="btn-save-edit">Guardar</button>
+                                            <button type="button" class="btn-cancel-edit"
+                                                onclick="toggleEditForm('edit-form-reply-{{ reply.id }}')">Cancelar</button>
+                                        </div>
+                                    </form>
+                            </div>
+                            {% endif %}
+                            {% endif %}
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+                {% else %}
+                <p class="no-comments">Aún no hay comentarios. ¡Sé el primero!</p>
+                {% endif %}
+            </div>
         </div>
+        <!-- /comments -->
+    </div>
+    <!-- /LEFT -->
+
+    <!-- RIGHT column (sidebar) -->
+    <div class="game-sidebar">
+
+        <!-- Creator card -->
         <div class="game-creator">
             {% if game.creator_pic %}
             <img src="{{ url_for('static', filename=game.creator_pic) }}" alt="{{ game.creator_name }}">
             {% else %}
-            <img src="{{ url_for('static', filename='img/image__1_-removebg-preview (1) (1).png') }}" alt="default">
+            <img src="{{ url_for('static', filename='img/logo.png') }}" alt="default">
             {% endif %}
             <div>
                 {% if game.creator_slug %}
-                <a class="creator-link" href="{{ url_for('user_profile', username=game.creator_slug) }}">{{
-                    game.creator_name or 'Anónimo' }}</a>
+                <a class="creator-link" href="{{ url_for('user_profile', username=game.creator_slug) }}">
+                    {{ game.creator_name or 'Anónimo' }}
+                </a>
                 {% else %}
-                <div class="creator-name">{{ game.creator_name or 'Anónimo' }}</div>
+                <div style="font-weight:600; color:#fff;">
+                    {{ game.creator_name or 'Anónimo' }}
+                </div>
                 {% endif %}
                 {% if game.creator_role == 'developer' %}
                 <span class="role-badge role-developer">Developer</span>
                 {% elif game.creator_role == 'admin' %}
-                <span class="role-badge role-admin">Admin</span>
+                <span class="role-badge role-developer">Developer</span>
                 {% endif %}
-                <div style="font-size:0.85rem; color:#999;">Creador</div>
+                <div style="font-size:0.82rem; color:#999; margin-top:4px;">Creador</div>
             </div>
         </div>
 
-        <!-- Download & Favorite -->
+        <style>
+            .secure-notice {
+                font-size: 0.75rem;
+                color: #777;
+                margin-top: 20px;
+                text-align: center;
+            }
+
+            .btn-support {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                width: 100%;
+                margin-top: 18px;
+                padding: 13px 20px;
+                border-radius: 25px;
+                border: 1px solid rgba(13, 148, 136, 0.6);
+                background: transparent;
+                color: #2dd4bf;
+                font-weight: 700;
+                text-decoration: none;
+                transition: all 0.15s ease;
+            }
+
+            .btn-support:hover {
+                transform: translateY(-2px);
+                background: rgba(13, 148, 136, 0.05);
+                box-shadow: 0 6px 20px rgba(13, 148, 136, 0.15);
+            }
+
+            /* ─── PAYWALL MODAL ─────────────────────────────────────── */
+            .modal-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.85);
+                backdrop-filter: blur(8px);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 10000;
+                transition: all 0.3s ease;
+            }
+
+            .modal-overlay.hidden {
+                opacity: 0;
+                visibility: hidden;
+                pointer-events: none;
+            }
+
+            .modal-content.glass {
+                background: rgba(255, 255, 255, 0.06);
+                border: 1px solid rgba(255, 255, 255, 0.18);
+                border-radius: 22px;
+                padding: 28px 26px;
+                width: min(90%, 520px);
+                max-width: 520px;
+                max-height: 90vh;
+                overflow-y: auto;
+                scrollbar-width: none;
+                -ms-overflow-style: none;
+                -webkit-overflow-scrolling: touch;
+                position: relative;
+                box-shadow: 0 30px 60px -18px rgba(0, 0, 0, 0.6);
+                text-align: center;
+                box-sizing: border-box;
+            }
+
+            .modal-content.glass::-webkit-scrollbar {
+                display: none;
+            }
+
+            .modal-content.glass h2 {
+                margin: 0;
+                font-size: 1.5rem;
+                letter-spacing: 0.3px;
+            }
+
+            .close-modal {
+                position: absolute;
+                top: 12px;
+                right: 18px;
+                background: none;
+                border: none;
+                color: #fff;
+                font-size: 2.1rem;
+                cursor: pointer;
+                opacity: 0.6;
+            }
+
+            .close-modal:hover {
+                opacity: 1;
+            }
+
+            .price-display {
+                font-size: 1.6rem;
+                font-weight: 800;
+                color: #ff00c8;
+                margin: 10px 0 14px;
+            }
+
+            #payment-form {
+                text-align: left;
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 4px;
+                align-items: start;
+            }
+
+            .form-group {
+                margin-bottom: 4px;
+            }
+
+            .form-row {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+
+            .btn-pay {
+                width: 100%;
+            }
+
+            .form-group.full {
+                grid-column: span 1;
+            }
+
+            @media (max-width: 768px) {
+                #payment-form {
+                    grid-template-columns: repeat(2, minmax(160px, 1fr));
+                }
+
+                .form-group {
+                    grid-column: span 2;
+                }
+
+                /* Keep expiry + CVV side-by-side on mobile */
+                .form-row .form-group {
+                    grid-column: span 1;
+                }
+
+                .form-group.half {
+                    grid-column: span 1;
+                }
+
+                .form-group.full {
+                    grid-column: span 2;
+                }
+            }
+
+            .form-group label {
+                display: block;
+                color: #aaa;
+                font-size: 0.82rem;
+                margin-bottom: 4px;
+            }
+
+            .form-group input {
+                width: 100%;
+                background: rgba(255, 255, 255, 0.1);
+                border: 1px solid rgba(255, 255, 255, 0.18);
+                border-radius: 10px;
+                padding: 9px 10px;
+                color: #fff;
+                font-size: 0.9rem;
+                outline: none;
+                box-sizing: border-box;
+            }
+
+            .form-group input:focus {
+                border-color: #ff00c8;
+                background: rgba(255, 255, 255, 0.2);
+            }
+
+            .btn-pay {
+                width: 100%;
+                background: linear-gradient(45deg, #ff00c8, #7000ff);
+                color: #fff;
+                border: none;
+                padding: 12px;
+                border-radius: 12px;
+                font-weight: 700;
+                font-size: 1rem;
+                cursor: pointer;
+                margin-top: 10px;
+                transition: all 0.2s;
+            }
+
+            .btn-pay:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 12px 24px rgba(255, 0, 200, 0.35);
+            }
+
+            /* ─── TIP / PROPINA SECTION ─────────────────────────────── */
+            .tip-section {
+                margin-top: 12px;
+                padding: 14px;
+                background: rgba(255, 255, 255, 0.04);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                border-radius: 12px;
+                text-align: left;
+            }
+
+            .tip-section h3 {
+                color: #fff;
+                font-size: 0.92rem;
+                margin: 0 0 4px;
+                display: flex;
+                align-items: center;
+                gap: 6px;
+            }
+
+            .tip-section .tip-desc {
+                color: #999;
+                font-size: 0.78rem;
+                margin-bottom: 10px;
+                line-height: 1.4;
+            }
+
+            .tip-options {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 6px;
+                margin-bottom: 10px;
+            }
+
+            .tip-btn {
+                padding: 8px 4px;
+                border-radius: 10px;
+                border: 1px solid rgba(255, 255, 255, 0.12);
+                background: rgba(255, 255, 255, 0.06);
+                color: #ccc;
+                font-size: 0.82rem;
+                font-weight: 700;
+                cursor: pointer;
+                transition: all 0.18s ease;
+                text-align: center;
+            }
+
+            .tip-btn:hover {
+                border-color: rgba(255, 0, 200, 0.5);
+                background: rgba(255, 0, 200, 0.1);
+                color: #fff;
+            }
+
+            .tip-btn.active {
+                background: linear-gradient(135deg, rgba(255, 0, 200, 0.85), rgba(112, 0, 255, 0.85));
+                border-color: transparent;
+                color: #fff;
+                box-shadow: 0 4px 16px rgba(255, 0, 200, 0.3);
+                transform: translateY(-1px);
+            }
+
+            .tip-custom-wrap {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+
+            .tip-custom-wrap label {
+                color: #aaa;
+                font-size: 0.88rem;
+                white-space: nowrap;
+            }
+
+            .tip-custom-wrap input {
+                flex: 1;
+                padding: 8px 10px;
+                border-radius: 10px;
+                border: 1px solid rgba(255, 255, 255, 0.12);
+                background: rgba(255, 255, 255, 0.06);
+                color: #fff;
+                font-size: 0.88rem;
+                outline: none;
+                box-sizing: border-box;
+            }
+
+            .tip-custom-wrap input:focus {
+                border-color: #ff00c8;
+                background: rgba(255, 255, 255, 0.12);
+            }
+
+            .total-display {
+                margin-top: 10px;
+                padding: 10px 14px;
+                background: rgba(255, 0, 200, 0.08);
+                border: 1px solid rgba(255, 0, 200, 0.2);
+                border-radius: 10px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .total-display .total-label {
+                color: #bbb;
+                font-size: 0.85rem;
+                font-weight: 600;
+            }
+
+            .total-display .total-value {
+                color: #ff00c8;
+                font-size: 1.2rem;
+                font-weight: 800;
+            }
+
+            .tip-thanks {
+                color: #00e676;
+                font-size: 0.78rem;
+                margin-top: 6px;
+                margin-bottom: 0;
+                font-weight: 600;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            }
+
+            .tip-thanks.visible {
+                opacity: 1;
+            }
+
+            @media (max-width: 768px) {
+                .modal-content.glass {
+                    padding: 22px 18px;
+                    width: min(90%, 440px);
+                }
+
+                .modal-content.glass h2 {
+                    font-size: 1.3rem;
+                }
+
+                .price-display {
+                    font-size: 1.4rem;
+                    margin: 8px 0 12px;
+                }
+
+                .btn-pay {
+                    padding: 11px;
+                    font-size: 0.95rem;
+                }
+            }
+
+            @media (max-width: 540px) {
+                #payment-form {
+                    grid-template-columns: 1fr;
+                }
+
+                .form-group {
+                    grid-column: auto;
+                }
+
+                .modal-content.glass {
+                    padding: 18px 14px;
+                    width: min(94%, 360px);
+                }
+
+                .modal-content.glass h2 {
+                    font-size: 1.2rem;
+                }
+
+                .price-display {
+                    font-size: 1.3rem;
+                    margin: 6px 0 10px;
+                }
+
+                .btn-pay {
+                    padding: 10px;
+                    font-size: 0.9rem;
+                }
+
+                .tip-options {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+            }
+
+            /* User Dropdown CSS added by Assistant */
+            .user-dropdown-container {
+                position: relative;
+                display: inline-block;
+            }
+
+            .user-dropdown-menu {
+                position: absolute;
+                top: calc(100% + 10px);
+                right: 0;
+                background: #2a2238;
+                /* Matches dark theme */
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                border-radius: 12px;
+                padding: 8px 0;
+                min-width: 180px;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+                opacity: 0;
+                visibility: hidden;
+                transform: translateY(-10px);
+                transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+                z-index: 1000;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .user-dropdown-menu.active {
+                opacity: 1;
+                visibility: visible;
+                transform: translateY(0);
+            }
+
+            .user-dropdown-menu a {
+                display: block;
+                padding: 10px 20px;
+                color: #ddd;
+                text-decoration: none;
+                font-size: 0.9rem;
+                transition: background 0.2s, color 0.2s;
+                text-align: left;
+            }
+
+            .user-dropdown-menu a:hover {
+                background: rgba(255, 255, 255, 0.05);
+                color: #fff;
+            }
+
+            .user-dropdown-menu hr {
+                border: none;
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+                margin: 8px 0;
+            }
+        </style>
+
+        <div class="game-rating">
+            <div class="avg-rating-display">
+                ★ {{ "%.1f"|format(game.avg_rating) }} / 5.0
+            </div>
+            <div class="rating-count">{{ game.rating_count }} valoraciones</div>
+
+            {% if current_user %}
+            <form action="{{ url_for('rate_game', game_id=game.id) }}" method="POST" id="rating-form">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                <div
+                    style="display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%;">
+                    <p style="font-size: 0.8rem; margin: 0 0 5px 0; color: #aaa; text-align: center; width: 100%;">
+                        {{ 'Tu valoración' if game.user_rating > 0 else 'Valora este juego' }}
+                    </p>
+                    <div class="rating-stars" style="margin-top: 0;">
+                        {% for i in range(5, 0, -1) %}
+                        <input type="radio" name="rating" id="star{{ i }}" value="{{ i }}" {% if game.user_rating==i
+                            %}checked{% endif %} onchange="document.getElementById('rating-form').submit()">
+                        <label for="star{{ i }}">★</label>
+                        {% endfor %}
+                    </div>
+                </div>
+            </form>
+            {% endif %}
+        </div>
+
+        {% if game.price > 0 %}
+        <div class="game-price-tag">
+            <span class="price-amount">${{ "%.2f"|format(game.price) }}</span>
+        </div>
+        {% endif %}
+
+        <!-- Action buttons -->
         <div class="game-actions">
             {% if game.game_file %}
-            <a href="{{ url_for('download_game_file', game_id=game.id) }}" class="btn-download">⬇ Descargar juego</a>
+            <a href="{{ url_for('download_game_file', game_id=game.id) }}" class="btn-download">⬇ Descargar
+                juego</a>
             {% endif %}
 
             {% if current_user %}
-            <form method="POST" action="{{ url_for('toggle_fav_game', game_id=game.id) }}" style="display:inline;">
+            <form method="POST" action="{{ url_for('toggle_fav_game', game_id=game.id) }}">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                 <button type="submit" class="btn-fav-game {{ 'favorited' if is_favorited }}">
                     {{ '★ Favorito' if is_favorited else '☆ Añadir a favoritos' }}
                     ({{ game.fav_count }})
                 </button>
             </form>
+
+            {% if game.creator_slug %}
+            <a href="{{ url_for('user_profile', username=game.creator_slug) }}" class="btn-support">
+                💖 Donar al creador
+            </a>
+            {% endif %}
+
+            {% if current_user.id == game.creator_id or current_user.role == 'admin' %}
+            <div class="manage-row">
+                <a href="{{ url_for('edit_game', game_id=game.id) }}" class="btn-edit">✎ Editar</a>
+                <form method="POST" action="{{ url_for('delete_game', game_id=game.id) }}"
+                    onsubmit="return confirm('Seguro que quieres borrar tu juego?') && confirm('si borras el juego, no podras recuperarlo de ninguna forma, estas SEGURO?');">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                    <button type="submit" class="btn-delete">🗑 Borrar</button>
+                </form>
+            </div>
+            {% endif %}
+
             {% else %}
             <span style="color:#888; font-size:0.9rem;">⭐ {{ game.fav_count }} favoritos</span>
             {% endif %}
         </div>
+
     </div>
+    <!-- /RIGHT -->
 
-    <!-- Comments Section -->
-    <div class="comments-section">
-        <h2>Comentarios ({{ comments|length }})</h2>
-
-        {% if current_user %}
-        <form class="comment-form" method="POST" action="{{ url_for('post_comment', game_id=game.id) }}">
-            <textarea name="content" placeholder="Escribe un comentario..." required></textarea>
-            <button type="submit">Comentar</button>
-        </form>
-        {% else %}
-        <p class="login-prompt"><a href="{{ url_for('login') }}">Inicia sesión</a> para dejar un comentario.</p>
-        {% endif %}
-
-        <div style="margin-top: 24px;">
-            {% if comments %}
-            {% for comment in comments %}
-            <div class="comment-card">
-                <div class="comment-header">
-                    {% if comment.user_pic %}
-                    <img src="{{ url_for('static', filename=comment.user_pic) }}" alt="{{ comment.username }}">
-                    {% else %}
-                    <img src="{{ url_for('static', filename='img/image__1_-removebg-preview (1) (1).png') }}"
-                        alt="default">
-                    {% endif %}
-                    <span class="comment-user">{{ comment.username }}</span>
-                    <span class="comment-date">{{ comment.created_at.strftime('%d/%m/%Y %H:%M') }}</span>
-                </div>
-                <div class="comment-body">{{ comment.content }}</div>
-                <div class="comment-actions">
-                    {% if current_user %}
-                    <form method="POST" action="{{ url_for('like_comment', comment_id=comment.id) }}">
-                        <button type="submit" class="like-btn {{ 'liked' if comment.user_liked }}">
-                            ♥ {{ comment.like_count }}
-                        </button>
-                    </form>
-                    <button class="reply-toggle"
-                        onclick="document.getElementById('reply-form-{{ comment.id }}').classList.toggle('hidden')">
-                        ↩ Responder
-                    </button>
-                    {% else %}
-                    <span class="like-btn">♥ {{ comment.like_count }}</span>
-                    {% endif %}
-                </div>
-
-                <!-- Reply form (hidden by default) -->
-                {% if current_user %}
-                <div id="reply-form-{{ comment.id }}" class="reply-form hidden">
-                    <form method="POST" action="{{ url_for('reply_comment', comment_id=comment.id) }}">
-                        <textarea name="content" placeholder="Escribe una respuesta..." required></textarea>
-                        <button type="submit">Responder</button>
-                    </form>
-                </div>
-                {% endif %}
-
-                <!-- Replies -->
-                {% if comment.replies %}
-                <div class="replies">
-                    {% for reply in comment.replies %}
-                    <div class="reply-card">
-                        <div class="comment-header">
-                            {% if reply.user_pic %}
-                            <img src="{{ url_for('static', filename=reply.user_pic) }}" alt="{{ reply.username }}">
-                            {% else %}
-                            <img src="{{ url_for('static', filename='img/image__1_-removebg-preview (1) (1).png') }}"
-                                alt="default">
-                            {% endif %}
-                            <span class="comment-user">{{ reply.username }}</span>
-                            <span class="comment-date">{{ reply.created_at.strftime('%d/%m/%Y %H:%M') }}</span>
-                        </div>
-                        <div class="comment-body">{{ reply.content }}</div>
-                    </div>
-                    {% endfor %}
-                </div>
-                {% endif %}
-            </div>
-            {% endfor %}
-            {% else %}
-            <p class="no-comments">Aún no hay comentarios. ¡Sé el primero!</p>
-            {% endif %}
-        </div>
     </div>
+    <!-- /game-body -->
+
+    </div>
+    <!-- /page-wrapper -->
 
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
     <script>
-        document.querySelectorAll('.reply-toggle').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const target = btn.closest('.comment-card').querySelector('.reply-form');
-                if (target) target.classList.toggle('hidden');
+        // Toggle inline edit/reply forms
+        function toggleEditForm(id) {
+            const el = document.getElementById(id);
+            if (el) el.classList.toggle('hidden');
+        }
+
+        // Countdown timer for comment edit window
+        function startEditTimers() {
+            document.querySelectorAll('.edit-window-timer').forEach(span => {
+                const btn = span.closest('button');
+                if (!btn) return;
+                const deadline = new Date(btn.dataset.deadline + 'Z');
+                function tick() {
+                    const remaining = Math.max(0, Math.floor((deadline - Date.now()) / 1000));
+                    if (remaining <= 0) {
+                        // Hide the edit button and its form when time runs out
+                        btn.style.display = 'none';
+                        const formId = btn.id.replace('edit-btn-', 'edit-form-');
+                        const form = document.getElementById(formId);
+                        if (form) form.classList.add('hidden');
+                        return;
+                    }
+                    const m = Math.floor(remaining / 60);
+                    const s = String(remaining % 60).padStart(2, '0');
+                    span.textContent = `(${m}:${s})`;
+                    setTimeout(tick, 1000);
+                }
+                tick();
             });
+        }
+    </script>
+
+    <div id="checkout-modal" class="modal-overlay hidden" data-game-price="{{ game.price or 0 }}"
+        data-has-purchased="{{ 'true' if has_purchased else 'false' }}">
+        <div class="modal-content glass">
+            <button class="close-modal">&times;</button>
+            <h2 style="color: #fff; font-size: 1.8rem; margin-bottom: 10px;">Completar compra</h2>
+            <p style="color: #bbb; font-size: 0.95rem;">Estás a un paso de descargar <strong>{{ game.title }}</strong>
+            </p>
+            <div class="price-display" id="base-price-display">${{ "%.2f"|format(game.price) }}</div>
+
+            <form id="payment-form" action="{{ url_for('purchase_game', game_id=game.id) }}" method="POST">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                <div class="form-group">
+                    <label>Nombre en la tarjeta</label>
+                    <input type="text" name="card_name" placeholder="Ej: Juan Pérez" required>
+                </div>
+                <div class="form-group">
+                    <label>Correo electrónico</label>
+                    <input type="email" name="email" placeholder="tu@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Número de tarjeta</label>
+                    <input type="text" name="card_number" placeholder="0000 0000 0000 0000" maxlength="19" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group half">
+                        <label>Vencimiento</label>
+                        <input type="text" name="expiry" placeholder="MM/YY" maxlength="5" required>
+                    </div>
+                    <div class="form-group half">
+                        <label>CVV</label>
+                        <input type="text" name="cvv" placeholder="123" maxlength="3" required>
+                    </div>
+                </div>
+
+                <!-- ── TIP / PROPINA ── -->
+                <div class="tip-section" id="tip-section">
+                    <h3>💖 ¿Quieres dejar una propina?</h3>
+                    <p class="tip-desc">Apoya al desarrollador con un extra. ¡Cada propina cuenta!</p>
+                    <div class="tip-options">
+                        <button type="button" class="tip-btn" data-tip-pct="0">Sin propina</button>
+                        <button type="button" class="tip-btn" data-tip-pct="10">10%</button>
+                        <button type="button" class="tip-btn" data-tip-pct="15">15%</button>
+                        <button type="button" class="tip-btn" data-tip-pct="20">20%</button>
+                    </div>
+                    <div class="tip-custom-wrap">
+                        <label for="tip-custom">Personalizado: $</label>
+                        <input type="number" id="tip-custom" name="tip_amount" step="0.01" min="0" value="0.00"
+                            placeholder="0.00">
+                    </div>
+                    <div class="total-display">
+                        <span class="total-label">Total a pagar</span>
+                        <span class="total-value" id="total-with-tip">${{ "%.2f"|format(game.price) }}</span>
+                    </div>
+                    <p class="tip-thanks" id="tip-thanks">🎉 ¡Gracias por tu generosidad!</p>
+                </div>
+
+                <button type="submit" class="btn-pay">Pagar y Descargar</button>
+            </form>
+            <p class="secure-notice">🔒 Pago seguro y encriptado de prueba</p>
+        </div>
+    </div>
+
+    <script>
+        // Modal & Payment Logic
+        document.addEventListener('DOMContentLoaded', () => {
+            const checkoutModal = document.getElementById('checkout-modal');
+            const downloadBtn = document.querySelector('.btn-download');
+            const closeModal = document.querySelector('.close-modal');
+
+            if (downloadBtn && checkoutModal) {
+                downloadBtn.addEventListener('click', (e) => {
+                    const gamePrice = parseFloat(checkoutModal.dataset.gamePrice || 0);
+                    const hasPurchased = checkoutModal.dataset.hasPurchased === 'true';
+                    if (gamePrice > 0 && !hasPurchased) {
+                        e.preventDefault();
+                        checkoutModal.classList.remove('hidden');
+                    }
+                });
+            }
+
+            if (closeModal) {
+                closeModal.addEventListener('click', () => {
+                    checkoutModal.classList.add('hidden');
+                });
+            }
+
+            // Close modal on background click
+            checkoutModal.addEventListener('click', (e) => {
+                if (e.target === checkoutModal) {
+                    checkoutModal.classList.add('hidden');
+                }
+            });
+
+            // Card formatting
+            const cardInput = document.querySelector('input[name="card_number"]');
+            if (cardInput) {
+                cardInput.addEventListener('input', (e) => {
+                    let val = e.target.value.replace(/\D/g, '');
+                    let formatted = '';
+                    for (let i = 0; i < val.length; i++) {
+                        if (i > 0 && i % 4 === 0) formatted += ' ';
+                        formatted += val[i];
+                    }
+                    e.target.value = formatted.substring(0, 19);
+                });
+            }
+
+            // Expiry formatting
+            const expiryInput = document.querySelector('input[name="expiry"]');
+            if (expiryInput) {
+                expiryInput.addEventListener('input', (e) => {
+                    let val = e.target.value.replace(/\D/g, '');
+                    if (val.length > 2) {
+                        e.target.value = val.substring(0, 2) + '/' + val.substring(2, 4);
+                    } else {
+                        e.target.value = val;
+                    }
+                });
+            }
+
+            // ── TIP LOGIC ──
+            const basePrice = parseFloat(checkoutModal.dataset.gamePrice || 0);
+            const tipBtns = document.querySelectorAll('.tip-btn');
+            const tipCustom = document.getElementById('tip-custom');
+            const totalDisplay = document.getElementById('total-with-tip');
+            const tipThanks = document.getElementById('tip-thanks');
+
+            function updateTotal() {
+                const tipVal = parseFloat(tipCustom.value) || 0;
+                const total = basePrice + tipVal;
+                if (totalDisplay) totalDisplay.textContent = '$' + total.toFixed(2);
+                if (tipThanks) {
+                    tipThanks.classList.toggle('visible', tipVal > 0);
+                }
+            }
+
+            tipBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    tipBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    const pct = parseInt(btn.dataset.tipPct);
+                    const tipVal = (basePrice * pct / 100);
+                    if (tipCustom) tipCustom.value = tipVal.toFixed(2);
+                    updateTotal();
+                });
+            });
+
+            if (tipCustom) {
+                tipCustom.addEventListener('input', () => {
+                    tipBtns.forEach(b => b.classList.remove('active'));
+                    updateTotal();
+                });
+            }
+
+            // Set default "Sin propina" as active
+            const noTipBtn = document.querySelector('.tip-btn[data-tip-pct="0"]');
+            if (noTipBtn) noTipBtn.classList.add('active');
+
+            startEditTimers();
+            setTimeout(() => {
+                document.querySelectorAll('.flash-msg').forEach(el => el.style.display = 'none');
+            }, 4000);
         });
-        setTimeout(() => {
-            document.querySelectorAll('.flash-msg').forEach(el => el.style.display = 'none');
-        }, 4000);
+    </script>
+    <script>
+        // Auto-hide alerts after 3.5 seconds
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                const alerts = document.querySelectorAll('.flash-msg');
+                alerts.forEach(alert => {
+                    alert.classList.add('fade-out');
+                    setTimeout(() => alert.remove(), 600);
+                });
+            }, 3500);
+        });
     </script>
 </body>
 

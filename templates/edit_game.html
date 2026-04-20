@@ -5,7 +5,7 @@
     <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Editor del juego - New Era Games</title>
+    <title>Editar {{ game.title }} - New Era Games</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="{{ url_for('static', filename='img/fav.png') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/estilojuegos.css') }}">
@@ -19,214 +19,21 @@
             padding-top: 0 !important;
         }
 
-        /* ── Header base ── */
         header.header {
             min-height: auto !important;
             padding: 0 !important;
-            background: transparent !important;
+            background: #1b1726 !important;
             display: block !important;
             position: relative !important;
             z-index: 1000;
         }
 
-        /* ── Override estilojuegos.css fullscreen .menu overlay ── */
         header.header .menu {
             position: relative !important;
-            width: 100% !important;
-            height: auto !important;
-            min-height: 0 !important;
+            padding: 20px 0;
             background: transparent !important;
+            height: auto !important;
             clip-path: none !important;
-            display: flex !important;
-            align-items: center !important;
-            justify-content: space-between !important;
-            padding: 14px 24px !important;
-            z-index: 1100 !important;
-            transition: none !important;
-        }
-
-        /* Hamburger label */
-        header.header .menu label {
-            display: none;
-            cursor: pointer;
-            order: 0;
-        }
-
-        header.header .menu .menu-icono {
-            width: 28px;
-        }
-
-        /* Nav links – always left-aligned, NOT right */
-        header.header .menu .navbar {
-            display: flex !important;
-            text-align: left !important;
-            padding: 0 !important;
-            row-gap: 0 !important;
-            margin-left: 10px;
-            margin-right: auto;
-        }
-
-        header.header .menu .navbar ul {
-            display: flex !important;
-            flex-direction: row !important;
-            align-items: center;
-            gap: 4px;
-        }
-
-        header.header .menu .navbar ul li {
-            float: none;
-        }
-
-        header.header .menu .navbar ul li a {
-            font-size: 17px !important;
-            font-weight: 600;
-            color: #fff !important;
-            padding: 10px 14px;
-            display: block;
-            border-bottom: none !important;
-            transition: color 0.15s ease, transform 0.15s ease;
-        }
-
-        header.header .menu .navbar ul li a:hover {
-            color: #ff00c8 !important;
-            font-size: 17px !important;
-            border-bottom: none !important;
-            transform: scale(1.06);
-        }
-
-        /* Logo in nav */
-        header.header .menu .navbar ul li.logo-item img {
-            height: 38px;
-            display: block;
-        }
-
-        /* User welcome pill – pushed to the right */
-        .user-welcome {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 6px 12px;
-            border-radius: 999px;
-            color: #fff;
-            font-weight: 700;
-            text-decoration: none;
-            cursor: pointer;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: transform 0.2s ease, background 0.2s ease;
-            order: 2;
-            flex-shrink: 0;
-        }
-
-        .user-welcome:hover {
-            transform: translateY(-2px) scale(1.02);
-            background: rgba(255, 255, 255, 0.16);
-        }
-
-        .user-welcome img,
-        .user-welcome .default-avatar {
-            width: 34px;
-            height: 34px;
-            border-radius: 50%;
-            object-fit: cover;
-            background: #ccc;
-            display: inline-block;
-            transition: transform 0.2s ease;
-        }
-
-        /* Hidden checkbox */
-        #menu {
-            display: none;
-        }
-
-        /* ── MOBILE ── */
-        @media (max-width: 991px) {
-            header.header .menu {
-                padding: 14px 16px !important;
-                flex-wrap: wrap;
-            }
-
-            /* Show hamburger */
-            header.header .menu label {
-                display: block !important;
-                z-index: 1200;
-                order: 0;
-            }
-
-            /* Navbar hidden by default, slides down from top-left */
-            header.header .menu .navbar {
-                display: none !important;
-                position: absolute !important;
-                top: 100% !important;
-                left: 0 !important;
-                right: 0 !important;
-                background: rgba(22, 14, 34, 0.97) !important;
-                padding: 12px 18px !important;
-                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5) !important;
-                margin: 0 !important;
-                z-index: 1150 !important;
-                border-radius: 0 0 12px 12px;
-            }
-
-            header.header .menu .navbar ul {
-                flex-direction: column !important;
-                gap: 4px !important;
-                align-items: flex-start !important;
-            }
-
-            header.header .menu .navbar ul li {
-                width: 100%;
-            }
-
-            header.header .menu .navbar ul li a {
-                padding: 12px 10px !important;
-                font-size: 17px !important;
-            }
-
-            /* Logo: centered, below all links, separated by a line */
-            header.header .menu .navbar ul li.logo-item {
-                width: 100% !important;
-                display: flex !important;
-                justify-content: center !important;
-                align-items: center !important;
-                padding: 12px 0 4px 0 !important;
-                margin-top: 8px !important;
-                border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
-                margin-left: 0 !important;
-            }
-
-            header.header .menu .navbar ul li.logo-item a.logo {
-                display: flex !important;
-                justify-content: center !important;
-                align-items: center !important;
-                width: 100% !important;
-                text-align: center !important;
-                margin: 0 auto !important;
-            }
-
-            header.header .menu .navbar ul li.logo-item img {
-                height: 44px !important;
-                width: auto !important;
-                display: block !important;
-                margin: 0 auto !important;
-            }
-
-            /* Open on checkbox check */
-            header.header .menu #menu:checked~.navbar {
-                display: block !important;
-            }
-
-            /* User pill stays on the right */
-            .user-welcome {
-                order: 1;
-                margin-left: auto;
-                font-size: 14px;
-                padding: 5px 10px;
-            }
-
-            .user-welcome span {
-                display: inline;
-            }
         }
 
         /* ── Editor panel ── */
@@ -387,6 +194,8 @@
         .editor-actions {
             display: flex;
             justify-content: center;
+            align-items: center;
+            gap: 20px;
             margin-top: 20px;
             grid-column: 1 / -1;
         }
@@ -432,6 +241,35 @@
             transform: translateY(-1px);
         }
 
+        .btn-cancel {
+            padding: 15px 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            font-weight: 700;
+            color: white;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-cancel:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-4px);
+        }
+
+        .current-file {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: 6px;
+            margin-left: 5px;
+        }
+
         @media (max-width: 991px) {
             .editor-panel {
                 margin: 20px 12px 40px;
@@ -458,7 +296,12 @@
                 font-size: 0.8rem;
             }
 
-            .btn-save {
+            .editor-actions {
+                flex-direction: column;
+            }
+
+            .btn-save,
+            .btn-cancel {
                 width: 100%;
                 padding: 14px;
                 font-size: 1rem;
@@ -760,59 +603,6 @@
                 overflow-y: auto;
             }
         }
-    
-        /* User Dropdown CSS added by Assistant */
-        .user-dropdown-container {
-            position: relative;
-            display: inline-block;
-        }
-
-        .user-dropdown-menu {
-            position: absolute;
-            top: calc(100% + 10px);
-            right: 0;
-            background: #2a2238; /* Matches dark theme */
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 8px 0;
-            min-width: 180px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(-10px);
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            z-index: 1000;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .user-dropdown-menu.active {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-
-        .user-dropdown-menu a {
-            display: block;
-            padding: 10px 20px;
-            color: #ddd;
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: background 0.2s, color 0.2s;
-            text-align: left;
-        }
-
-        .user-dropdown-menu a:hover {
-            background: rgba(255, 255, 255, 0.05);
-            color: #fff;
-        }
-
-        .user-dropdown-menu hr {
-            border: none;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            margin: 8px 0;
-        }
-
     </style>
 </head>
 
@@ -879,12 +669,11 @@
                 });
             </script>
             {% endif %}
-
         </div>
     </header>
 
     <div class="editor-panel container">
-        <h2>Publicar un Nuevo Juego</h2>
+        <h2>Editar Juego</h2>
 
         {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
@@ -894,52 +683,69 @@
         {% endif %}
         {% endwith %}
 
-        <form id="publishForm" method="POST" action="{{ url_for('publish') }}" enctype="multipart/form-data">
+        <form id="editGameForm" method="POST" action="{{ url_for('edit_game', game_id=game.id) }}"
+            enctype="multipart/form-data">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
             <div class="editor-field">
                 <label for="title">Título del juego</label>
-                <input type="text" name="title" id="title" placeholder="Ej: Mi Gran Aventura" required>
+                <input type="text" name="title" id="title" value="{{ game.title }}" required>
             </div>
 
             <div class="editor-field">
-                <label for="categories">Categorías (separadas por comas)</label>
-                <input type="text" name="categories" id="categories" placeholder="Ej: RPG, Acción, Aventura" required>
+                <label for="categories">Categorías</label>
+                <input type="text" name="categories" id="categories" value="{{ game.categories }}"
+                    placeholder="Ej: Aventura, Terror...">
             </div>
 
             <div class="editor-field">
-                <label for="price">Precio (0 para Gratis)</label>
-                <input type="number" name="price" id="price" step="0.01" min="0" placeholder="0.00" value="0.00">
+                <label for="price">Precio (0 para gratis)</label>
+                <input type="number" step="0.01" name="price" id="price" value="{{ game.price }}" placeholder="0.00">
             </div>
 
             <div class="editor-field field-full">
-                <label for="description">Descripción general</label>
-                <textarea name="description" id="description" rows="6"
-                    placeholder="Describe la historia y jugabilidad..." required></textarea>
+                <label for="description">Descripción General</label>
+                <textarea name="description" id="description" required>{{ game.description }}</textarea>
             </div>
 
-            <div class="editor-field field-full">
-                <label for="cover">Imagen de Portada</label>
-                <input type="file" name="cover" id="cover" accept="image/*" required>
+            <div class="editor-field">
+                <label for="cover">Imagen de Portada (Opcional)</label>
+                <input type="file" name="cover" id="cover" accept="image/*">
+                {% if game.cover %}
+                <div class="current-file">
+                    Actual: {{ game.cover.split('/')[-1] }}
+                </div>
+                {% endif %}
             </div>
 
-            <div class="editor-field field-full">
-                <label for="game_file">Archivo del Juego (.zip, .rar, .exe)</label>
+            <div class="editor-field">
+                <label for="game_file">Archivo del juego (Opcional)</label>
                 <input type="file" name="game_file" id="game_file" accept=".zip,.rar,.exe,.7z">
+                {% if game.game_file %}
+                <div class="current-file">
+                    Actual: {{ game.game_file.split('/')[-1] }}
+                </div>
+                {% endif %}
             </div>
 
             <div class="editor-actions">
-                <button type="button" class="btn-save" id="openModalBtn">Publicar Juego</button>
+                <a href="{{ url_for('game_detail', slug=game.slug or game.id) }}" class="btn-cancel">Cancelar</a>
+                {% if session.get('developer_plan', 'estandar') in ['pro', 'ultimate'] %}
+                <button type="submit" class="btn-save" id="submitBtn">Guardar Cambios</button>
+                {% else %}
+                <button type="button" class="btn-save" id="openModalBtn">Guardar Cambios</button>
+                {% endif %}
             </div>
         </form>
     </div>
 
     <!-- Modal de Planes de Pago -->
+    {% if session.get('developer_plan', 'estandar') not in ['pro', 'ultimate'] %}
     <div class="plan-modal-overlay" id="planModalOverlay">
         <!-- Plans Selection -->
         <div class="plan-modal" id="planModal">
             <button class="modal-close" id="closePlanModalBtn">&times;</button>
             <h3>Supera los Límites</h3>
-            <p class="sub">Elige un plan de publicación para tu juego</p>
+            <p class="sub">Activa un plan para tu juego</p>
             <div class="plans-container">
                 <div class="plan-card" data-plan="estandar">
                     <div class="plan-title">Estándar</div>
@@ -967,7 +773,7 @@
         <div class="paywall-modal" id="paywallModal" style="display: none;">
             <button class="modal-close" id="closePaywallModalBtn">&times;</button>
             <h3 id="paywallTitle">Activar Plan</h3>
-            <p class="sub">Ingresa tus datos para continuar con la publicación</p>
+            <p class="sub">Ingresa tus datos para continuar</p>
 
             <div class="paywall-form-group">
                 <label for="pw_card_name">Nombre en la tarjeta</label>
@@ -982,14 +788,15 @@
                 <input type="text" id="pw_card_number" placeholder="4532 1234 5678 9012" maxlength="19">
             </div>
 
-            <button class="paywall-btn" id="paywallSubmitBtn">Pagar y Publicar</button>
+            <button class="paywall-btn" id="paywallSubmitBtn">Pagar y Guardar</button>
             <p style="text-align: center; font-size: 0.8rem; color: rgba(255,255,255,0.5); margin-top: 15px;">
                 Transacción segura simulada.</p>
         </div>
     </div>
+    {% endif %}
 
     <script>
-        const publishForm = document.getElementById('publishForm');
+        const editGameForm = document.getElementById('editGameForm');
         const openModalBtn = document.getElementById('openModalBtn');
         const planModalOverlay = document.getElementById('planModalOverlay');
         const planModal = document.getElementById('planModal');
@@ -1004,27 +811,32 @@
         const userPersistentPlan = "{{ current_user.developer_plan or 'none' }}";
 
         // Format Card Number
-        document.getElementById('pw_card_number').addEventListener('input', function (e) {
-            const digits = this.value.replace(/\D/g, '').slice(0, 16);
-            const groups = digits.match(/.{1,4}/g) || [];
-            this.value = groups.join(' ');
-        });
+        const pw_card_number = document.getElementById('pw_card_number');
+        if (pw_card_number) {
+            pw_card_number.addEventListener('input', function (e) {
+                const digits = this.value.replace(/\D/g, '').slice(0, 16);
+                const groups = digits.match(/.{1,4}/g) || [];
+                this.value = groups.join(' ');
+            });
+        }
 
         // Open Plans overlay
-        openModalBtn.addEventListener('click', () => {
-            if (publishForm.checkValidity()) {
-                // If user already has a plan, skip modal and submit
-                if (userPersistentPlan !== 'none') {
-                    submitFinalForm(userPersistentPlan);
+        if (openModalBtn) {
+            openModalBtn.addEventListener('click', () => {
+                if (editGameForm.checkValidity()) {
+                    // If user already has a plan, skip modal and submit
+                    if (userPersistentPlan !== 'none') {
+                        submitFinalForm(userPersistentPlan);
+                    } else {
+                        planModal.style.display = 'block';
+                        paywallModal.style.display = 'none';
+                        planModalOverlay.classList.add('active');
+                    }
                 } else {
-                    planModal.style.display = 'block';
-                    paywallModal.style.display = 'none';
-                    planModalOverlay.classList.add('active');
+                    editGameForm.reportValidity();
                 }
-            } else {
-                publishForm.reportValidity();
-            }
-        });
+            });
+        }
 
         const closeModal = () => {
             planModalOverlay.classList.remove('active');
@@ -1035,6 +847,20 @@
         planModalOverlay.addEventListener('click', (e) => {
             if (e.target === planModalOverlay) closeModal();
         });
+
+        // Auto-resize description textarea
+        const descTextarea = document.getElementById('description');
+        if (descTextarea) {
+            const autoResize = () => {
+                descTextarea.style.height = 'auto'; 
+                // Añadimos 35px extra de buffer para garantizar que el padding inferior jamás corte la última línea
+                descTextarea.style.height = (descTextarea.scrollHeight + 35) + 'px'; 
+            };
+            descTextarea.addEventListener('input', autoResize);
+            window.addEventListener('load', autoResize);
+            setTimeout(autoResize, 500); 
+            autoResize();
+        }
 
         // Plan Selection
         planCards.forEach(card => {
@@ -1080,7 +906,7 @@
             planInput.name = 'plan';
             planInput.id = 'hiddenPlanField';
             planInput.value = plan;
-            publishForm.appendChild(planInput);
+            editGameForm.appendChild(planInput);
 
             if (cardName && email && last4) {
                 const nameInput = document.createElement('input');
@@ -1088,38 +914,25 @@
                 nameInput.name = 'card_name';
                 nameInput.id = 'hiddenCardName';
                 nameInput.value = cardName;
-                publishForm.appendChild(nameInput);
+                editGameForm.appendChild(nameInput);
 
                 const emailInput = document.createElement('input');
                 emailInput.type = 'hidden';
                 emailInput.name = 'email';
                 emailInput.id = 'hiddenEmail';
                 emailInput.value = email;
-                publishForm.appendChild(emailInput);
+                editGameForm.appendChild(emailInput);
 
                 const last4Input = document.createElement('input');
                 last4Input.type = 'hidden';
                 last4Input.name = 'last4';
                 last4Input.id = 'hiddenLast4';
                 last4Input.value = last4;
-                publishForm.appendChild(last4Input);
+                editGameForm.appendChild(last4Input);
             }
 
             closeModal();
-            publishForm.submit();
-        }
-
-        const descTextarea = document.getElementById('description');
-        if (descTextarea) {
-            const autoResize = () => {
-                descTextarea.style.height = 'auto'; 
-                // Añadimos 35px extra de buffer para garantizar que el padding inferior jamás corte la última línea
-                descTextarea.style.height = (descTextarea.scrollHeight + 35) + 'px'; 
-            };
-            descTextarea.addEventListener('input', autoResize);
-            window.addEventListener('load', autoResize);
-            setTimeout(autoResize, 500); 
-            autoResize();
+            editGameForm.submit();
         }
     </script>
 </body>

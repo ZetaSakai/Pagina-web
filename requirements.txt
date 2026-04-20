@@ -1,3 +1,7 @@
 flask
 mysql-connector-python
 werkzeug
+flask-limiter
+flask-wtf
+email-validator
+python-dotenv

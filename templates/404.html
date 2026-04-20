@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>404 | New Era Games</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estiloindex.css') }}">
+    <style>
+        body {
+            background: #1b1726;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden;
+            color: #fff;
+        }
+
+        .error-container {
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .error-code {
+            font-size: clamp(8rem, 20vw, 15rem);
+            font-weight: 900;
+            margin: 0;
+            line-height: 1;
+            background: linear-gradient(135deg, #ff00c8, #00d2ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 30px rgba(255, 0, 200, 0.3));
+            animation: float 6s ease-in-out infinite;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 40px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .btn-back {
+            display: inline-block;
+            padding: 20px 45px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #fff;
+            text-decoration: none;
+            background: #ff00c8;
+            border-radius: 50px;
+            box-shadow: 0 10px 30px rgba(255, 0, 200, 0.4);
+            transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+            animation: pulse-button 2s infinite;
+        }
+
+        .btn-back:hover {
+            transform: scale(1.1) translateY(-5px);
+            background: #fff;
+            color: #ff00c8;
+            box-shadow: 0 15px 40px rgba(255, 255, 255, 0.2);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes pulse-button {
+            0% { transform: scale(1); box-shadow: 0 10px 30px rgba(255, 0, 200, 0.4); }
+            50% { transform: scale(1.05); box-shadow: 0 15px 45px rgba(255, 0, 200, 0.6); }
+            100% { transform: scale(1); box-shadow: 0 10px 30px rgba(255, 0, 200, 0.4); }
+        }
+
+        /* Bg particles simplified */
+        .bg-dots {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="bg-dots"></div>
+    <div class="error-container">
+        <p class="error-code">404</p>
+        <h1>{{ message or 'Pagina no encontrada.' }}</h1>
+        <a href="{{ url_for('index') }}" class="btn-back">Volver al Inicio</a>
+    </div>
+</body>
+
+</html>

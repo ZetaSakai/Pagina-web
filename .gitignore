@@ -1,5 +1,10 @@
 # MySQL data (no debe estar en el repositorio)
 mysql_data/
+mysql_data_ci/
+contenedor_bd_base_de_datos/
+
+# Secure backup (archivos sensibles retirados)
+.secure_backup/
 
 # Python cache
 __pycache__/
@@ -7,3 +12,60 @@ __pycache__/
 
 # Variables de entorno
 .env
+
+# Claves privadas y certificados
+*.key
+*.pem
+*.crt
+
+# Backups y dumps de base de datos
+*.sql
+*.zip
+*.tar.gz
+backups/
+
+# Archivos de Imagen y Disco
+*.img
+db_casefold.img
+
+# Logs
+*.log
+app.log
+
+# Uploads y archivos estáticos generados
+static/uploads/
+contenedor_web_archivos_multimedia/
+temp_wp_content/
+wordpress_extracted/
+
+# Entornos virtuales
+venv/
+.venv/
+env/
+
+# IDE y herramientas
+.vscode/
+.vscode-server/
+.idea/
+.agents/
+.antigravity-server/
+.gemini/
+.claude/
+.copilot/
+.cache/
+.local/
+.codex
+.clinerules
+.cursorrules
+.windsurfrules
+.history/
+
+# Temporales y respaldos
+*.bak
+*.tmp
+*.root_temp
+
+# OS
+.DS_Store
+Thumbs.db
+.wget-hsts

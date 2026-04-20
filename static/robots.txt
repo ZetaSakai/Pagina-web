@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Disallow: /logout
+Disallow: /settings
+Disallow: /settings/*
+Disallow: /publish
+Disallow: /edit_game/*
+Disallow: /delete_game/*
+
+# Sitemap location
+Sitemap: https://newera-games.servegame.com/sitemap.xml

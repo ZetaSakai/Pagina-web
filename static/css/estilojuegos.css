@@ -128,10 +128,10 @@ body {
     align-items: center;
     justify-content: space-between;
     transition: 0.5s;
-    clip-path: circle(0% at 100% 0%);
+    clip-path: circle(0% at 0% 0%);
 }
 .menu.active {
-    clip-path: circle(144% at 100% 0%);
+    clip-path: circle(144% at 0% 0%);
     z-index: 3000;
 }
 .menu img {

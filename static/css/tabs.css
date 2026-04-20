@@ -1,0 +1,39 @@
+/* Tabs specific variables and styles */
+.settings-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 30px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 15px;
+}
+.settings-tab-btn {
+    background: transparent;
+    color: rgba(255, 255, 255, 0.6);
+    border: none;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 10px 20px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+.settings-tab-btn:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.05);
+}
+.settings-tab-btn.active {
+    color: #ff00c8;
+    background: rgba(255, 0, 200, 0.1);
+}
+.settings-tab-content {
+    display: none;
+    animation: fadeIn 0.4s ease forwards;
+}
+.settings-tab-content.active {
+    display: block;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}

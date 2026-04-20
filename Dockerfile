@@ -17,7 +17,17 @@ COPY . .
 # Ensure upload directories exist inside the container
 RUN mkdir -p static/uploads/avatars static/uploads/covers static/uploads/games
 
-EXPOSE 5000
+EXPOSE 8080
 
 # Use gunicorn to run the flask application
-CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:5000", "app:app"]
+# --timeout: prevent worker timeouts
+# --capture-output: enable logging
+# --error-logfile: capture errors
+CMD ["gunicorn", \
+     "--timeout", "120", \
+     "--capture-output", \
+     "--error-logfile", "-", \
+     "--access-logfile", "-", \
+     "-w", "4", \
+     "-b", "0.0.0.0:8080", \
+     "app:app"]

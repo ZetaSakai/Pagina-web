@@ -2,13 +2,13 @@
 <html lang="en">
 
 <head>
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>New Era Games</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/css/style.css">
-    <link rel="icon" href="/img/1-17e21c9a.ico">
     <style>
         html {
             scroll-behavior: smooth;
@@ -18,11 +18,12 @@
 
 <body>
     <header class="header">
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}">
 
         <div class="menu container">
             <input type="checkbox" id="menu" />
             <label for="menu">
-                <img src="/img/menu.png" class="menu-icono" alt="menu">
+                <img src="{{ url_for('static', filename='img/menu.png') }}" class="menu-icono" alt="menu">
             </label>
             <nav class="navbar">
                 <ul>
@@ -31,7 +32,8 @@
                     <li><a href="login.html">Iniciar sesión</a></li>
                     <li><a href="contactos.html">Contacto</a></li>
                     <li class="logo-item"><a href="#" class="logo"><img
-                                src="/img/image__1_-removebg-preview (1) (1).png" alt="New Era Games logo"></a></li>
+                                src="{{ url_for('static', filename='img/logo.png') }}" alt="New Era Games logo"></a>
+                    </li>
                 </ul>
             </nav>
 
@@ -62,13 +64,41 @@
     <section class="popular-container container">
         <h2>Juegos populares</h2>
         <div class="popular-content">
-            <img src="/img/g1.jpg" alt="">
-            <img src="/img/g2.jpg" alt="">
-            <img src="/img/g3.jpg" alt="">
-            <img src="/img/g4.jpg" alt="">
-            <img src="/img/g5.jpg" alt="">
-            <img src="/img/g6.jpg" alt="">
-            <img src="/img/g7.jpg" alt="">
+            <div class="popular-item" style="cursor: pointer;">
+                <div class="popular-img-wrapper">
+                    <img src="{{ url_for('static', filename='img/g1.jpg') }}" alt="">
+                </div>
+            </div>
+            <div class="popular-item" style="cursor: pointer;">
+                <div class="popular-img-wrapper">
+                    <img src="{{ url_for('static', filename='img/g2.jpg') }}" alt="">
+                </div>
+            </div>
+            <div class="popular-item" style="cursor: pointer;">
+                <div class="popular-img-wrapper">
+                    <img src="{{ url_for('static', filename='img/g3.jpg') }}" alt="">
+                </div>
+            </div>
+            <div class="popular-item" style="cursor: pointer;">
+                <div class="popular-img-wrapper">
+                    <img src="{{ url_for('static', filename='img/g4.jpg') }}" alt="">
+                </div>
+            </div>
+            <div class="popular-item" style="cursor: pointer;">
+                <div class="popular-img-wrapper">
+                    <img src="{{ url_for('static', filename='img/g5.jpg') }}" alt="">
+                </div>
+            </div>
+            <div class="popular-item" style="cursor: pointer;">
+                <div class="popular-img-wrapper">
+                    <img src="{{ url_for('static', filename='img/g6.jpg') }}" alt="">
+                </div>
+            </div>
+            <div class="popular-item" style="cursor: pointer;">
+                <div class="popular-img-wrapper">
+                    <img src="{{ url_for('static', filename='img/g7.jpg') }}" alt="">
+                </div>
+            </div>
         </div>
     </section>
 
@@ -79,7 +109,7 @@
         <div class="product-content">
 
             <div class="product-1">
-                <img src="/img/l1.jpg" alt="">
+                <img src="{{ url_for('static', filename='img/l1.jpg') }}" alt="">
                 <div class="product-txt">
                     <h3>Juego lorem</h3>
                     <div class="price">
@@ -90,7 +120,7 @@
             </div>
 
             <div class="product-1">
-                <img src="/img/l2.jpg" alt="">
+                <img src="{{ url_for('static', filename='img/l2.jpg') }}" alt="">
                 <div class="product-txt">
                     <h3>Juego lorem</h3>
                     <div class="price">
@@ -101,7 +131,7 @@
             </div>
 
             <div class="product-1">
-                <img src="/img/l3.jpg" alt="">
+                <img src="{{ url_for('static', filename='img/l3.jpg') }}" alt="">
                 <div class="product-txt">
                     <h3>Juego lorem</h3>
                     <div class="price">
@@ -112,7 +142,7 @@
             </div>
 
             <div class="product-1">
-                <img src="/img/l4.jpg" alt="">
+                <img src="{{ url_for('static', filename='img/l4.jpg') }}" alt="">
                 <div class="product-txt">
                     <h3>Juego lorem</h3>
                     <div class="price">
@@ -123,7 +153,7 @@
             </div>
 
             <div class="product-1">
-                <img src="/img/l5.jpg" alt="">
+                <img src="{{ url_for('static', filename='img/l5.jpg') }}" alt="">
                 <div class="product-txt">
                     <h3>Juego lorem</h3>
                     <div class="price">
@@ -134,7 +164,7 @@
             </div>
 
             <div class="product-1">
-                <img src="/img/l6.jpg" alt="">
+                <img src="{{ url_for('static', filename='img/l6.jpg') }}" alt="">
                 <div class="product-txt">
                     <h3>Juego lorem</h3>
                     <div class="price">
@@ -145,7 +175,7 @@
             </div>
 
             <div class="product-1">
-                <img src="/img/l7.jpg" alt="">
+                <img src="{{ url_for('static', filename='img/l7.jpg') }}" alt="">
                 <div class="product-txt">
                     <h3>Juego lorem</h3>
                     <div class="price">
@@ -156,7 +186,7 @@
             </div>
 
             <div class="product-1">
-                <img src="/img/l8.jpg" alt="">
+                <img src="{{ url_for('static', filename='img/l8.jpg') }}" alt="">
                 <div class="product-txt">
                     <h3>Juego lorem</h3>
                     <div class="price">
@@ -167,7 +197,7 @@
             </div>
 
             <div class="product-1">
-                <img src="/img/l9.jpg" alt="">
+                <img src="{{ url_for('static', filename='img/l9.jpg') }}" alt="">
                 <div class="product-txt">
                     <h3>Juego lorem</h3>
                     <div class="price">
@@ -180,17 +210,6 @@
         </div>
     </main>
 
-    <section class="contact container">
-
-        <div class="contact-content">
-            <h3>Contacta con nosotros!</h3>
-            <form>
-                <input type="email" placeholder="Escribe tu correo">
-                <input type="submit" class="btn-3" value="Enviar">
-            </form>
-        </div>
-
-    </section>
 
     <footer class="footer container">
 

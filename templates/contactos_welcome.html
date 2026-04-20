@@ -2,22 +2,23 @@
 <html lang="en">
 
 <head>
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>New Era Games</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/css/contactos.css">
-    <link rel="icon" href="/img/1-17e21c9a.ico">
-</head>
+    </head>
 
 <body>
     <header class="header">
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}">
 
         <div class="menu container">
             <input type="checkbox" id="menu" />
             <label for="menu">
-                <img src="/img/menu.png" class="menu-icono" alt="menu">
+                <img src="{{ url_for('static', filename='img/menu.png') }}" class="menu-icono" alt="menu">
             </label>
             <nav class="navbar">
                 <ul>
@@ -26,7 +27,7 @@
                     <li><a href="login.html">Iniciar sesión</a></li>
                     <li><a href="contactos.html">Contacto</a></li>
                     <li class="logo-item"><a href="#" class="logo"><img
-                                src="/img/image__1_-removebg-preview (1) (1).png" alt="New Era Games logo"></a></li>
+                                src="{{ url_for('static', filename='img/logo.png') }}" alt="New Era Games logo"></a></li>
                 </ul>
             </nav>
 

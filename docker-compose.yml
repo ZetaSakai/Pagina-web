@@ -1,34 +1,42 @@
-version: '3.8'
+# version: '3.8'
 
 services:
   web:
     build: .
     ports:
-      - "5000:5000"
+      - "8080:8080"
     volumes:
-      - "./static/uploads:/app/static/uploads"  # Map host folder to container folder for persistent media
+      - "./contenedor_web_archivos_multimedia:/app/static/uploads"
     environment:
+      - FLASK_SECRET_KEY=${FLASK_SECRET_KEY:-change-this-secret-in-production}
+      - FLASK_DEBUG=${FLASK_DEBUG:-True}
       - DB_HOST=db
-      - DB_PORT=3306
-      - DB_USER=root
-      - DB_PASSWORD=root
-      - DB_NAME=main
+      - DB_PORT=3310
+      - DB_USER=${DB_USER:-root}
+      - DB_PASSWORD=${DB_PASSWORD:-root}
+      - DB_NAME=${DB_NAME:-main}
+      - ALLOWED_HOSTS=${ALLOWED_HOSTS:-localhost,127.0.0.1}
+    env_file:
+      - .env
     depends_on:
       db:
         condition: service_healthy
 
   db:
-    image: mysql:8.0
-    restart: always
+    image: mysql:lts
+    command: --lower_case_table_names=2
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: main
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root}
+      MYSQL_DATABASE: ${DB_NAME:-main}
     ports:
-      - "3310:3306"
+      - "127.0.0.1:3310:3306"  # Bind to localhost only for security
     volumes:
-      - ./mysql_data:/var/lib/mysql
+      - ./mysql_data_ci/db_data:/var/lib/mysql
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       interval: 10s
       timeout: 5s
       retries: 5
+
+# NOTE: dev_ssh service removed for production security
+# For development, use: docker compose exec web bash

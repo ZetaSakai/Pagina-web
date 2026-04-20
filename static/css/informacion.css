@@ -140,7 +140,7 @@ img {
 }
 
 .menu-icono {
-    width: 25px;
+    width: 28px;
 }
 
 .menu label {
@@ -203,21 +203,37 @@ img {
 h2 {
     color: #ffffff;
     font-size: 35px;
+    margin-top: 80px;
     margin-bottom: 45px;
-    justify-content: center;
+    text-align: left;
 }
 
 
 .popular-content {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    display: flex;
+    flex-direction: column;
     gap: 36px;
     margin: 30px 0 0 0;
 }
 
+.popular-row {
+    display: flex;
+    gap: 36px;
+    justify-content: center;
+    flex-wrap: nowrap;
+}
+
+.popular-row .popular-card {
+    flex: 1;
+}
+
+
 
 .popular-container {
-    background: linear-gradient(180deg, rgba(255, 0, 200, 0.05), rgba(0, 0, 0, 0.0));
+    background-image: linear-gradient(rgba(27, 23, 38, 0.8), rgba(27, 23, 38, 0.8)), url(../img/bg.jpg);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
     border-radius: 18px;
     padding: 40px 30px;
     margin-top: 60px;
@@ -230,18 +246,19 @@ h2 {
 
 .popular-card {
     position: relative;
-    background: linear-gradient(180deg, rgba(42, 34, 58, 0.7), rgba(22, 18, 32, 0.65));
+    background: rgba(42, 34, 58, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.05);
     border-radius: 14px;
     padding: 28px;
     min-height: 200px;
     display: flex;
     flex-direction: column;
     gap: 10px;
-    border: 1px solid rgba(255, 0, 200, 0.08);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.02);
-    transition: transform 0.35s ease, box-shadow 0.35s ease, filter 0.35s ease;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+    transition: all 0.4s cubic-bezier(.175, .885, .32, 1.275);
     overflow: hidden;
 }
+
 
 .popular-card h3 {
     color: #ffffff;
@@ -269,10 +286,13 @@ h2 {
 }
 
 .popular-card:hover {
-    transform: translateY(-12px);
-    box-shadow: 0 28px 80px rgba(0, 0, 0, 0.7);
-    filter: saturate(1.05) brightness(1.02);
+    transform: translateY(-12px) scale(1.03);
+    background-color: rgba(42, 34, 58, 0.9);
+    border-color: #ff00c8;
+    box-shadow: 0 0 30px rgba(255, 0, 200, 0.4);
+    animation: neon-pulse 1.5s ease-in-out infinite alternate;
 }
+
 
 .reveal-on-scroll {
     opacity: 0;
@@ -290,10 +310,21 @@ h2 {
     transform: translateY(0);
 }
 
+/* ── Tablet: 2 columnas ── */
 @media (max-width: 991px) {
+    .popular-row {
+        flex-wrap: wrap;
+        gap: 24px;
+    }
+
+    .popular-row .popular-card {
+        flex: 1 1 calc(50% - 24px);
+        min-width: 240px;
+    }
+
     .popular-content {
-        grid-template-columns: 1fr;
         margin: 20px 0 0 0;
+        gap: 24px;
     }
 
     .popular-container {
@@ -301,14 +332,34 @@ h2 {
     }
 }
 
-@media (max-width: 991px) {
-    .popular-content {
-        grid-template-columns: 1fr;
-        margin: 20px 0 0 0;
+/* ── Móvil: 1 columna, todo visible ── */
+@media (max-width: 640px) {
+    .popular-row {
+        flex-direction: column;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .popular-row .popular-card {
+        flex: 1 1 100%;
+        min-width: 0;
+    }
+
+    .popular-card h3 {
+        font-size: 20px;
+        white-space: normal;
+        overflow: visible;
+        word-break: break-word;
+    }
+
+    .popular-card p {
+        font-size: 14px;
     }
 
     .popular-container {
-        padding: 30px 20px;
+        padding: 24px 14px;
+        margin-top: 30px;
+        border-radius: 14px;
     }
 }
 
@@ -324,14 +375,18 @@ h2 {
 }
 
 .product-1 {
-    background-color: #2a223a;
-    border-radius: 14px;
+    background-color: rgba(42, 34, 58, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    padding: 12px;
     overflow: hidden;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
-    transition: transform 0.35s ease, box-shadow 0.35s ease;
+    transition: all 0.4s cubic-bezier(.175, .885, .32, 1.275);
     display: flex;
     flex-direction: column;
+    height: 100%;
+    position: relative;
 }
+
 
 .product-1 img {
     width: 100%;
@@ -342,9 +397,22 @@ h2 {
 }
 
 .product-1:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7);
+    transform: translateY(-12px) scale(1.03);
+    background-color: rgba(42, 34, 58, 0.9);
+    border-color: #ff00c8;
+    box-shadow: 0 0 30px rgba(255, 0, 200, 0.4);
+    animation: neon-pulse 1.5s ease-in-out infinite alternate;
 }
+
+@keyframes neon-pulse {
+    from {
+        box-shadow: 0 0 10px rgba(255, 0, 200, 0.2), 0 0 20px rgba(255, 0, 200, 0.1);
+    }
+    to {
+        box-shadow: 0 0 25px rgba(255, 0, 200, 0.5), 0 0 50px rgba(255, 0, 200, 0.3);
+    }
+}
+
 
 .product-1:hover img {
     transform: scale(1.05);
@@ -402,6 +470,10 @@ h3 {
 
 .contact {
     padding: 150px 300px;
+    background-image: linear-gradient(rgba(27, 23, 38, 0.8), rgba(27, 23, 38, 0.8)), url(../img/bg.jpg);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
 }
 
 .contact-content {
@@ -520,7 +592,7 @@ input {
     }
 
     .header-txt h1 {
-        font-size: 50px;
+        font-size: 38px;
         margin-bottom: 15px;
     }
 
@@ -551,7 +623,7 @@ input {
     }
 
     .contact {
-        padding: 30px;
+        padding: 40px 20px;
     }
 
     form {
@@ -578,5 +650,112 @@ input {
     .navbar ul li a,
     .product-1 {
         transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+}
+
+/* ─── GLOBAL MOBILE HEADER OVERRIDE (APPLIES TO ALL PAGES) ─── */
+@media (max-width: 991px) {
+    header.header .menu {
+        padding: 14px 16px !important;
+        flex-wrap: wrap;
+    }
+
+    header.header .menu label {
+        display: flex !important;
+        align-items: center !important;
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        z-index: 1200 !important;
+        order: 0;
+    }
+
+    header.header .menu .navbar {
+        display: none !important;
+        position: absolute !important;
+        top: 100% !important;
+        left: 0 !important;
+        right: 0 !important;
+        background: rgba(22, 14, 34, 0.97) !important;
+        padding: 12px 18px !important;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5) !important;
+        margin: 0 !important;
+        z-index: 1150 !important;
+        border-radius: 0 0 12px 12px;
+    }
+
+    header.header .menu .navbar ul {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 4px !important;
+        align-items: flex-start !important;
+    }
+
+    header.header .menu .navbar ul li {
+        width: 100% !important;
+        float: none !important;
+    }
+
+    header.header .menu .navbar ul li a {
+        padding: 12px 10px !important;
+        font-size: 17px !important;
+        color: #ffffff !important;
+        display: block !important;
+        border-bottom: none !important;
+        text-align: left !important;
+    }
+
+    header.header .menu .navbar ul li a:hover {
+        color: #ff00c8 !important;
+    }
+
+    header.header .menu .navbar ul li.logo-item {
+        width: 100% !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        padding: 12px 0 4px 0 !important;
+        margin-top: 8px !important;
+        border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+        margin-left: 0 !important;
+    }
+
+    header.header .menu .navbar ul li.logo-item a.logo {
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        width: 100% !important;
+        text-align: center !important;
+        margin: 0 auto !important;
+    }
+
+    header.header .menu .navbar ul li.logo-item img {
+        height: 44px !important;
+        width: auto !important;
+        display: block !important;
+        margin: 0 auto !important;
+    }
+
+    header.header .menu #menu:checked~.navbar {
+        display: block !important;
+    }
+
+    .user-welcome {
+        display: flex !important;
+        order: 1 !important;
+        margin-left: auto !important;
+        font-size: 14px !important;
+        padding: 5px 10px !important;
+        width: max-content;
+        background: transparent !important;
+        border: none !important;
+    }
+
+    header.header .menu .menu-icono {
+        width: 28px !important;
+        height: auto !important;
+        display: block !important;
     }
 }

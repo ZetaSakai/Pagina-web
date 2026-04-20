@@ -3,13 +3,13 @@
 <html>
 
 <head>
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Registrarse</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/register.css') }}">
-    <link rel="icon" href="{{ url_for('static', filename='img/1-17e21c9a.ico') }}">
     <style>
         .alert {
             padding: 15px;
@@ -61,7 +61,9 @@
         <div class="btn glass-effect">
             <a href="{{ url_for('index') }}">Volver al Inicio</a>
         </div>
-        <form method="POST" action="{{ url_for('register') }}" class="card-container glass-effect">
+        <form method="POST" action="{{ url_for('register') }}" class="card-container">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+
             <h1>Registrate!</h1>
             <input class="sign" type="text" name="username" id="username" placeholder="Nombre de Usuario" required>
             <input class="sign" type="email" name="email" id="email" placeholder="Email" required>
@@ -70,6 +72,7 @@
             <p><a class="anim-link pulse" href="{{ url_for('login') }}">Ya tengo una cuenta :D</a></p>
         </form>
     </div>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 
 </html>

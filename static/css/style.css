@@ -23,7 +23,6 @@ img {
 }
 
 .header {
-    background-image: url(#);
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -42,6 +41,7 @@ img {
     align-items: center;
     justify-content: space-between;
 }
+
 .menu {
     z-index: 1000;
 }
@@ -67,7 +67,7 @@ img {
 .menu .navbar {
     margin-left: 0;
     margin-right: auto;
-    padding-left: 20px; 
+    padding-left: 20px;
 }
 
 .menu .navbar ul {
@@ -97,7 +97,7 @@ img {
     display: block;
     height: 40px;
     margin-top: -2px;
-    transition: transform 0.18s cubic-bezier(.2,.8,.2,1);
+    transition: transform 0.18s cubic-bezier(.2, .8, .2, 1);
     transform-origin: center;
     will-change: transform;
 }
@@ -113,7 +113,7 @@ img {
     color: #ffffff;
     font-weight: 600;
     display: block;
-    transition: transform 0.16s cubic-bezier(.2,.8,.2,1), color 0.12s ease;
+    transition: transform 0.16s cubic-bezier(.2, .8, .2, 1), color 0.12s ease;
     transform-origin: center;
     will-change: transform, color;
 }
@@ -121,6 +121,131 @@ img {
 .menu .navbar ul li a:hover {
     color: #ff00c8;
     transform: scale(1.08);
+}
+
+/* ─── User welcome badge (all pages) ───────────────────────────────── */
+.user-welcome {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: #ffffff;
+    font-weight: 700;
+    text-decoration: none;
+    transition: transform 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
+}
+
+.user-welcome:hover {
+    transform: translateY(-2px) scale(1.02);
+    background: rgba(255, 255, 255, 0.18);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.35);
+}
+
+.user-welcome img,
+.user-welcome .default-avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    object-fit: cover;
+    transition: transform 0.18s ease;
+}
+
+.user-welcome:hover img,
+.user-welcome:hover .default-avatar {
+    transform: scale(1.08);
+}
+
+.default-avatar {
+    background: #cccccc;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* User Dropdown Menu CSS */
+.user-dropdown-container {
+    position: relative;
+    display: inline-block;
+}
+
+.user-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    background: #2a2238; /* Matches dark theme */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 8px 0;
+    min-width: 180px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+}
+
+.user-dropdown-menu.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.user-dropdown-menu a {
+    display: block;
+    padding: 10px 20px;
+    color: #ddd;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: background 0.2s, color 0.2s;
+    text-align: left;
+}
+
+.user-dropdown-menu a:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
+}
+
+.user-dropdown-menu hr {
+    border: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin: 8px 0;
+}
+
+/* ─── Plan Badges ─── */
+.plan-badge {
+    font-size: 0.7rem;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-left: 6px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.plan-badge-estandar {
+    background: rgba(180, 180, 190, 0.1);
+    color: rgba(200, 200, 210, 0.75);
+    border: 1px solid rgba(180, 180, 190, 0.25);
+}
+
+.plan-badge-pro {
+    background: rgba(100, 200, 220, 0.08);
+    color: rgba(130, 210, 220, 0.8);
+    border: 1px solid rgba(100, 200, 220, 0.25);
+}
+
+.plan-badge-ultimate {
+    background: rgba(200, 100, 180, 0.1);
+    color: rgba(210, 140, 195, 0.85);
+    border: 1px solid rgba(200, 100, 180, 0.3);
 }
 
 #menu {
@@ -148,7 +273,7 @@ img {
     font-size: 60px;
     color: #ffffff;
     line-height: 1.3;
-    margin-bottom: 25px;   
+    margin-bottom: 25px;
 }
 
 .header-txt span {
@@ -166,7 +291,9 @@ img {
     display: flex;
 }
 
-.btn-1, .btn-2, .btn-3 {
+.btn-1,
+.btn-2,
+.btn-3 {
     display: inline-block;
     padding: 11px 35px;
     border: 2px solid #ff00c8;
@@ -204,7 +331,7 @@ h2 {
 .popular-content img {
     width: 150px;
     margin: 10px;
-    transition: transform 0.12s cubic-bezier(.2,.8,.2,1), filter 0.12s ease, box-shadow 0.12s ease;
+    transition: transform 0.12s cubic-bezier(.2, .8, .2, 1), filter 0.12s ease, box-shadow 0.12s ease;
     will-change: transform, filter, box-shadow;
     cursor: pointer;
     border-radius: 6px;
@@ -214,12 +341,12 @@ h2 {
 .popular-content img:focus {
     transform: translateY(-8px) scale(1.06);
     filter: brightness(1.05) saturate(1.08);
-    box-shadow: 0 18px 30px rgba(0,0,0,0.6);
+    box-shadow: 0 18px 30px rgba(0, 0, 0, 0.6);
     outline: none;
 }
 
 .popular-content img:focus {
-    outline: 3px solid rgba(255,0,200,0.12);
+    outline: 3px solid rgba(255, 0, 200, 0.12);
     outline-offset: 6px;
 }
 
@@ -228,15 +355,20 @@ h2 {
     grid-template-columns: repeat(3, 1fr);
     gap: 50px;
 }
+
 .product-1 {
-    background-color: #2a223a;
-    border-radius: 14px;
+    background-color: rgba(42, 34, 58, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    padding: 12px;
     overflow: hidden;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.6);
-    transition: transform 0.12s ease, box-shadow 0.12s ease;
+    transition: all 0.4s cubic-bezier(.175, .885, .32, 1.275);
     display: flex;
     flex-direction: column;
+    height: 100%;
+    position: relative;
 }
+
 
 .product-1 img {
     width: 100%;
@@ -248,9 +380,22 @@ h2 {
 }
 
 .product-1:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 25px 60px rgba(0,0,0,0.7);
+    transform: translateY(-12px) scale(1.03);
+    background-color: rgba(42, 34, 58, 0.9);
+    border-color: #ff00c8;
+    box-shadow: 0 0 30px rgba(255, 0, 200, 0.4);
+    animation: neon-pulse 1.5s ease-in-out infinite alternate;
 }
+
+@keyframes neon-pulse {
+    from {
+        box-shadow: 0 0 10px rgba(255, 0, 200, 0.2), 0 0 20px rgba(255, 0, 200, 0.1);
+    }
+    to {
+        box-shadow: 0 0 25px rgba(255, 0, 200, 0.5), 0 0 50px rgba(255, 0, 200, 0.3);
+    }
+}
+
 
 .product-1:hover img {
     transform: scale(1.05);
@@ -289,7 +434,7 @@ h3 {
 
 .btr-2 {
     padding: 8px 18px;
-    background: linear-gradient(90deg,#ff6ad1,#ff00c8);
+    background: linear-gradient(90deg, #ff6ad1, #ff00c8);
     color: #fff;
     border-radius: 20px;
     text-decoration: none;
@@ -356,13 +501,13 @@ input {
     display: flex;
 }
 
-.link ul li > a {
+.link ul li>a {
     font-size: 17px;
     color: #ffffff;
     margin-right: 20px;
 }
 
-.link ul li > a:hover {
+.link ul li>a:hover {
     color: #ff00c8;
 }
 
@@ -382,10 +527,10 @@ input {
         top: 100%;
         left: 0;
         right: 0;
-        background-color: rgba(27,17,38,0.9);
+        background-color: rgba(27, 17, 38, 0.9);
         display: none;
         padding: 12px 16px;
-        box-shadow: 0 6px 20px rgba(0,0,0,0.45);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
     }
 
     .menu .navbar ul {
@@ -402,18 +547,17 @@ input {
 
     .menu .navbar ul li a:hover {
         color: #ff00c8;
-        background: transparent;
     }
 
     .menu .navbar ul li {
         width: 100%;
     }
 
-    #menu:checked ~ .navbar {
+    #menu:checked~.navbar {
         display: block;
     }
 
-    .header{
+    .header {
         min-height: 0vh;
         padding: 80px 30px 50px 30px;
         padding-top: 120px;
@@ -445,8 +589,8 @@ input {
         padding: 30px;
     }
 
-    .product-content{
-        grid-template-columns: repeat(1,1fr);
+    .product-content {
+        grid-template-columns: repeat(1, 1fr);
         gap: 30px;
     }
 
@@ -473,28 +617,28 @@ input {
 
     .link ul {
         margin-top: 20px;
-        
+
     }
 
     .navbar ul li a {
-    display: inline-block;
+        display: inline-block;
     }
 
     .navbar ul li a,
-.product-1 {
-    transition: transform 0.12s ease, box-shadow 0.12s ease;
+    .product-1 {
+        transition: transform 0.12s ease, box-shadow 0.12s ease;
     }
 
     .navbar ul li a,
-.product-1 {
-    transition: transform 0.12s ease, box-shadow 0.12s ease;
+    .product-1 {
+        transition: transform 0.12s ease, box-shadow 0.12s ease;
     }
 }
 
 .reveal-on-scroll {
     opacity: 0;
     transform: translateY(22px) scale(0.995);
-    transition: opacity 600ms cubic-bezier(.2,.9,.2,1), transform 600ms cubic-bezier(.2,.9,.2,1);
+    transition: opacity 600ms cubic-bezier(.2, .9, .2, 1), transform 600ms cubic-bezier(.2, .9, .2, 1);
     will-change: opacity, transform;
 }
 
@@ -560,5 +704,124 @@ input {
     .menu label img {
         display: block !important;
         pointer-events: none !important;
+    }
+}
+
+/* ─── Username Hover Effects ───────────────────────────────── */
+.comment-user a,
+.creator-link {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.2s ease, text-decoration 0.2s ease;
+}
+
+.comment-user a:hover,
+.creator-link:hover {
+    color: #ff00c8 !important;
+    text-decoration: none !important;
+}
+
+/* ─── GLOBAL MOBILE HEADER OVERRIDE (APPLIES TO ALL PAGES) ─── */
+@media (max-width: 991px) {
+    header.header .menu {
+        padding: 14px 16px !important;
+        flex-wrap: wrap;
+    }
+
+    header.header .menu label {
+        display: block !important;
+        z-index: 1200 !important;
+        order: 0;
+    }
+
+    header.header .menu .navbar {
+        display: none !important;
+        position: absolute !important;
+        top: 100% !important;
+        left: 0 !important;
+        right: 0 !important;
+        background: rgba(22, 14, 34, 0.97) !important;
+        padding: 12px 18px !important;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5) !important;
+        margin: 0 !important;
+        z-index: 1150 !important;
+        border-radius: 0 0 12px 12px;
+    }
+
+    header.header .menu .navbar ul {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 4px !important;
+        align-items: flex-start !important;
+    }
+
+    header.header .menu .navbar ul li {
+        width: 100% !important;
+        float: none !important;
+    }
+
+    header.header .menu .navbar ul li a {
+        padding: 12px 10px !important;
+        font-size: 17px !important;
+        color: #ffffff !important;
+        display: block !important;
+        border-bottom: none !important;
+        text-align: left !important;
+    }
+
+    header.header .menu .navbar ul li a:hover {
+        color: #ff00c8 !important;
+    }
+
+    /* Logo centered below all links */
+    header.header .menu .navbar ul li.logo-item {
+        width: 100% !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        padding: 12px 0 4px 0 !important;
+        margin-top: 8px !important;
+        border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+        margin-left: 0 !important;
+    }
+
+    header.header .menu .navbar ul li.logo-item a.logo {
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        width: 100% !important;
+        text-align: center !important;
+        margin: 0 auto !important;
+    }
+
+    header.header .menu .navbar ul li.logo-item img {
+        height: 44px !important;
+        width: auto !important;
+        display: block !important;
+        margin: 0 auto !important;
+    }
+
+    header.header .menu #menu:checked~.navbar {
+        display: block !important;
+    }
+
+    .user-dropdown-container {
+        margin-left: auto !important;
+    }
+
+    .user-welcome {
+        display: flex !important;
+        order: 1 !important;
+        font-size: 14px !important;
+        padding: 5px 10px !important;
+        width: max-content;
+        background: transparent !important;
+        border: none !important;
+    }
+
+    header.header .menu .menu-icono {
+        width: 28px !important;
+        height: auto !important;
+        display: block !important;
     }
 }

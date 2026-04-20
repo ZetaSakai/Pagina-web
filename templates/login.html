@@ -3,13 +3,13 @@
 <html>
 
 <head>
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Iniciar Sesión</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
-    <link rel="icon" href="{{ url_for('static', filename='img/1-17e21c9a.ico') }}">
     <style>
         .alert {
             padding: 15px;
@@ -46,30 +46,6 @@
 </head>
 
 <body>
-    <header class="header">
-        <div class="menu container">
-            <input type="checkbox" id="menu" />
-            <label for="menu">
-                <img src="{{ url_for('static', filename='img/menu.png') }}" class="menu-icono" alt="menu">
-            </label>
-            <nav class="navbar">
-                <ul>
-                    <li><a href="{{ url_for('index') }}">Inicio</a></li>
-                    <li><a href="{{ url_for('informacion') }}">Servicios</a></li>
-                    {% if current_user %}
-                    <li><a href="{{ url_for('publish') }}">Publicar Juego</a></li>
-                    <li><a href="{{ url_for('logout') }}">Cerrar sesión</a></li>
-                    {% else %}
-                    <li><a href="{{ url_for('login') }}">Iniciar sesión</a></li>
-                    {% endif %}
-                    <li><a href="{{ url_for('contactos') }}">Contacto</a></li>
-                    <li class="logo-item"><a href="{{ url_for('index') }}" class="logo"><img
-                                src="{{ url_for('static', filename='img/image__1_-removebg-preview (1) (1).png') }}"
-                                alt="New Era Games logo"></a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
 
     <div class="flash-container"
         style="position: absolute; top: 80px; width: 100%; z-index: 999; display: flex; flex-direction: column; align-items: center;">
@@ -87,14 +63,21 @@
             <a href="{{ url_for('index') }}">Volver al Inicio</a>
         </div>
 
-        <form method="POST" action="{{ url_for('login') }}" class="card-container glass-effect">
+        <form method="POST" action="{{ url_for('login') }}" class="card-container">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+
             <h1>Iniciar Sesión</h1>
             <input class="sign" type="email" name="email" id="email" placeholder="Email" required>
             <input class="sign" type="password" name="passwd" id="passwd" placeholder="Contraseña" required>
-            <input class="glass-effect button" type="submit" value="Iniciar Sesión">
-            <p><a class="anim-link pulse" href="{{ url_for('register') }}">No tengo una cuenta :( </a></p>
+
+            <div class="login-actions">
+                <input class="glass-effect button" type="submit" value="Iniciar Sesión">
+                <p class="register-link"><a class="anim-link pulse" href="{{ url_for('register') }}">No tengo una cuenta
+                        :( </a></p>
+            </div>
         </form>
     </div>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 
 </html>

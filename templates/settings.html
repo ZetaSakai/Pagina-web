@@ -2,26 +2,23 @@
 <html>
 
 <head>
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Ajustes — New Era Games</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="{{ url_for('static', filename='img/fav.png') }}" type="image/x-icon">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilojuegos.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estiloindex.css') }}">
     <style>
         html {
             scroll-behavior: smooth;
         }
 
-        body {
-            padding-top: 0 !important;
-        }
-
+        /* ─── Override fullscreen menu overlay ─── */
         header.header {
             min-height: auto !important;
             padding: 0 !important;
-            background: #1b1726 !important;
+            background: transparent !important;
             display: block !important;
             position: relative !important;
             z-index: 1000;
@@ -29,26 +26,168 @@
 
         header.header .menu {
             position: relative !important;
-            padding: 20px 0;
-            background: transparent !important;
+            width: 100% !important;
             height: auto !important;
+            min-height: 0 !important;
+            background: transparent !important;
             clip-path: none !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            padding: 14px 24px !important;
+            z-index: 1100 !important;
+            transition: none !important;
+        }
+
+        header.header .menu label {
+            display: none;
+            cursor: pointer;
+            order: 0;
+        }
+
+        header.header .menu .menu-icono {
+            width: 28px;
+        }
+
+        header.header .menu .navbar {
+            display: flex !important;
+            text-align: left !important;
+            padding: 0 !important;
+            row-gap: 0 !important;
+            margin-left: 10px;
+            margin-right: auto;
+        }
+
+        header.header .menu .navbar ul {
+            display: flex !important;
+            flex-direction: row !important;
+            align-items: center;
+            gap: 4px;
+        }
+
+        header.header .menu .navbar ul li {
+            float: none;
+        }
+
+        header.header .menu .navbar ul li a {
+            font-size: 17px !important;
+            font-weight: 600;
+            color: #fff !important;
+            padding: 10px 14px;
+            display: block;
+            border-bottom: none !important;
+            transition: color 0.15s ease, transform 0.15s ease;
+        }
+
+        header.header .menu .navbar ul li a:hover {
+            color: #ff00c8 !important;
+            font-size: 17px !important;
+            border-bottom: none !important;
+            transform: scale(1.06);
+        }
+
+        header.header .menu .navbar ul li.logo-item img {
+            height: 38px;
+            display: block;
+        }
+
+        #menu {
+            display: none;
         }
 
         @media (max-width: 991px) {
             header.header .menu {
-                padding: 20px;
+                padding: 14px 16px !important;
+                flex-wrap: wrap;
+            }
+
+            header.header .menu label {
+                display: block !important;
+                z-index: 1200;
+                order: 0;
+            }
+
+            header.header .menu .navbar {
+                display: none !important;
+                position: absolute !important;
+                top: 100% !important;
+                left: 0 !important;
+                right: 0 !important;
+                background: rgba(22, 14, 34, 0.97) !important;
+                padding: 12px 18px !important;
+                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5) !important;
+                margin: 0 !important;
+                z-index: 1150 !important;
+                border-radius: 0 0 12px 12px;
+            }
+
+            header.header .menu .navbar ul {
+                flex-direction: column !important;
+                gap: 4px !important;
+                align-items: flex-start !important;
+            }
+
+            header.header .menu .navbar ul li {
+                width: 100%;
+            }
+
+            header.header .menu .navbar ul li a {
+                padding: 12px 10px !important;
+                font-size: 17px !important;
+            }
+
+            header.header .menu .navbar ul li.logo-item {
+                width: 100% !important;
+                display: flex !important;
+                justify-content: center !important;
+                align-items: center !important;
+                padding: 12px 0 4px 0 !important;
+                margin-top: 8px !important;
+                border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+                margin-left: 0 !important;
+            }
+
+            header.header .menu .navbar ul li.logo-item a.logo {
+                display: flex !important;
+                justify-content: center !important;
+                align-items: center !important;
+                width: 100% !important;
+                text-align: center !important;
+                margin: 0 auto !important;
+            }
+
+            header.header .menu .navbar ul li.logo-item img {
+                height: 44px !important;
+                width: auto !important;
+                display: block !important;
+                margin: 0 auto !important;
+            }
+
+            header.header .menu #menu:checked~.navbar {
+                display: block !important;
+            }
+
+            /* .user-welcome mobile overrides exist lower parsing down */
+            .user-welcome {
+                order: 1 !important;
+                margin-left: auto !important;
+                font-size: 14px !important;
+                padding: 5px 10px !important;
             }
         }
 
+        /* ══════════════════════════════════════════
+           SETTINGS PANEL
+        ══════════════════════════════════════════ */
         .settings-panel {
-            max-width: 600px;
-            margin: 40px auto 60px auto;
-            padding: 40px;
-            background: rgba(42, 34, 58, 0.95);
+            max-width: 820px;
+            margin: 48px auto 72px auto;
+            padding: 48px 44px;
+            background: rgba(42, 34, 58, 0.97);
             color: #fff;
             border-radius: 16px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+            box-shadow: 0 18px 60px rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 0, 200, 0.03);
         }
 
         .settings-panel h2 {
@@ -97,13 +236,106 @@
             color: rgba(255, 255, 255, 0.9);
         }
 
-        .settings-field input[type="file"] {
+        .settings-field input[type="file"],
+        .settings-field input[type="text"] {
             padding: 12px;
             border-radius: 8px;
             border: 1px solid rgba(255, 255, 255, 0.1);
             background: #24192b;
             color: #fff;
             font-size: 1rem;
+        }
+        
+        .settings-field input[type="text"]:focus {
+            outline: none;
+            border-color: #ff00c8;
+            box-shadow: 0 0 0 3px rgba(255, 0, 200, 0.15);
+        }
+
+        .settings-field textarea {
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(20, 10, 30, 0.65);
+            color: #fff;
+            font-size: 1rem;
+            resize: vertical;
+            min-height: 110px;
+        }
+
+        .settings-field textarea:focus {
+            outline: none;
+            border-color: #ff00c8;
+            box-shadow: 0 0 0 3px rgba(255, 0, 200, 0.15);
+        }
+
+        /* Desktop layout: stacked (one column) to match original design */
+        @media (min-width: 992px) {
+            .settings-panel form {
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 22px;
+                align-items: start;
+            }
+
+            .settings-panel .settings-field {
+                margin-bottom: 0;
+            }
+
+            /* Make file input visually balanced with textarea */
+            .settings-panel .settings-field input[type="file"] {
+                width: 100%;
+                box-sizing: border-box;
+                padding: 14px 16px;
+                border-radius: 12px;
+                background: rgba(20, 10, 30, 0.6);
+                border: 1px solid rgba(255, 255, 255, 0.06);
+                color: #fff;
+                height: 56px;
+            }
+
+            .settings-panel .settings-field textarea {
+                min-height: 200px;
+                height: auto;
+                border-radius: 12px;
+                background: rgba(14, 8, 20, 0.6);
+                border: 1px solid rgba(255, 255, 255, 0.06);
+                padding: 16px;
+                font-size: 1.02rem;
+                line-height: 1.5;
+            }
+
+            /* Prominent centered button below inputs */
+            .settings-panel .btn-save {
+                grid-column: 1 / -1;
+                justify-self: center;
+                width: 220px;
+                height: 64px;
+                padding: 0 18px;
+                border-radius: 24px;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                background: linear-gradient(90deg, #ff6ad1, #ff00c8);
+                color: #fff;
+                font-weight: 800;
+                font-size: 1.05rem;
+                box-shadow: 0 20px 60px rgba(255, 0, 160, 0.18);
+                border: none;
+                transition: transform 0.18s ease, box-shadow 0.18s ease;
+                margin-top: 6px;
+            }
+
+            .settings-panel .btn-save:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 26px 70px rgba(255, 0, 160, 0.22);
+            }
+
+            .settings-panel .profile-link {
+                grid-column: 1 / -1;
+                text-align: center;
+                margin-top: 18px;
+            }
         }
 
         .btn-save {
@@ -131,6 +363,17 @@
             margin-bottom: 20px;
             border-radius: 4px;
             text-align: center;
+            transition: opacity 0.6s ease, transform 0.6s ease, margin 0.6s ease, padding 0.6s ease;
+            overflow: hidden;
+        }
+
+        .alert.fade-out {
+            opacity: 0;
+            transform: translateY(-20px);
+            margin-top: -60px; /* Collapse the space */
+            padding-top: 0;
+            padding-bottom: 0;
+            pointer-events: none;
         }
 
         .alert-success {
@@ -175,6 +418,50 @@
             letter-spacing: 1px;
         }
 
+        /* ──── user-welcome pill (igual que en Index) ──── */
+        .user-welcome {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 6px 12px;
+            border-radius: 999px;
+            color: #ffffff;
+            font-weight: 700;
+            text-decoration: none;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.1);
+            transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .user-welcome:hover {
+            transform: translateY(-2px) scale(1.02);
+            background: rgba(255, 255, 255, 0.16);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.35);
+        }
+
+        .user-welcome:hover img,
+        .user-welcome:hover .default-avatar {
+            transform: scale(1.08);
+        }
+
+        .user-welcome img {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            object-fit: cover;
+            transition: transform 0.2s ease;
+        }
+
+        .user-welcome .default-avatar {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: #cccccc;
+            display: inline-block;
+            transition: transform 0.2s ease;
+        }
+
         .role-standard {
             background: #3f3456;
             color: #aaa;
@@ -189,12 +476,204 @@
             background: linear-gradient(90deg, #ff0844, #ffb199);
             color: #fff;
         }
+
+        /* user-welcome pill igual que en Index */
+        .user-welcome {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 6px 12px;
+            border-radius: 999px;
+            color: #ffffff;
+            font-weight: 700;
+            text-decoration: none;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.1);
+            transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .user-welcome:hover {
+            transform: translateY(-2px) scale(1.02);
+            background: rgba(255, 255, 255, 0.16);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.35);
+        }
+
+        .user-welcome img {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            object-fit: cover;
+            transition: transform 0.2s ease;
+        }
+
+        .user-welcome .default-avatar {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: #cccccc;
+            display: inline-block;
+            transition: transform 0.2s ease;
+        }
+
+        /* ── Media queries para settings panel ── */
+        @media (max-width: 991px) {
+            .settings-panel {
+                max-width: 90%;
+                padding: 32px 28px;
+                margin: 30px auto 50px auto;
+            }
+
+            .settings-panel h2 {
+                font-size: 1.5rem;
+                margin-bottom: 24px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .settings-panel {
+                max-width: 95%;
+                padding: 26px 20px;
+                margin: 20px auto 40px auto;
+                border-radius: 12px;
+            }
+
+            .settings-panel h2 {
+                font-size: 1.35rem;
+                margin-bottom: 20px;
+            }
+
+            .current-avatar img,
+            .current-avatar .avatar-placeholder {
+                width: 100px;
+                height: 100px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .settings-panel {
+                max-width: 100%;
+                padding: 20px 14px;
+                margin: 14px auto 28px auto;
+                border-radius: 10px;
+            }
+
+            .settings-panel h2 {
+                font-size: 1.2rem;
+            }
+
+            .current-avatar img,
+            .current-avatar .avatar-placeholder {
+                width: 86px;
+                height: 86px;
+            }
+
+            .btn-save {
+                font-size: 0.95rem;
+                padding: 12px;
+                border-radius: 10px;
+                margin-top: 14px;
+            }
+        }
+    
+        /* User Dropdown CSS added by Assistant */
+        .user-dropdown-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .user-dropdown-menu {
+            position: absolute;
+            top: calc(100% + 10px);
+            right: 0;
+            background: #2a2238; /* Matches dark theme */
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 8px 0;
+            min-width: 180px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .user-dropdown-menu.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .user-dropdown-menu a {
+            display: block;
+            padding: 10px 20px;
+            color: #ddd;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: background 0.2s, color 0.2s;
+            text-align: left;
+        }
+
+        .user-dropdown-menu a:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+        }
+
+        .user-dropdown-menu hr {
+            border: none;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin: 8px 0;
+        }
+
+        /* Tabs specific variables and styles */
+        .settings-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 15px;
+        }
+        .settings-tab-btn {
+            background: transparent;
+            color: rgba(255, 255, 255, 0.6);
+            border: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 10px 20px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        .settings-tab-btn:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.05);
+        }
+        .settings-tab-btn.active {
+            color: #ff00c8;
+            background: rgba(255, 0, 200, 0.1);
+        }
+        .settings-tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease forwards;
+        }
+        .settings-tab-content.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 
 <body>
     <header class="header">
-        <div class="menu container">
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}">
+    <div class="menu container">
             <input type="checkbox" id="menu" />
             <label for="menu">
                 <img src="{{ url_for('static', filename='img/menu.png') }}" class="menu-icono" alt="menu">
@@ -203,19 +682,59 @@
                 <ul>
                     <li><a href="{{ url_for('index') }}">Inicio</a></li>
                     <li><a href="{{ url_for('informacion') }}">Servicios</a></li>
+                    <li><a href="{{ url_for('pricing') }}">Planes</a></li>
+                    <li><a href="{{ url_for('donar') }}">Donaciones</a></li>
                     {% if current_user %}
-                    <li><a href="{{ url_for('publish') }}">Publicar Juego</a></li>
-                    <li><a href="{{ url_for('user_profile', username=current_user.username) }}">Mi Perfil</a></li>
-                    <li><a href="{{ url_for('logout') }}">Cerrar sesión</a></li>
+                    <li><a href="{{ url_for('publish') }}">Juegos</a></li>
                     {% else %}
                     <li><a href="{{ url_for('login') }}">Iniciar sesión</a></li>
                     {% endif %}
                     <li><a href="{{ url_for('contactos') }}">Contacto</a></li>
                     <li class="logo-item"><a href="{{ url_for('index') }}" class="logo"><img
-                                src="{{ url_for('static', filename='img/image__1_-removebg-preview (1) (1).png') }}"
-                                alt="New Era Games logo"></a></li>
+                                src="{{ url_for('static', filename='img/logo.png') }}" alt="New Era Games logo"></a>
+                    </li>
                 </ul>
             </nav>
+            {% if current_user %}
+            <div class="user-dropdown-container">
+                <button class="user-welcome" onclick="this.nextElementSibling.classList.toggle('active')">
+                    <span class="welcome-text" {% if not show_welcome %}style="display: none;"{% endif %}>Bienvenido! </span>
+                    <span class="username-text">{{ current_user.username }}</span>
+                    {% if current_user.pic %}
+                    <img src="{{ url_for('static', filename=current_user.pic) }}" alt="Avatar">
+                    {% else %}
+                    <div class="default-avatar"></div>
+                    {% endif %}
+                    <svg style="width:14px; margin-left:4px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </button>
+                <div class="user-dropdown-menu">
+                    <a href="{{ url_for('user_profile', username=current_user.username) }}">Mi perfil</a>
+                    <a href="{{ url_for('settings', tab='account') }}">Mis datos</a>
+                    <a href="{{ url_for('settings', tab='profile') }}">Configuración</a>
+                    <hr>
+                    <a href="{{ url_for('logout') }}" style="color: #ff4757;">Cerrar sesión</a>
+                </div>
+            </div>
+            <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    const welcomeSpans = document.querySelectorAll('.welcome-text');
+                    const viewedKey = 'welcomed_user_{{ current_user.username }}';
+                    if (!sessionStorage.getItem(viewedKey)) {
+                        welcomeSpans.forEach(span => span.style.display = 'inline');
+                        sessionStorage.setItem(viewedKey, 'true');
+                    }
+                });
+                
+                // Cierra el menu si clica fuera
+                window.addEventListener('click', function(e) {
+                    if (!e.target.closest('.user-dropdown-container')) {
+                        document.querySelectorAll('.user-dropdown-menu.active').forEach(menu => {
+                            menu.classList.remove('active');
+                        });
+                    }
+                });
+            </script>
+            {% endif %}
         </div>
     </header>
 
@@ -230,29 +749,110 @@
         {% endif %}
         {% endwith %}
 
-        <div class="current-avatar">
-            {% if current_user and current_user.pic %}
-            <img src="{{ url_for('static', filename=current_user.pic) }}" alt="Tu avatar">
-            {% else %}
-            <div class="avatar-placeholder">
-                {{ current_user.username[0]|upper if current_user else '?' }}
-            </div>
-            {% endif %}
-            {% if current_user %}
-            <div class="user-info">
-                <strong>{{ current_user.username }}</strong>
-                <span class="role-badge role-{{ current_user.role }}">{{ current_user.role }}</span>
-            </div>
-            {% endif %}
+        <div class="settings-tabs">
+            <button class="settings-tab-btn active" onclick="openTab('tab-profile')">Perfil Público</button>
+            <button class="settings-tab-btn" onclick="openTab('tab-account')">Configuración de Cuenta</button>
         </div>
 
-        <form method="POST" action="{{ url_for('settings') }}" enctype="multipart/form-data">
-            <div class="settings-field">
-                <label for="avatar">Cambiar foto de perfil</label>
-                <input type="file" name="avatar" id="avatar" accept="image/*">
+        <div id="tab-profile" class="settings-tab-content active">
+            <div class="current-avatar">
+                {% if current_user and current_user.pic %}
+                <img src="{{ url_for('static', filename=current_user.pic) }}" alt="Tu avatar">
+                {% else %}
+                <div class="avatar-placeholder">
+                    {{ current_user.username[0]|upper if current_user else '?' }}
+                </div>
+                {% endif %}
+                {% if current_user %}
+                <div class="user-info">
+                    <strong>{{ current_user.username }}</strong>
+                    <span class="role-badge role-{{ 'developer' if current_user.role == 'admin' else current_user.role }}">{{ 'developer' if current_user.role == 'admin' else current_user.role }}</span>
+                </div>
+                {% endif %}
             </div>
-            <button type="submit" class="btn-save">Guardar cambios</button>
-        </form>
+
+            <form method="POST" action="{{ url_for('settings') }}" enctype="multipart/form-data">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                <input type="hidden" name="form_type" value="profile">
+                <div class="settings-field">
+                    <label for="avatar">Cambiar foto de perfil</label>
+                    <input type="file" name="avatar" id="avatar" accept="image/*">
+                </div>
+                <div class="settings-field">
+                    <label for="description">Descripción</label>
+                    <textarea name="description" id="description" rows="4"
+                        placeholder="Cuéntanos algo sobre ti...">{{ current_user.description or '' }}</textarea>
+                </div>
+
+                <h3 style="margin-top: 20px; font-size: 1.2rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px;">Redes Sociales</h3>
+                
+                <div class="settings-field">
+                    <label for="social_x">X (Twitter)</label>
+                    <input type="text" name="social_x" id="social_x" placeholder="https://x.com/tu_usuario" value="{{ current_user.social_x or '' }}">
+                </div>
+                <div class="settings-field">
+                    <label for="social_youtube">YouTube</label>
+                    <input type="text" name="social_youtube" id="social_youtube" placeholder="https://youtube.com/@tu_canal" value="{{ current_user.social_youtube or '' }}">
+                </div>
+                <div class="settings-field">
+                    <label for="social_instagram">Instagram</label>
+                    <input type="text" name="social_instagram" id="social_instagram" placeholder="https://instagram.com/tu_usuario" value="{{ current_user.social_instagram or '' }}">
+                </div>
+                <div class="settings-field">
+                    <label for="social_github">GitHub</label>
+                    <input type="text" name="social_github" id="social_github" placeholder="https://github.com/tu_usuario" value="{{ current_user.social_github or '' }}">
+                </div>
+
+                <button type="submit" class="btn-save">Guardar cambios del perfil</button>
+            </form>
+        </div>
+
+        <div id="tab-account" class="settings-tab-content">
+            <form method="POST" action="{{ url_for('settings') }}">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                <input type="hidden" name="form_type" value="account">
+                
+                <div class="settings-field">
+                    <label for="username">Nombre de usuario</label>
+                    <input type="text" name="username" id="username" value="{{ current_user.username or '' }}" required>
+                    {% if current_user.username_changes_count is defined %}
+                    <small style="color: rgba(255,255,255,0.4); font-size: 0.8rem;">
+                        Cambios restantes: {{ 3 - current_user.username_changes_count }} (debes esperar 30 días tras cada cambio)
+                    </small>
+                    {% endif %}
+                </div>
+                <div class="settings-field">
+                    <label for="email">Correo electrónico</label>
+                    <input type="email" name="email" id="email" value="{{ current_user.email or '' }}" required>
+                    {% if current_user.email_changes_count is defined %}
+                    <small style="color: rgba(255,255,255,0.4); font-size: 0.8rem;">
+                        Cambios restantes: {{ 5 - current_user.email_changes_count }} (debes esperar 30 días tras cada cambio)
+                    </small>
+                    {% endif %}
+                </div>
+
+                <h3 style="margin-top: 20px; font-size: 1.2rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px;">Cambiar Contraseña</h3>
+                <p style="font-size: 0.9rem; color: rgba(255,255,255,0.6); margin-bottom: 15px;">Deja estos campos en blanco si no deseas cambiar tu contraseña.</p>
+
+                <div class="settings-field">
+                    <label for="current_password">Contraseña actual</label>
+                    <input type="password" name="current_password" id="current_password" placeholder="Tu contraseña actual">
+                </div>
+                <div class="settings-field">
+                    <label for="new_password">Nueva contraseña</label>
+                    <input type="password" name="new_password" id="new_password" placeholder="Tu nueva contraseña">
+                </div>
+                <div class="settings-field">
+                    <label for="confirm_new_password">Repetir nueva contraseña</label>
+                    <input type="password" name="confirm_new_password" id="confirm_new_password" placeholder="Repite tu nueva contraseña">
+                    <small style="color: rgba(255,255,255,0.4); font-size: 0.8rem;">
+                        Margen de 24 horas requerido entre cambios de contraseña.
+                    </small>
+                </div>
+
+                <button type="submit" class="btn-save">Guardar cambios de cuenta</button>
+            </form>
+        </div>
 
         {% if current_user %}
         <div class="profile-link">
@@ -260,6 +860,53 @@
         </div>
         {% endif %}
     </div>
+
+    <script>
+        function openTab(tabId) {
+            // Remove active class from all buttons and contents
+            document.querySelectorAll('.settings-tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.settings-tab-content').forEach(content => content.classList.remove('active'));
+            
+            // Add active class to clicked button and target content
+            const activeBtn = document.querySelector(`.settings-tab-btn[onclick*="${tabId}"]`);
+            if (activeBtn) activeBtn.classList.add('active');
+
+            const content = document.getElementById(tabId);
+            if (content) content.classList.add('active');
+
+            // Save active tab in localStorage
+            localStorage.setItem('activeSettingsTab', tabId);
+        }
+
+        // Keep active tab across page reloads (e.g., after form submission or deep links)
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const tabParam = urlParams.get('tab');
+            
+            let targetTab = 'tab-profile'; // Default
+
+            if (tabParam === 'account') {
+                targetTab = 'tab-account';
+            } else if (tabParam === 'profile') {
+                targetTab = 'tab-profile';
+            } else {
+                // Fallback to localStorage if no URL param
+                const savedTab = localStorage.getItem('activeSettingsTab');
+                if (savedTab) targetTab = savedTab;
+            }
+
+            openTab(targetTab);
+
+            // Auto-hide alerts after 3.5 seconds
+            setTimeout(() => {
+                const alerts = document.querySelectorAll('.alert');
+                alerts.forEach(alert => {
+                    alert.classList.add('fade-out');
+                    setTimeout(() => alert.remove(), 600);
+                });
+            }, 3500);
+        });
+    </script>
 </body>
 
 </html>

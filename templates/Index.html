@@ -4,8 +4,8 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>New Era Games</title>
-    <meta name="description" content="">
+    <title>New Era Games | Descubre y Publica Videojuegos Indie</title>
+    <meta name="description" content="La plataforma definitiva para descubrir videojuegos indie. Apoya a desarrolladores independientes, explora títulos únicos y publica tus propios juegos en New Era Games.">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/estiloindex.css') }}">
     <link rel="icon" href="{{ url_for('static', filename='img/1-17e21c9a.ico') }}">
@@ -14,12 +14,30 @@
             scroll-behavior: smooth;
         }
 
+        .creator-info:hover .creator-name {
+            color: #ff69b4 !important;
+            transition: color 0.3s ease;
+        }
+
         .user-welcome {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
+            padding: 6px 12px;
+            border-radius: 999px;
             color: #ffffff;
             font-weight: 700;
+            text-decoration: none;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.1);
+            transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .user-welcome:hover {
+            transform: translateY(-2px) scale(1.02);
+            background: rgba(255, 255, 255, 0.16);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.35);
         }
 
         .user-welcome img {
@@ -27,6 +45,7 @@
             height: 34px;
             border-radius: 50%;
             object-fit: cover;
+            transition: transform 0.2s ease;
         }
 
         .user-welcome .default-avatar {
@@ -35,6 +54,59 @@
             border-radius: 50%;
             background: #cccccc;
             display: inline-block;
+            transition: transform 0.2s ease;
+        }
+
+        /* User Dropdown CSS */
+        .user-dropdown-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .user-dropdown-menu {
+            position: absolute;
+            top: calc(100% + 10px);
+            right: 0;
+            background: #2a2238;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 8px 0;
+            min-width: 180px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .user-dropdown-menu.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .user-dropdown-menu a {
+            display: block;
+            padding: 10px 20px;
+            color: #ddd;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: background 0.2s, color 0.2s;
+            text-align: left;
+        }
+
+        .user-dropdown-menu a:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+        }
+
+        .user-dropdown-menu hr {
+            border: none;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin: 8px 0;
         }
 
         .alert {
@@ -69,11 +141,39 @@
             border-color: #bee5eb;
         }
     </style>
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "New Era Games",
+      "url": "https://newera-games.servegame.com/",
+      "logo": "https://newera-games.servegame.com/static/img/logo.png",
+      "description": "Plataforma especializada en la visibilidad y descubrimiento de videojuegos independientes.",
+      "sameAs": [
+        "https://twitter.com/newera_games",
+        "https://discord.gg/newera-games"
+      ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "New Era Games",
+      "url": "https://newera-games.servegame.com/",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://newera-games.servegame.com/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
 </head>
 
 <body>
     <header class="header">
-
+        <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}">
         <div class="menu container">
             <input type="checkbox" id="menu" />
             <label for="menu">
@@ -81,36 +181,75 @@
             </label>
             <nav class="navbar">
                 <ul>
-                    <li><a href="{{ url_for('index') }}">Inicio</a></li>
-                    <li><a href="{{ url_for('informacion') }}">Servicios</a></li>
+                    <li><a href="{{ url_for('index') }}"
+                            class="{% if request.path == url_for('index') %}active{% endif %}">Inicio</a></li>
+                    <li><a href="{{ url_for('informacion') }}"
+                            class="{% if request.path == url_for('informacion') %}active{% endif %}">Servicios</a></li>
+                    <li><a href="{{ url_for('pricing') }}"
+                            class="{% if request.path == url_for('pricing') %}active{% endif %}">Planes</a></li>
+                    <li><a href="{{ url_for('donar') }}"
+                            class="{% if request.path == url_for('donar') %}active{% endif %}">Donaciones</a></li>
                     {% if current_user %}
-                    <li><a href="{{ url_for('publish') }}">Publicar Juego</a></li>
-                    <li><a href="{{ url_for('logout') }}">Cerrar sesión</a></li>
+                    <li><a href="{{ url_for('publish') }}">Juegos</a></li>
                     {% else %}
                     <li><a href="{{ url_for('login') }}">Iniciar sesión</a></li>
                     {% endif %}
-                    <li><a href="{{ url_for('contactos') }}">Contacto</a></li>
+                    <li><a href="{{ url_for('contactos') }}"
+                            class="{% if request.path == url_for('contactos') %}active{% endif %}">Contacto</a></li>
                     <li class="logo-item"><a href="{{ url_for('index') }}" class="logo"><img
-                                src="{{ url_for('static', filename='img/image__1_-removebg-preview (1) (1).png') }}"
-                                alt="New Era Games logo"></a></li>
+                                src="{{ url_for('static', filename='img/logo.png') }}" alt="New Era Games logo"></a>
+                    </li>
                 </ul>
             </nav>
-
             {% if current_user %}
-            <div class="user-welcome">
-                <span>Bienvenido! {{ current_user.username }}</span>
-                {% if current_user.pic %}
-                <img src="{{ url_for('static', filename=current_user.pic) }}" alt="Avatar">
-                {% else %}
-                <div class="default-avatar"></div>
-                {% endif %}
+            <div class="user-dropdown-container">
+                <button class="user-welcome" onclick="this.nextElementSibling.classList.toggle('active')">
+                    <span class="welcome-text" {% if not show_welcome %}style="display: none;" {% endif %}>Bienvenido!
+                    </span>
+                    <span class="username-text">{{ current_user.username }}</span>
+                    {% if current_user.pic %}
+                    <img src="{{ url_for('static', filename=current_user.pic) }}" alt="Avatar">
+                    {% else %}
+                    <div class="default-avatar"></div>
+                    {% endif %}
+                    <svg style="width:14px; margin-left:4px;" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </button>
+                <div class="user-dropdown-menu">
+                    <a href="{{ url_for('user_profile', username=current_user.username) }}">Mi perfil</a>
+                    <a href="{{ url_for('settings', tab='account') }}">Mis datos</a>
+                    <a href="{{ url_for('settings', tab='profile') }}">Configuración</a>
+                    <hr>
+                    <a href="{{ url_for('logout') }}" style="color: #ff4757;">Cerrar sesión</a>
+                </div>
             </div>
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    const welcomeSpans = document.querySelectorAll('.welcome-text');
+                    const viewedKey = 'welcomed_user_{{ current_user.username }}';
+                    if (!sessionStorage.getItem(viewedKey)) {
+                        welcomeSpans.forEach(span => span.style.display = 'inline');
+                        sessionStorage.setItem(viewedKey, 'true');
+                    }
+                });
+
+                // Cierra el menu si clica fuera
+                window.addEventListener('click', function (e) {
+                    if (!e.target.closest('.user-dropdown-container')) {
+                        document.querySelectorAll('.user-dropdown-menu.active').forEach(menu => {
+                            menu.classList.remove('active');
+                        });
+                    }
+                });
+            </script>
             {% endif %}
         </div>
 
         <div class="header-content container">
             <div class="header-txt">
-                <h1>Descubre tu <span>juego</span> <br> favorito aqui </h1>
+                <h1>Descubre tu <br> <span>juego favorito</span> aquí </h1>
                 <p>
                     Nosotros somos <strong>New Era Games</strong> una empresa dedicada a la creación de una página web
                     especializada en videojuegos indie con el objetivo de <strong>facilitar el descubrimiento de nuevos
@@ -136,16 +275,111 @@
         </div>
     </header>
 
-    <section class="popular-container container">
-        <h2>Juegos populares</h2>
+    <section id="popular-section" class="popular-container container">
+        <div class="popular-header" style="display: flex; justify-content: flex-start; align-items: center; margin-top: 80px; margin-bottom: 45px; flex-wrap: wrap; gap: 25px;">
+            <h2 style="margin: 0;">Juegos populares</h2>
+            
+            <div class="custom-sort-dropdown" style="position: relative; z-index: 100; min-width: 280px;">
+                <div class="sort-selected" onclick="this.nextElementSibling.classList.toggle('show'); this.classList.toggle('active')" 
+                     style="background: rgba(42, 34, 58, 0.8); color: #fff; border: 1px solid rgba(255, 0, 200, 0.4); border-radius: 20px; padding: 10px 45px 10px 20px; font-family: 'Poppins', sans-serif; font-size: 15px; font-weight: 500; cursor: pointer; transition: all 0.2s ease; backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: space-between; user-select: none;">
+                    <span>Ordenar por: <span style="color: #ff00c8; margin-left: 5px;">{% if request.args.get('sort', 'popular') == 'popular' %}Más descargados{% else %}Mejor puntuados{% endif %}</span></span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="position: absolute; right: 18px; transition: transform 0.3s; color: #ff00c8;">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </div>
+                <div class="sort-options" style="position: absolute; top: 100%; left: 0; right: 0; background: rgba(42, 34, 58, 0.98); border: 1px solid rgba(255, 0, 200, 0.4); border-top: 1px solid rgba(255, 255, 255, 0.05); border-radius: 0 0 20px 20px; overflow: hidden; display: none; flex-direction: column; box-shadow: 0 15px 30px rgba(0,0,0,0.6); backdrop-filter: blur(10px);">
+                    <a href="{{ url_for('index') }}?sort=popular#popular-section" class="{% if request.args.get('sort', 'popular') == 'popular' %}active-option{% endif %}" style="padding: 14px 20px; color: #fff; text-decoration: none; font-size: 14px; font-family: 'Poppins', sans-serif; transition: background 0.2s;">Más descargados</a>
+                    <a href="{{ url_for('index') }}?sort=top_rated#popular-section" class="{% if request.args.get('sort') == 'top_rated' %}active-option{% endif %}" style="padding: 14px 20px; color: #fff; text-decoration: none; font-size: 14px; font-family: 'Poppins', sans-serif; transition: background 0.2s; border-top: 1px solid rgba(255,255,255,0.05);">Mejor puntuados</a>
+                </div>
+            </div>
+            
+            <style>
+                .custom-sort-dropdown .sort-selected:hover {
+                    border-color: #ff00c8 !important;
+                    box-shadow: 0 0 15px rgba(255, 0, 200, 0.3);
+                }
+                .custom-sort-dropdown .sort-selected.active {
+                    border-bottom-left-radius: 0 !important;
+                    border-bottom-right-radius: 0 !important;
+                    background: rgba(42, 34, 58, 0.98) !important;
+                    box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.2);
+                }
+                .custom-sort-dropdown .sort-selected.active svg {
+                    transform: rotate(180deg);
+                }
+                .custom-sort-dropdown .sort-options.show {
+                    display: flex;
+                    animation: slideDown 0.2s ease forwards;
+                    transform-origin: top;
+                }
+                .custom-sort-dropdown .sort-options a:hover {
+                    background: rgba(255, 0, 200, 0.15) !important;
+                }
+                .custom-sort-dropdown .sort-options a.active-option {
+                    background: rgba(255, 0, 200, 0.25);
+                    font-weight: 600;
+                    color: #ff00c8 !important;
+                }
+                @keyframes slideDown {
+                    from { opacity: 0; transform: scaleY(0.95); }
+                    to { opacity: 1; transform: scaleY(1); }
+                }
+            </style>
+            <script>
+                document.addEventListener('click', function(e) {
+                    if (!e.target.closest('.custom-sort-dropdown')) {
+                        document.querySelectorAll('.custom-sort-dropdown .sort-options').forEach(opt => opt.classList.remove('show'));
+                        document.querySelectorAll('.custom-sort-dropdown .sort-selected').forEach(sel => sel.classList.remove('active'));
+                    }
+                });
+            </script>
+        </div>
         <div class="popular-content">
-            <img src="{{ url_for('static', filename='img/g1.jpg') }}" alt="">
-            <img src="{{ url_for('static', filename='img/g2.jpg') }}" alt="">
-            <img src="{{ url_for('static', filename='img/g3.jpg') }}" alt="">
-            <img src="{{ url_for('static', filename='img/g4.jpg') }}" alt="">
-            <img src="{{ url_for('static', filename='img/g5.jpg') }}" alt="">
-            <img src="{{ url_for('static', filename='img/g6.jpg') }}" alt="">
-            <img src="{{ url_for('static', filename='img/g7.jpg') }}" alt="">
+            {% if db_connected and popular_games %}
+            {% for g in popular_games %}
+            <div class="popular-item" onclick="window.location='{{ url_for('game_detail', slug=g.game_slug or g.id) }}'" style="cursor: pointer;">
+                <div class="popular-img-wrapper">
+                    <img src="{{ url_for('static', filename=g.cover) }}" alt="{{ g.title }}">
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <div class="popular-item" style="cursor: pointer;">
+                <div class="popular-img-wrapper">
+                    <img src="{{ url_for('static', filename='img/g1.jpg') }}" alt="">
+                </div>
+            </div>
+            <div class="popular-item" style="cursor: pointer;">
+                <div class="popular-img-wrapper">
+                    <img src="{{ url_for('static', filename='img/g2.jpg') }}" alt="">
+                </div>
+            </div>
+            <div class="popular-item" style="cursor: pointer;">
+                <div class="popular-img-wrapper">
+                    <img src="{{ url_for('static', filename='img/g3.jpg') }}" alt="">
+                </div>
+            </div>
+            <div class="popular-item" style="cursor: pointer;">
+                <div class="popular-img-wrapper">
+                    <img src="{{ url_for('static', filename='img/g4.jpg') }}" alt="">
+                </div>
+            </div>
+            <div class="popular-item" style="cursor: pointer;">
+                <div class="popular-img-wrapper">
+                    <img src="{{ url_for('static', filename='img/g5.jpg') }}" alt="">
+                </div>
+            </div>
+            <div class="popular-item" style="cursor: pointer;">
+                <div class="popular-img-wrapper">
+                    <img src="{{ url_for('static', filename='img/g6.jpg') }}" alt="">
+                </div>
+            </div>
+            <div class="popular-item" style="cursor: pointer;">
+                <div class="popular-img-wrapper">
+                    <img src="{{ url_for('static', filename='img/g7.jpg') }}" alt="">
+                </div>
+            </div>
+            {% endif %}
         </div>
     </section>
 
@@ -155,17 +389,42 @@
 
         <div class="product-content">
 
-            {% if games %}
+            {% if db_connected and games %}
             {% for g in games %}
-            <div class="product-1">
+            <div class="product-1" onclick="window.location='{{ url_for('game_detail', slug=g.game_slug or g.id) }}'"
+                style="cursor: pointer;">
                 <img src="{{ url_for('static', filename=g.cover) }}" alt="{{ g.title }}"
-                    style="width:100%; height:250px; object-fit:cover;">
+                    style="width:100%; height:250px; object-fit:cover; border-radius: 12px;">
                 <div class="product-txt">
-                    <h3 style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" title="{{ g.title }}">{{
-                        g.title }}</h3>
-                    <div class="price">
-                        <p>Gratis</p>
-                        <a href="{{ url_for('game_detail', slug=g.game_slug or g.id) }}" class="btr-2">Ver Juego</a>
+                    <div class="creator-info"
+                        onclick="event.stopPropagation(); window.location='{{ url_for('user_profile', username=g.creator_slug or g.creator_name) }}'"
+                        style="display: flex; align-items: center; gap: 10px; margin: 5px 0 10px 0; cursor: pointer;">
+                        {% if g.creator_pic %}
+                        <img src="{{ url_for('static', filename=g.creator_pic) }}" alt="{{ g.creator_name }}"
+                            style="width: 28px; height: 28px; border-radius: 50%; object-fit: cover; margin: 0;">
+                        {% else %}
+                        <div
+                            style="width: 28px; height: 28px; border-radius: 50%; background: #332b45; display: inline-block;">
+                        </div>
+                        {% endif %}
+                        <span class="creator-name"
+                            style="color: rgba(255,255,255,0.6); font-size: 0.85rem; font-weight: 600;">{{
+                            g.creator_name or 'Desconocido' }}</span>
+                    </div>
+
+                    <h3 style="font-size: 1.4rem; color: #fff; font-weight: 800; margin-bottom: 20px;">{{ g.title }}</h3>
+
+                    <div class="price" style="display: flex; justify-content: space-between; align-items: center; margin-top: auto; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.05);">
+                        <span class="price-badge {% if not g.price or g.price <= 0 %}free{% endif %}" 
+                              style="background: #ff00c8; color: #fff; padding: 8px 18px; border-radius: 12px; font-weight: 800; font-size: 0.95rem;">
+                            {% if g.price and g.price > 0 %}${{ "%.2f"|format(g.price) }}{% else %}Gratis{% endif %}
+                        </span>
+                        <a href="{{ url_for('game_detail', slug=g.game_slug or g.id) }}" 
+                           class="btr-2" 
+                           onclick="event.stopPropagation();"
+                           style="background: #ff00c8; color: #fff; padding: 10px 22px; border-radius: 999px; font-weight: 700; font-size: 0.95rem; box-shadow: 0 4px 15px rgba(255,0,200,0.3);">
+                            Ver Juego
+                        </a>
                     </div>
                 </div>
             </div>
@@ -178,7 +437,7 @@
                     <h3>Juego lorem</h3>
                     <div class="price">
                         <p>$500</p>
-                        <a href="{{ url_for('download') }}" class="btr-2">Descargar</a>
+                        <a href="#" class="btr-2">Descargar</a>
                     </div>
                 </div>
             </div>
@@ -210,22 +469,62 @@
         </div>
     </main>
 
-    <section class="contact container">
 
-        <div class="contact-content">
-            <h3>Contacta con nosotros!</h3>
-            <form>
-                <input type="email" placeholder="Escribe tu correo">
-                <input type="submit" class="btn-3" value="Enviar">
-            </form>
-        </div>
-
-    </section>
-
-    <footer class="footer container">
-
-        <div class="link">
-            <a href="#" class="logo"></a>
+    <footer class="footer-pro">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <img src="{{ url_for('static', filename='img/logo.png') }}" alt="logo"
+                        style="height: 50px; margin-bottom: 20px;">
+                    <p style="color: rgba(255,255,255,0.4); font-size: 0.9rem; line-height: 1.6;">
+                        La plataforma definitiva para desarrolladores indie. Crea, comparte y monetiza tus juegos en un
+                        ecosistema diseñado para la nueva era.
+                    </p>
+                </div>
+                <div class="footer-col">
+                    <h4>Plataforma</h4>
+                    <ul>
+                        <li><a href="{{ url_for('index') }}">Inicio</a></li>
+                        <li><a href="{{ url_for('informacion') }}">Servicios</a></li>
+                        <li><a href="{{ url_for('pricing') }}">Planes</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Comunidad</h4>
+                    <ul>
+                        <li><a href="{{ url_for('donar') }}">Donaciones</a></li>
+                        <li><a href="{{ url_for('contactos') }}">Soporte</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Discord</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Síguenos</h4>
+                    <div class="social-links">
+                        <a href="#" class="social-icon">
+                            <svg style="width:20px;height:20px" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-1.015-2.178-1.648-3.597-1.648-2.722 0-4.928 2.206-4.928 4.929 0 .386.043.762.127 1.124-4.096-.205-7.728-2.168-10.161-5.152-.424.63-.667 1.381-.667 2.189 0 1.71.87 3.218 2.193 4.098-.808-.026-1.566-.248-2.228-.616v.062c0 2.388 1.698 4.381 3.951 4.832-.413.112-.849.172-1.298.172-.317 0-.626-.031-.926-.089.626 1.954 2.443 3.376 4.601 3.416-1.68 1.319-3.809 2.105-6.102 2.105-.397 0-.788-.023-1.175-.067 2.189 1.394 4.798 2.208 7.557 2.208 9.068 0 14.025-7.512 14.025-14.025 0-.213-.002-.426-.007-.637 1.037-.749 1.938-1.683 2.65-2.738Z" />
+                            </svg>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <svg style="width:20px;height:20px" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm4.441 16.892c-2.102.144-6.784.144-8.883 0-2.276-.156-2.541-1.27-2.558-4.892.017-3.629.285-4.736 2.558-4.892 2.099-.144 6.782-.144 8.883 0 2.277.156 2.541 1.27 2.559 4.892-.018 3.629-.285 4.736-2.559 4.892zM10 9.658l3.333 2.342L10 14.342V9.658z" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 New Era Games. Diseñado para creadores.</p>
+                <div style="display:flex; gap: 20px;">
+                    <a href="#"
+                        style="color:rgba(255,255,255,0.3); text-decoration:none; font-size:0.85rem;">Privacidad</a>
+                    <a href="#"
+                        style="color:rgba(255,255,255,0.3); text-decoration:none; font-size:0.85rem;">Términos</a>
+                </div>
+            </div>
         </div>
     </footer>
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>

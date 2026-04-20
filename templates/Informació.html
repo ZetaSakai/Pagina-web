@@ -2,17 +2,111 @@
 <html lang="en">
 
 <head>
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>New Era Games - Servicios</title>
-    <meta name="description" content="">
+    <title>Servicios para Desarrolladores Indie | New Era Games</title>
+    <meta name="description"
+        content="Explora los servicios de New Era Games: visibilidad, interactividad, desarrollo y comunidad para creadores de videojuegos independientes.">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/informacion.css') }}">
-    <link rel="icon" href="{{ url_for('static', filename='img/1-17e21c9a.ico') }}">
+    <style>
+        .user-welcome {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 6px 12px;
+            border-radius: 999px;
+            color: #ffffff;
+            font-weight: 700;
+            text-decoration: none;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.1);
+            transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .user-welcome:hover {
+            transform: translateY(-2px) scale(1.02);
+            background: rgba(255, 255, 255, 0.16);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.35);
+        }
+
+        .user-welcome img {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            object-fit: cover;
+            transition: transform 0.2s ease;
+        }
+
+        .user-welcome .default-avatar {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: #cccccc;
+            display: inline-block;
+            transition: transform 0.2s ease;
+        }
+
+        /* User Dropdown CSS added by Assistant */
+        .user-dropdown-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .user-dropdown-menu {
+            position: absolute;
+            top: calc(100% + 10px);
+            right: 0;
+            background: #2a2238;
+            /* Matches dark theme */
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 8px 0;
+            min-width: 180px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .user-dropdown-menu.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .user-dropdown-menu a {
+            display: block;
+            padding: 10px 20px;
+            color: #ddd;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: background 0.2s, color 0.2s;
+            text-align: left;
+        }
+
+        .user-dropdown-menu a:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+        }
+
+        .user-dropdown-menu hr {
+            border: none;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin: 8px 0;
+        }
+    </style>
 </head>
 
 <body>
     <header class="header">
+        <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}">
         <div class="menu container">
             <input type="checkbox" id="menu" />
             <label for="menu">
@@ -20,20 +114,70 @@
             </label>
             <nav class="navbar">
                 <ul>
-                    <li><a href="{{ url_for('index') }}">Inicio</a></li>
-                    <li><a href="{{ url_for('informacion') }}">Servicios</a></li>
+                    <li><a href="{{ url_for('index') }}"
+                            class="{% if request.path == url_for('index') %}active{% endif %}">Inicio</a></li>
+                    <li><a href="{{ url_for('informacion') }}"
+                            class="{% if request.path == url_for('informacion') %}active{% endif %}">Servicios</a></li>
+                    <li><a href="{{ url_for('pricing') }}"
+                            class="{% if request.path == url_for('pricing') %}active{% endif %}">Planes</a></li>
+                    <li><a href="{{ url_for('donar') }}"
+                            class="{% if request.path == url_for('donar') %}active{% endif %}">Donaciones</a></li>
                     {% if current_user %}
-                    <li><a href="{{ url_for('publish') }}">Publicar Juego</a></li>
-                    <li><a href="{{ url_for('logout') }}">Cerrar sesión</a></li>
+                    <li><a href="{{ url_for('publish') }}">Juegos</a></li>
                     {% else %}
                     <li><a href="{{ url_for('login') }}">Iniciar sesión</a></li>
                     {% endif %}
-                    <li><a href="{{ url_for('contactos') }}">Contacto</a></li>
+                    <li><a href="{{ url_for('contactos') }}"
+                            class="{% if request.path == url_for('contactos') %}active{% endif %}">Contacto</a></li>
                     <li class="logo-item"><a href="{{ url_for('index') }}" class="logo"><img
-                                src="{{ url_for('static', filename='img/image__1_-removebg-preview (1) (1).png') }}"
-                                alt="New Era Games logo"></a></li>
+                                src="{{ url_for('static', filename='img/logo.png') }}" alt="New Era Games logo"></a>
+                    </li>
                 </ul>
             </nav>
+            {% if current_user %}
+            <div class="user-dropdown-container">
+                <button class="user-welcome" onclick="this.nextElementSibling.classList.toggle('active')">
+                    <span class="welcome-text" {% if not show_welcome %}style="display: none;" {% endif %}>Bienvenido!
+                    </span>
+                    <span class="username-text">{{ current_user.username }}</span>
+                    {% if current_user.pic %}
+                    <img src="{{ url_for('static', filename=current_user.pic) }}" alt="Avatar">
+                    {% else %}
+                    <div class="default-avatar"></div>
+                    {% endif %}
+                    <svg style="width:14px; margin-left:4px;" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </button>
+                <div class="user-dropdown-menu">
+                    <a href="{{ url_for('user_profile', username=current_user.username) }}">Mi perfil</a>
+                    <a href="{{ url_for('settings', tab='account') }}">Mis datos</a>
+                    <a href="{{ url_for('settings', tab='profile') }}">Configuración</a>
+                    <hr>
+                    <a href="{{ url_for('logout') }}" style="color: #ff4757;">Cerrar sesión</a>
+                </div>
+            </div>
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    const welcomeSpans = document.querySelectorAll('.welcome-text');
+                    const viewedKey = 'welcomed_user_{{ current_user.username }}';
+                    if (!sessionStorage.getItem(viewedKey)) {
+                        welcomeSpans.forEach(span => span.style.display = 'inline');
+                        sessionStorage.setItem(viewedKey, 'true');
+                    }
+                });
+
+                // Cierra el menu si clica fuera
+                window.addEventListener('click', function (e) {
+                    if (!e.target.closest('.user-dropdown-container')) {
+                        document.querySelectorAll('.user-dropdown-menu.active').forEach(menu => {
+                            menu.classList.remove('active');
+                        });
+                    }
+                });
+            </script>
+            {% endif %}
         </div>
 
         <div class="header-content container">
@@ -58,32 +202,41 @@
     <section class="popular-container container servicios">
         <h2>Nuestros servicios</h2>
         <div class="popular-content">
-            <div class="popular-card">
-                <h3>Visibilidad</h3>
-                <p>Ofrecemos <strong>servicios de visibilidad</strong> para ayudar a nuestros clientes a destacar en el
-                    mercado de los videojuegos. Proporcionándoles estrategias efectivas de promoción y posicionamiento
-                    en línea.</p>
+            <div class="popular-row">
+                <div class="popular-card">
+                    <h3>Visibilidad</h3>
+                    <p>Ofrecemos <strong>servicios de visibilidad</strong> para ayudar a nuestros clientes a destacar en
+                        el
+                        mercado de los videojuegos. Proporcionándoles estrategias efectivas de promoción y
+                        posicionamiento
+                        en línea.</p>
+                </div>
+                <div class="popular-card">
+                    <h3>Interactividad</h3>
+                    <p>Ofrecemos <strong>servicios de interactividad</strong> para mejorar la experiencia del jugador en
+                        nuestros juegos. Nuestro equipo de expertos se asegura de que cada juego sea atractivo y
+                        entretenido.</p>
+                </div>
+                <div class="popular-card">
+                    <h3>Descubrimiento</h3>
+                    <p>Facilitamos el descubrimiento de <strong>nuevos juegos y contenido</strong> para nuestros
+                        clientes,
+                        ayudándoles a encontrar oportunidades únicas en el mercado.</p>
+                </div>
             </div>
-            <div class="popular-card">
-                <h3>Interactividad</h3>
-                <p>Ofrecemos <strong>servicios de interactividad</strong> para mejorar la experiencia del jugador en
-                    nuestros juegos. Nuestro equipo de expertos se asegura de que cada juego sea atractivo y
-                    entretenido.</p>
-            </div>
-            <div class="popular-card">
-                <h3>Descubrimiento</h3>
-                <p>Facilitamos el descubrimiento de <strong>nuevos juegos y contenido</strong> para nuestros clientes,
-                    ayudándoles a encontrar oportunidades únicas en el mercado.</p>
-            </div>
-            <div class="popular-card">
-                <h3>Comunidad</h3>
-                <p>Hacemos que nuestros clientes puedan crear una <strong>comunidad activa y comprometida</strong> con
-                    sus juegos, fomentando la interacción y el engagement entre jugadores.</p>
-            </div>
-            <div class="popular-card">
-                <h3>Desarrollo</h3>
-                <p>Ofrecemos <strong>servicios de desarrollo</strong> para crear juegos innovadores y de alta calidad
-                    que cumplan con los más altos estándares.</p>
+            <div class="popular-row">
+                <div class="popular-card">
+                    <h3>Comunidad</h3>
+                    <p>Hacemos que nuestros clientes puedan crear una <strong>comunidad activa y comprometida</strong>
+                        con
+                        sus juegos, fomentando la interacción y el engagement entre jugadores.</p>
+                </div>
+                <div class="popular-card">
+                    <h3>Desarrollo</h3>
+                    <p>Ofrecemos <strong>servicios de desarrollo</strong> para crear juegos innovadores y de alta
+                        calidad
+                        que cumplan con los más altos estándares.</p>
+                </div>
             </div>
         </div>
     </section>
